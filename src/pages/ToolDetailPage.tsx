@@ -66,9 +66,14 @@ const ToolDetailPage = () => {
 
               <div className="mb-6 text-3xl font-extrabold text-primary">{tool.price}</div>
 
-              <button className="w-full rounded-lg bg-accent px-8 py-3.5 text-base font-semibold text-accent-foreground transition-all hover:opacity-90">
-                Buy Now
-              </button>
+              <a
+                href={`https://wa.me/qr/LUQWRX5MSJSWN1?text=${encodeURIComponent(`Hi, I'd like to purchase ${tool.name} (${tool.price})`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground transition-all hover:opacity-90"
+              >
+                Buy via WhatsApp
+              </a>
 
               {/* Warning */}
               <div className="mt-6 flex gap-3 rounded-lg border border-border bg-accent-orange-light p-4">
