@@ -66,9 +66,14 @@ const ToolDetailPage = () => {
 
               <div className="mb-6 text-3xl font-extrabold text-primary">{tool.price}</div>
 
-              <button className="w-full rounded-lg bg-accent px-8 py-3.5 text-base font-semibold text-accent-foreground transition-all hover:opacity-90">
-                Buy Now
-              </button>
+              <a
+                href={`https://wa.me/qr/LUQWRX5MSJSWN1?text=${encodeURIComponent(`Hi, I'd like to purchase ${tool.name} (${tool.price})`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground transition-all hover:opacity-90"
+              >
+                Buy via WhatsApp
+              </a>
 
               {/* Warning */}
               <div className="mt-6 flex gap-3 rounded-lg border border-border bg-accent-orange-light p-4">
@@ -84,9 +89,14 @@ const ToolDetailPage = () => {
           <div className="mt-16 rounded-xl border border-border bg-secondary p-8 text-center">
             <h3 className="mb-2 text-xl font-bold text-foreground">Need help installing this tool?</h3>
             <p className="mb-4 text-muted-foreground">Get professional help from a certified Shopify expert.</p>
-            <button className="rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90">
+            <a
+              href="https://wa.me/qr/LUQWRX5MSJSWN1?text=Hi%2C%20I%20need%20help%20installing%20a%20Shopify%20tool"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
+            >
               Hire a Shopify Expert
-            </button>
+            </a>
           </div>
         </div>
       </section>
