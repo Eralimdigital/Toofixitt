@@ -89,9 +89,14 @@ const ToolDetailPage = () => {
           <div className="mt-16 rounded-xl border border-border bg-secondary p-8 text-center">
             <h3 className="mb-2 text-xl font-bold text-foreground">Need help installing this tool?</h3>
             <p className="mb-4 text-muted-foreground">Get professional help from a certified Shopify expert.</p>
-            <button className="rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90">
+            <a
+              href="https://wa.me/qr/LUQWRX5MSJSWN1?text=Hi%2C%20I%20need%20help%20installing%20a%20Shopify%20tool"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
+            >
               Hire a Shopify Expert
-            </button>
+            </a>
           </div>
         </div>
       </section>
