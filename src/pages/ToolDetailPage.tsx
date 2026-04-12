@@ -67,12 +67,10 @@ const ToolDetailPage = () => {
               <div className="mb-6 text-3xl font-extrabold text-primary">{tool.price}</div>
 
               <a
-                href={`https://wa.me/qr/LUQWRX5MSJSWN1?text=${encodeURIComponent(`Hi, I'd like to purchase ${tool.name} (${tool.price})`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`mailto:smithmove0@gmail.com?subject=${encodeURIComponent(`Purchase: ${tool.name} (${tool.price})`)}&body=${encodeURIComponent(`Hi, I'd like to purchase ${tool.name} (${tool.price}). Please send me the details.`)}`}
                 className="block w-full rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground transition-all hover:opacity-90"
               >
-                Buy via WhatsApp
+                Buy via Email
               </a>
 
               {/* Warning */}
@@ -90,9 +88,7 @@ const ToolDetailPage = () => {
             <h3 className="mb-2 text-xl font-bold text-foreground">Need help installing this tool?</h3>
             <p className="mb-4 text-muted-foreground">Get professional help from a certified Shopify expert.</p>
             <a
-              href="https://wa.me/qr/LUQWRX5MSJSWN1?text=Hi%2C%20I%20need%20help%20installing%20a%20Shopify%20tool"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="mailto:smithmove0@gmail.com?subject=Shopify%20Expert%20Help&body=Hi%2C%20I%20need%20help%20installing%20a%20Shopify%20tool."
               className="inline-block rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
             >
               Hire a Shopify Expert

@@ -165,4 +165,15 @@ export const tools: Tool[] = [
     category: "Marketing",
     imagePrompt: "tiktok",
   },
+  {
+    id: "15",
+    name: "Moneyrobot",
+    slug: "moneyrobot",
+    description: "Generate massive traffic to your Shopify store with automated backlink building and SEO submission.",
+    price: "$500",
+    priceValue: 500,
+    benefits: ["Drive targeted traffic", "Automated backlink building", "Boost search rankings", "Scale store visibility"],
+    category: "Traffic",
+    imagePrompt: "moneyrobot",
+  },
 ];
