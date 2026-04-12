@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Star } from "lucide-react";
 import type { Tool } from "@/data/tools";
 
 interface ToolCardProps {
@@ -6,6 +9,22 @@ interface ToolCardProps {
 }
 
 const ToolCard = ({ tool }: ToolCardProps) => {
+  const { data: reviews } = useQuery({
+    queryKey: ["reviews-summary", tool.slug],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("reviews")
+        .select("rating")
+        .eq("tool_slug", tool.slug);
+      return data || [];
+    },
+  });
+
+  const avgRating = reviews?.length
+    ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+    : 0;
+  const count = reviews?.length || 0;
+
   return (
     <div className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
       <div className="aspect-[16/10] overflow-hidden bg-secondary">
@@ -23,7 +42,27 @@ const ToolCard = ({ tool }: ToolCardProps) => {
           {tool.category}
         </span>
         <h3 className="mb-1 text-lg font-bold text-foreground">{tool.name}</h3>
-        <p className="mb-4 flex-1 text-sm text-muted-foreground">{tool.description}</p>
+        <p className="mb-3 flex-1 text-sm text-muted-foreground">{tool.description}</p>
+
+        {/* Rating */}
+        <div className="mb-3 flex items-center gap-1.5">
+          <div className="flex">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                className={`h-3.5 w-3.5 ${
+                  star <= Math.round(avgRating)
+                    ? "fill-primary text-primary"
+                    : "text-muted-foreground/30"
+                }`}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-muted-foreground">
+            {avgRating > 0 ? avgRating.toFixed(1) : "No reviews"}{count > 0 ? ` (${count})` : ""}
+          </span>
+        </div>
+
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold text-primary">{tool.price}</span>
           <Link
