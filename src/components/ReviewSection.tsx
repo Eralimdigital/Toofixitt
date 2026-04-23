@@ -97,9 +97,26 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
     onError: () => toast.error("Failed to submit review"),
   });
 
+  const helpfulMutation = useMutation({
+    mutationFn: async (reviewId: string) => {
+      const { error } = await supabase.from("review_helpful_votes" as never).insert({
+        review_id: reviewId,
+        voter_key: voterKey,
+      } as never);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews", toolSlug] });
+      toast.success("Marked as helpful");
+    },
+    onError: () => toast.error("You already marked this review helpful"),
+  });
+
   const avgRating = reviews.length
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : null;
+
+  const goToPage = (nextPage: number) => setPage(Math.min(Math.max(nextPage, 1), totalPages));
 
   return (
     <div className="mt-16">
