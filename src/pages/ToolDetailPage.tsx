@@ -33,9 +33,9 @@ const ToolDetailPage = () => {
             ← Back to Tools
           </Link>
 
-          <div className="mt-6 grid gap-10 md:grid-cols-2">
+           <div className="mt-6 grid gap-10 rounded-2xl border border-border bg-card/70 p-6 shadow-card backdrop-blur-sm md:grid-cols-2">
             {/* Image */}
-            <div className="overflow-hidden rounded-xl border border-border bg-secondary">
+            <div className="overflow-hidden rounded-xl border border-border bg-secondary shadow-card">
               <img
                 src={`/images/tools/${tool.slug}.jpg`}
                 alt={tool.name}
@@ -47,7 +47,7 @@ const ToolDetailPage = () => {
 
             {/* Info */}
             <div>
-              <span className="mb-3 inline-block rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
+              <span className="mb-3 inline-block rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
                 {tool.category}
               </span>
               <h1 className="mb-3 text-3xl font-extrabold text-foreground">{tool.name}</h1>
@@ -58,14 +58,14 @@ const ToolDetailPage = () => {
                 <ul className="space-y-2">
                   {tool.benefits.map((b) => (
                     <li key={b} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-accent" />
                       {b}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="mb-6 text-3xl font-extrabold text-primary">{tool.price}</div>
+              <div className="mb-6 text-3xl font-extrabold text-accent">{tool.price}</div>
 
               <a
                 href={`mailto:smithmove0@gmail.com?subject=${encodeURIComponent(`Purchase: ${tool.name} (${tool.price})`)}&body=${encodeURIComponent(`Hi, I'd like to purchase ${tool.name} (${tool.price}). Please send me the details.`)}`}
@@ -75,7 +75,7 @@ const ToolDetailPage = () => {
               </a>
 
               {/* Warning */}
-              <div className="mt-6 flex gap-3 rounded-lg border border-border bg-accent-orange-light p-4">
+              <div className="mt-6 flex gap-3 rounded-lg border border-accent/30 bg-accent-orange-light p-4">
                 <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                 <p className="text-xs text-foreground">
                   This tool requires expert-level Shopify knowledge for proper implementation. Improper use may affect store performance.
@@ -85,7 +85,7 @@ const ToolDetailPage = () => {
           </div>
 
           {/* Upsell */}
-          <div className="mt-16 rounded-xl border border-border bg-secondary p-8 text-center">
+          <div className="mt-16 rounded-xl border border-border bg-secondary/80 p-8 text-center shadow-card">
             <h3 className="mb-2 text-xl font-bold text-foreground">Need help installing this tool?</h3>
             <p className="mb-4 text-muted-foreground">Get professional help from a certified Shopify expert.</p>
             <a

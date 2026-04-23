@@ -13,9 +13,9 @@ const Index = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="gradient-hero py-24 md:py-32">
+      <section className="gradient-hero border-b border-border py-24 md:py-32">
         <div className="container text-center">
-          <span className="mb-6 inline-block rounded-full bg-secondary px-4 py-1.5 text-xs font-semibold text-secondary-foreground">
+          <span className="mb-6 inline-block rounded-full border border-border bg-secondary/80 px-4 py-1.5 text-xs font-semibold text-secondary-foreground shadow-card">
             🚀 The #1 Shopify Tools Marketplace
           </span>
           <h1 className="mx-auto mb-6 max-w-3xl text-4xl font-extrabold leading-tight text-foreground md:text-5xl lg:text-6xl">
@@ -28,13 +28,13 @@ const Index = () => {
           <div className="flex items-center justify-center gap-4">
             <Link
               to="/tools"
-              className="rounded-lg bg-accent px-8 py-3.5 text-base font-semibold text-accent-foreground shadow-lg transition-all hover:opacity-90"
+              className="rounded-lg bg-accent px-8 py-3.5 text-base font-semibold text-accent-foreground shadow-card transition-all hover:opacity-90"
             >
               Browse Tools
             </Link>
             <Link
               to="/tools"
-              className="rounded-lg border border-border bg-card px-8 py-3.5 text-base font-semibold text-foreground transition-all hover:bg-secondary"
+              className="rounded-lg border border-border bg-card/80 px-8 py-3.5 text-base font-semibold text-foreground shadow-card transition-all hover:bg-secondary"
             >
               Get Started
             </Link>
@@ -43,7 +43,7 @@ const Index = () => {
       </section>
 
       {/* Features */}
-      <section className="border-b border-border py-20">
+      <section className="border-b border-border bg-background/40 py-20">
         <div className="container">
           <h2 className="mb-12 text-center text-3xl font-bold text-foreground">Why ToolifyHQ?</h2>
           <div className="grid gap-8 md:grid-cols-3">
@@ -52,9 +52,9 @@ const Index = () => {
               { icon: ShieldCheck, title: "Expert-Grade Quality", desc: "Every tool is built for professional Shopify store owners." },
               { icon: Download, title: "Easy Integration", desc: "Simple setup guides included with every tool purchase." },
             ].map((f) => (
-              <div key={f.title} className="rounded-xl border border-border bg-card p-8 text-center shadow-card">
+              <div key={f.title} className="rounded-xl border border-border bg-card/90 p-8 text-center shadow-card backdrop-blur-sm">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-secondary">
-                  <f.icon className="h-6 w-6 text-primary" />
+                  <f.icon className="h-6 w-6 text-accent" />
                 </div>
                 <h3 className="mb-2 text-lg font-bold text-foreground">{f.title}</h3>
                 <p className="text-sm text-muted-foreground">{f.desc}</p>
@@ -79,7 +79,7 @@ const Index = () => {
           <div className="mt-12 text-center">
             <Link
               to="/tools"
-              className="rounded-lg bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground transition-all hover:opacity-90"
+              className="rounded-lg bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-card transition-all hover:opacity-90"
             >
               View All Tools
             </Link>
@@ -88,7 +88,7 @@ const Index = () => {
       </section>
 
       {/* CTA */}
-      <section className="gradient-primary py-20">
+      <section className="gradient-primary border-y border-border py-20">
         <div className="container text-center">
           <h2 className="mb-4 text-3xl font-bold text-primary-foreground">Ready to Scale Your Shopify Store?</h2>
           <p className="mx-auto mb-8 max-w-md text-primary-foreground/80">
