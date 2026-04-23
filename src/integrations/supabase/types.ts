@@ -14,6 +14,35 @@ export type Database = {
   }
   public: {
     Tables: {
+      review_helpful_votes: {
+        Row: {
+          created_at: string
+          id: string
+          review_id: string
+          voter_key: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          review_id: string
+          voter_key: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          review_id?: string
+          voter_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_helpful_votes_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "reviews"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           comment: string | null
