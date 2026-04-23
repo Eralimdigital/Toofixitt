@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
 import { tools } from "@/data/tools";
-import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2, CreditCard, Mail, ShieldCheck, Sparkles } from "lucide-react";
 
 const ToolDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -65,14 +65,43 @@ const ToolDetailPage = () => {
                 </ul>
               </div>
 
-              <div className="mb-6 text-3xl font-extrabold text-accent">{tool.price}</div>
+              <div className="mb-6 grid gap-4 rounded-xl border border-border bg-secondary/70 p-4 shadow-card backdrop-blur-sm">
+                <div className="flex items-start justify-between gap-4 border-b border-border pb-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Order summary</p>
+                    <p className="mt-1 font-bold text-foreground">{tool.name}</p>
+                  </div>
+                  <div className="text-right text-3xl font-extrabold text-accent">{tool.price}</div>
+                </div>
+                <div className="grid gap-3 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <CreditCard className="h-4 w-4 text-accent" />
+                    <span>Secure payment details are confirmed by email.</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 text-accent" />
+                    <span>Delivery and setup instructions included after confirmation.</span>
+                  </div>
+                </div>
+              </div>
 
               <a
                 href={`mailto:smithmove0@gmail.com?subject=${encodeURIComponent(`Purchase: ${tool.name} (${tool.price})`)}&body=${encodeURIComponent(`Hi, I'd like to purchase ${tool.name} (${tool.price}). Please send me the details.`)}`}
-                className="block w-full rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground transition-all hover:opacity-90"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90"
               >
-                Buy via Email
+                <Mail className="h-4 w-4" />
+                Start Checkout
               </a>
+
+              <div className="mt-4 rounded-lg border border-accent/30 bg-card/80 p-4 shadow-card">
+                <div className="mb-2 flex items-center gap-2 text-sm font-bold text-foreground">
+                  <Sparkles className="h-4 w-4 text-accent" />
+                  Confirmation preview
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Once your order is confirmed, you’ll receive the tool files, setup notes, and support next steps in one premium delivery email.
+                </p>
+              </div>
 
               {/* Warning */}
               <div className="mt-6 flex gap-3 rounded-lg border border-accent/30 bg-accent-orange-light p-4">

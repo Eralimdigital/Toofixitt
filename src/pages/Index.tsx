@@ -52,7 +52,7 @@ const Index = () => {
               { icon: ShieldCheck, title: "Expert-Grade Quality", desc: "Every tool is built for professional Shopify store owners." },
               { icon: Download, title: "Easy Integration", desc: "Simple setup guides included with every tool purchase." },
             ].map((f) => (
-              <div key={f.title} className="rounded-xl border border-border bg-card/90 p-8 text-center shadow-card backdrop-blur-sm">
+              <div key={f.title} className="rounded-xl border border-border bg-card/90 p-8 text-center shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-secondary">
                   <f.icon className="h-6 w-6 text-accent" />
                 </div>
