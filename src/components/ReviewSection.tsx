@@ -175,9 +175,13 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
         <p className="text-sm text-muted-foreground">No reviews yet. Be the first!</p>
       ) : (
         <div className="space-y-4">
-          {reviews.map((review) => (
-            <div key={review.id} className="rounded-xl border border-border bg-card/80 p-5 shadow-card">
-              <div className="mb-2 flex items-center justify-between">
+          {visibleReviews.map((review) => {
+            const helpfulCount = review.review_helpful_votes.length;
+            const hasVoted = review.review_helpful_votes.some((vote) => vote.voter_key === voterKey);
+
+            return (
+              <div key={review.id} className="rounded-xl border border-border bg-card/80 p-5 shadow-card transition-all hover:shadow-card-hover">
+              <div className="mb-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                 <span className="text-sm font-semibold text-foreground">{review.reviewer_name}</span>
                 <span className="text-xs text-muted-foreground">
                   {new Date(review.created_at).toLocaleDateString()}
@@ -187,8 +191,44 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
               {review.comment && (
                 <p className="mt-2 text-sm text-muted-foreground">{review.comment}</p>
               )}
+              <button
+                type="button"
+                onClick={() => helpfulMutation.mutate(review.id)}
+                disabled={hasVoted || helpfulMutation.isPending}
+                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-border bg-secondary/70 px-3 py-2 text-xs font-semibold text-muted-foreground shadow-card transition-all hover:border-accent/60 hover:text-accent disabled:cursor-default disabled:border-accent/40 disabled:text-accent"
+              >
+                <ThumbsUp className={`h-3.5 w-3.5 ${hasVoted ? "fill-accent" : ""}`} />
+                Helpful {helpfulCount > 0 && `(${helpfulCount})`}
+              </button>
             </div>
-          ))}
+            );
+          })}
+
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between rounded-xl border border-border bg-secondary/70 p-3 shadow-card">
+              <button
+                type="button"
+                onClick={() => goToPage(page - 1)}
+                disabled={page === 1}
+                className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground transition-all hover:border-accent/60 hover:text-accent disabled:opacity-40"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Previous
+              </button>
+              <span className="text-xs font-semibold text-muted-foreground">
+                Page {page} of {totalPages}
+              </span>
+              <button
+                type="button"
+                onClick={() => goToPage(page + 1)}
+                disabled={page === totalPages}
+                className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground transition-all hover:border-accent/60 hover:text-accent disabled:opacity-40"
+              >
+                Next
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
