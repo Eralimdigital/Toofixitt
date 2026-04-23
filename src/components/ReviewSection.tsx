@@ -78,7 +78,7 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
       </div>
 
       {/* Submit Form */}
-      <div className="mb-8 rounded-xl border border-border bg-secondary p-6">
+      <div className="mb-8 rounded-xl border border-border bg-secondary/80 p-6 shadow-card">
         <h4 className="mb-4 text-sm font-semibold text-foreground">Write a Review</h4>
         <div className="mb-3">
           <label className="mb-1 block text-xs text-muted-foreground">Your Name</label>
@@ -87,7 +87,7 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="John Doe"
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full rounded-lg border border-border bg-background/80 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
         <div className="mb-3">
@@ -101,13 +101,13 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
             onChange={(e) => setComment(e.target.value)}
             placeholder="Share your experience..."
             rows={3}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full rounded-lg border border-border bg-background/80 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
         <button
           onClick={() => mutation.mutate()}
           disabled={!name.trim() || rating === 0 || mutation.isPending}
-          className="rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 disabled:opacity-50"
+          className="rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-primary-foreground shadow-card transition-all hover:opacity-90 disabled:opacity-50"
         >
           {mutation.isPending ? "Submitting..." : "Submit Review"}
         </button>
@@ -121,7 +121,7 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
       ) : (
         <div className="space-y-4">
           {reviews.map((review) => (
-            <div key={review.id} className="rounded-xl border border-border bg-background p-5">
+            <div key={review.id} className="rounded-xl border border-border bg-card/80 p-5 shadow-card">
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-sm font-semibold text-foreground">{review.reviewer_name}</span>
                 <span className="text-xs text-muted-foreground">

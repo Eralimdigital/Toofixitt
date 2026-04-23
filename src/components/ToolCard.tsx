@@ -26,7 +26,7 @@ const ToolCard = ({ tool }: ToolCardProps) => {
   const count = reviews?.length || 0;
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
+    <div className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover">
       <div className="aspect-[16/10] overflow-hidden bg-secondary">
         <img
           src={`/images/tools/${tool.slug}.jpg`}
@@ -38,7 +38,7 @@ const ToolCard = ({ tool }: ToolCardProps) => {
         />
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <span className="mb-2 inline-block w-fit rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
+        <span className="mb-2 inline-block w-fit rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
           {tool.category}
         </span>
         <h3 className="mb-1 text-lg font-bold text-foreground">{tool.name}</h3>
@@ -52,7 +52,7 @@ const ToolCard = ({ tool }: ToolCardProps) => {
                 key={star}
                 className={`h-3.5 w-3.5 ${
                   star <= Math.round(avgRating)
-                    ? "fill-primary text-primary"
+                    ? "fill-accent text-accent"
                     : "text-muted-foreground/30"
                 }`}
               />

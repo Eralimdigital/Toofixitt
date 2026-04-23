@@ -19,7 +19,7 @@ const ToolsPage = () => {
       <Navbar />
       <section className="py-16">
         <div className="container">
-          <div className="mb-12 text-center">
+          <div className="mb-12 rounded-2xl border border-border bg-card/70 px-6 py-12 text-center shadow-card backdrop-blur-sm">
             <h1 className="mb-3 text-4xl font-extrabold text-foreground">All Shopify Tools</h1>
             <p className="text-lg text-muted-foreground">
               Browse our complete collection of premium Shopify tools
@@ -34,8 +34,8 @@ const ToolsPage = () => {
                 onClick={() => setActive(cat)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
                   active === cat
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                    ? "bg-accent text-accent-foreground shadow-card"
+                    : "border border-border bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 }`}
               >
                 {cat}
