@@ -3,7 +3,7 @@ import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/75 shadow-card backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="ToolifyHQ" width={160} height={40} className="h-9 w-auto" />
@@ -18,7 +18,7 @@ const Navbar = () => {
         </nav>
         <Link
           to="/tools"
-          className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground transition-all hover:opacity-90"
+          className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-card transition-all hover:opacity-90"
         >
           Browse Tools
         </Link>
