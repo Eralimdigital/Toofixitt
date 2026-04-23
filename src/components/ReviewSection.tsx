@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Star } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight, ThumbsUp, Star } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -7,6 +7,29 @@ import { toast } from "sonner";
 interface ReviewSectionProps {
   toolSlug: string;
 }
+
+const REVIEWS_PER_PAGE = 5;
+
+type Review = {
+  id: string;
+  tool_slug: string;
+  reviewer_name: string;
+  rating: number;
+  comment: string | null;
+  created_at: string;
+  review_helpful_votes: { voter_key: string }[];
+};
+
+const getVisitorKey = () => {
+  const storageKey = "toolify-review-voter-key";
+  const existingKey = localStorage.getItem(storageKey);
+
+  if (existingKey) return existingKey;
+
+  const newKey = crypto.randomUUID();
+  localStorage.setItem(storageKey, newKey);
+  return newKey;
+};
 
 const StarRating = ({ rating, onRate, interactive = false }: { rating: number; onRate?: (r: number) => void; interactive?: boolean }) => (
   <div className="flex gap-0.5">
@@ -25,19 +48,34 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [page, setPage] = useState(1);
+  const voterKey = useMemo(getVisitorKey, []);
 
   const { data: reviews = [], isLoading } = useQuery({
     queryKey: ["reviews", toolSlug],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("reviews")
-        .select("*")
+        .select("*, review_helpful_votes(voter_key)")
         .eq("tool_slug", toolSlug)
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return data;
+      return data as Review[];
     },
   });
+
+  const sortedReviews = useMemo(
+    () =>
+      [...reviews].sort((a, b) => {
+        const helpfulDifference = b.review_helpful_votes.length - a.review_helpful_votes.length;
+        if (helpfulDifference !== 0) return helpfulDifference;
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      }),
+    [reviews],
+  );
+
+  const totalPages = Math.max(1, Math.ceil(sortedReviews.length / REVIEWS_PER_PAGE));
+  const visibleReviews = sortedReviews.slice((page - 1) * REVIEWS_PER_PAGE, page * REVIEWS_PER_PAGE);
 
   const mutation = useMutation({
     mutationFn: async () => {
