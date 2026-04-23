@@ -176,4 +176,15 @@ export const tools: Tool[] = [
     category: "Traffic",
     imagePrompt: "moneyrobot",
   },
+  {
+    id: "16",
+    name: "AI Product Video Tool",
+    slug: "ai-product-video-tool",
+    description: "Create AI product photography and promotional videos that capture attention and help attract more sales.",
+    price: "$200",
+    priceValue: 200,
+    benefits: ["Premium product photography", "AI promotional videos", "Increase customer attention", "Attract more sales"],
+    category: "AI",
+    imagePrompt: "ai-product-video",
+  },
 ];
