@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ToolCard from "@/components/ToolCard";
@@ -11,8 +12,23 @@ const ToolsPage = () => {
     return ["All", ...cats.sort()];
   }, []);
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState("All");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParams.get("q") ?? "");
+
+  useEffect(() => {
+    const q = searchParams.get("q") ?? "";
+    setSearch(q);
+  }, [searchParams]);
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    if (value.trim()) {
+      setSearchParams({ q: value }, { replace: true });
+    } else {
+      setSearchParams({}, { replace: true });
+    }
+  };
 
   const filtered = tools.filter((tool) => {
     const matchesCategory = active === "All" || tool.category === active;
@@ -45,7 +61,7 @@ const ToolsPage = () => {
               <input
                 type="search"
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                onChange={(event) => handleSearchChange(event.target.value)}
                 placeholder="Search premium Shopify tools"
                 className="h-12 w-full rounded-xl border border-border bg-secondary/80 pl-11 pr-4 text-sm font-medium text-foreground shadow-card outline-none transition-all placeholder:text-muted-foreground focus:border-accent/70 focus:ring-2 focus:ring-ring/30"
               />
@@ -69,10 +85,32 @@ const ToolsPage = () => {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
-            ))}
+            {filtered.length > 0 ? (
+              filtered.map((tool) => <ToolCard key={tool.id} tool={tool} />)
+            ) : (
+              <div className="col-span-full rounded-2xl border border-dashed border-border bg-card/60 px-6 py-16 text-center">
+                <p className="text-lg font-semibold text-foreground">No tools found</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Try a different search term or category.
+                </p>
+                <button
+                  onClick={() => {
+                    handleSearchChange("");
+                    setActive("All");
+                  }}
+                  className="mt-4 rounded-lg gradient-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-card transition-all hover:opacity-90"
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
           </div>
+
+          {filtered.length > 0 && (
+            <p className="mt-6 text-center text-xs text-muted-foreground">
+              Showing {filtered.length} of {tools.length} tools
+            </p>
+          )}
         </div>
       </section>
       <Footer />
