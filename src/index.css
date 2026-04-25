@@ -21,7 +21,7 @@
     --secondary: 268 42% 20%;
     --secondary-foreground: 35 100% 92%;
 
-    --accent: 28 100% 56%;
+    --accent: 280 95% 72%;
     --accent-foreground: 263 48% 9%;
 
     --muted: 266 33% 18%;
@@ -32,13 +32,13 @@
 
     --border: 270 44% 27%;
     --input: 270 44% 27%;
-    --ring: 28 100% 56%;
+    --ring: 280 95% 72%;
 
     --radius: 0.75rem;
 
-    --accent-orange: 30 100% 50%;
+    --accent-orange: 280 95% 72%;
     --accent-orange-foreground: 0 0% 100%;
-    --accent-orange-light: 27 90% 18%;
+    --accent-orange-light: 270 50% 22%;
 
     --sidebar-background: 263 48% 9%;
     --sidebar-foreground: 34 100% 96%;
@@ -47,7 +47,7 @@
     --sidebar-accent: 268 42% 20%;
     --sidebar-accent-foreground: 35 100% 92%;
     --sidebar-border: 270 44% 27%;
-    --sidebar-ring: 28 100% 56%;
+    --sidebar-ring: 280 95% 72%;
   }
 }
 
@@ -59,8 +59,8 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background-image:
-      radial-gradient(circle at 20% -10%, hsl(270 100% 68% / 0.24), transparent 32rem),
-      radial-gradient(circle at 85% 10%, hsl(28 100% 56% / 0.2), transparent 28rem),
+      radial-gradient(circle at 20% -10%, hsl(270 100% 68% / 0.28), transparent 32rem),
+      radial-gradient(circle at 85% 10%, hsl(285 95% 65% / 0.22), transparent 28rem),
       linear-gradient(180deg, hsl(var(--background)), hsl(263 55% 7%));
     background-attachment: fixed;
   }
@@ -72,20 +72,20 @@
 
 @layer utilities {
   .gradient-primary {
-    background: linear-gradient(135deg, hsl(270, 100%, 58%), hsl(28, 100%, 56%));
+    background: linear-gradient(135deg, hsl(270, 100%, 58%), hsl(290, 95%, 70%));
   }
 
   .gradient-accent {
-    background: linear-gradient(135deg, hsl(28, 100%, 56%), hsl(42, 100%, 60%));
+    background: linear-gradient(135deg, hsl(280, 95%, 72%), hsl(260, 100%, 75%));
   }
 
   .gradient-hero {
     background:
-      linear-gradient(135deg, hsl(263, 58%, 11%) 0%, hsl(274, 54%, 17%) 54%, hsl(28, 92%, 18%) 100%);
+      linear-gradient(135deg, hsl(263, 58%, 11%) 0%, hsl(274, 54%, 17%) 54%, hsl(285, 70%, 22%) 100%);
   }
 
   .shadow-card {
-    box-shadow: 0 1px 0 hsl(34 100% 96% / 0.08) inset, 0 16px 45px -28px hsl(28 100% 56% / 0.45);
+    box-shadow: 0 1px 0 hsl(34 100% 96% / 0.08) inset, 0 16px 45px -28px hsl(280 95% 72% / 0.45);
   }
 
   .shadow-card-hover {
@@ -94,6 +94,6 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(34, 100%, 88%), hsl(28, 100%, 56%));
+    background-image: linear-gradient(135deg, hsl(285, 100%, 92%), hsl(280, 95%, 70%));
   }
 }
