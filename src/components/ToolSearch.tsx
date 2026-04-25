@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, ArrowRight, Tag } from "lucide-react";
+import { Search, ArrowRight, Tag, CornerDownLeft } from "lucide-react";
 import { tools } from "@/data/tools";
 
 interface ToolSearchProps {
@@ -22,6 +22,7 @@ const ToolSearch = ({
   const [activeIdx, setActiveIdx] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -53,6 +54,10 @@ const ToolSearch = ({
   useEffect(() => {
     setActiveIdx(0);
   }, [query]);
+
+  useEffect(() => {
+    itemRefs.current[activeIdx]?.scrollIntoView({ block: "nearest" });
+  }, [activeIdx]);
 
   const goToTool = (slug: string) => {
     setOpen(false);
@@ -137,14 +142,19 @@ const ToolSearch = ({
       {open && query.trim() && (
         <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-border bg-card/95 shadow-card-hover backdrop-blur-xl">
           {results.length > 0 ? (
-            <ul className="max-h-96 overflow-y-auto py-2">
+            <ul className="max-h-96 overflow-y-auto py-2" role="listbox">
               {results.map((tool, i) => (
                 <li key={tool.id}>
                   <button
+                    ref={(el) => (itemRefs.current[i] = el)}
+                    role="option"
+                    aria-selected={i === activeIdx}
                     onMouseEnter={() => setActiveIdx(i)}
                     onClick={() => goToTool(tool.slug)}
-                    className={`flex w-full items-start gap-3 px-4 py-3 text-left transition-colors ${
-                      i === activeIdx ? "bg-accent/10" : "hover:bg-accent/5"
+                    className={`flex w-full items-start gap-3 border-l-2 px-4 py-3 text-left transition-colors ${
+                      i === activeIdx
+                        ? "border-accent bg-accent/10"
+                        : "border-transparent hover:bg-accent/5"
                     }`}
                   >
                     <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg gradient-primary text-primary-foreground shadow-card">
@@ -167,6 +177,9 @@ const ToolSearch = ({
                         {tool.category}
                       </span>
                     </div>
+                    {i === activeIdx && (
+                      <CornerDownLeft className="mt-2 h-4 w-4 shrink-0 text-accent" />
+                    )}
                   </button>
                 </li>
               ))}
@@ -178,6 +191,21 @@ const ToolSearch = ({
                   See all results for "{query}"
                   <ArrowRight className="h-3 w-3" />
                 </button>
+              </li>
+              <li className="flex items-center justify-center gap-3 border-t border-border bg-secondary/40 px-4 py-2 text-[10px] font-medium text-muted-foreground">
+                <span className="flex items-center gap-1">
+                  <kbd className="rounded border border-border bg-card px-1.5 py-0.5 font-semibold">↑</kbd>
+                  <kbd className="rounded border border-border bg-card px-1.5 py-0.5 font-semibold">↓</kbd>
+                  navigate
+                </span>
+                <span className="flex items-center gap-1">
+                  <kbd className="rounded border border-border bg-card px-1.5 py-0.5 font-semibold">Enter</kbd>
+                  open
+                </span>
+                <span className="flex items-center gap-1">
+                  <kbd className="rounded border border-border bg-card px-1.5 py-0.5 font-semibold">Esc</kbd>
+                  close
+                </span>
               </li>
             </ul>
           ) : (
