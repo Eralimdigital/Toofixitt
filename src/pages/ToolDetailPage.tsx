@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
+import ToolFAQ from "@/components/ToolFAQ";
 import { tools } from "@/data/tools";
 import { AlertTriangle, CheckCircle2, CreditCard, Mail, ShieldCheck, Sparkles } from "lucide-react";
 
@@ -127,6 +128,9 @@ const ToolDetailPage = () => {
 
           {/* Reviews */}
           <ReviewSection toolSlug={tool.slug} />
+
+          {/* FAQ */}
+          <ToolFAQ tool={tool} />
         </div>
       </section>
       <Footer />
