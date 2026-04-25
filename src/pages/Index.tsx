@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ToolCard from "@/components/ToolCard";
+import ToolSearch from "@/components/ToolSearch";
 import { tools } from "@/data/tools";
 import { ShieldCheck, Zap, Download } from "lucide-react";
 
@@ -25,6 +26,21 @@ const Index = () => {
           <p className="mx-auto mb-10 max-w-xl text-lg text-muted-foreground">
             Automate, optimize, and scale your Shopify store with powerful ready-to-use tools.
           </p>
+          <div className="mx-auto mb-8 max-w-2xl">
+            <ToolSearch />
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+              <span className="font-semibold text-foreground/70">Popular:</span>
+              {["SEO", "Email Marketing", "Google Ads", "TikTok", "Speed"].map((tag) => (
+                <Link
+                  key={tag}
+                  to={`/tools?q=${encodeURIComponent(tag)}`}
+                  className="rounded-full border border-border bg-card/70 px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-accent/60 hover:text-accent"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          </div>
           <div className="flex items-center justify-center gap-4">
             <Link
               to="/tools"
