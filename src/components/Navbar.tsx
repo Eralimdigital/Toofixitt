@@ -15,10 +15,16 @@ const Navbar = () => {
           <Link to="/tools" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Tools
           </Link>
+          <Link to="/about" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            About
+          </Link>
+          <Link to="/contact" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            Contact
+          </Link>
         </nav>
         <Link
           to="/tools"
-          className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-card transition-all hover:opacity-90"
+          className="rounded-lg gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-95"
         >
           Browse Tools
         </Link>
