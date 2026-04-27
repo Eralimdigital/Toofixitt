@@ -12,6 +12,8 @@ import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
 import Refund from "./pages/Refund.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import ChatbotWidget from "./components/ChatbotWidget";
+import PurchaseNotifications from "./components/PurchaseNotifications";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +34,8 @@ const App = () => (
           <Route path="/refund" element={<Refund />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <ChatbotWidget />
+        <PurchaseNotifications />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
