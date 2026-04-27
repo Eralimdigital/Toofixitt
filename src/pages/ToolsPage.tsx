@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ToolCard from "@/components/ToolCard";
 import { tools } from "@/data/tools";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 const ToolsPage = () => {
   const categories = useMemo(() => {
@@ -13,21 +13,50 @@ const ToolsPage = () => {
   }, []);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [active, setActive] = useState("All");
+  const initialCategory = searchParams.get("category");
+  const [active, setActive] = useState(
+    initialCategory && categories.includes(initialCategory) ? initialCategory : "All",
+  );
   const [search, setSearch] = useState(searchParams.get("q") ?? "");
+  const [maxPrice, setMaxPrice] = useState<number | null>(() => {
+    const raw = searchParams.get("maxPrice");
+    const n = raw ? Number(raw) : NaN;
+    return Number.isFinite(n) && n > 0 ? n : null;
+  });
 
   useEffect(() => {
     const q = searchParams.get("q") ?? "";
     setSearch(q);
-  }, [searchParams]);
+    const cat = searchParams.get("category");
+    if (cat && categories.includes(cat)) setActive(cat);
+    else if (!cat) setActive("All");
+    const rawMax = searchParams.get("maxPrice");
+    const n = rawMax ? Number(rawMax) : NaN;
+    setMaxPrice(Number.isFinite(n) && n > 0 ? n : null);
+  }, [searchParams, categories]);
+
+  const updateParams = (updates: Record<string, string | null>) => {
+    const next = new URLSearchParams(searchParams);
+    Object.entries(updates).forEach(([k, v]) => {
+      if (v === null || v === "") next.delete(k);
+      else next.set(k, v);
+    });
+    setSearchParams(next, { replace: true });
+  };
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
-    if (value.trim()) {
-      setSearchParams({ q: value }, { replace: true });
-    } else {
-      setSearchParams({}, { replace: true });
-    }
+    updateParams({ q: value.trim() || null });
+  };
+
+  const handleCategoryChange = (cat: string) => {
+    setActive(cat);
+    updateParams({ category: cat === "All" ? null : cat });
+  };
+
+  const clearMaxPrice = () => {
+    setMaxPrice(null);
+    updateParams({ maxPrice: null });
   };
 
   const filtered = tools.filter((tool) => {
@@ -38,8 +67,9 @@ const ToolsPage = () => {
       tool.name.toLowerCase().includes(query) ||
       tool.description.toLowerCase().includes(query) ||
       tool.category.toLowerCase().includes(query);
+    const matchesPrice = maxPrice === null || tool.priceValue <= maxPrice;
 
-    return matchesCategory && matchesSearch;
+    return matchesCategory && matchesSearch && matchesPrice;
   });
 
   return (
@@ -71,7 +101,7 @@ const ToolsPage = () => {
               {categories.map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => setActive(cat)}
+                  onClick={() => handleCategoryChange(cat)}
                   className={`rounded-full border px-4 py-2 text-sm font-semibold shadow-card transition-all hover:-translate-y-0.5 ${
                     active === cat
                       ? "border-accent bg-accent text-accent-foreground"
@@ -82,6 +112,19 @@ const ToolsPage = () => {
                 </button>
               ))}
             </div>
+
+            {maxPrice !== null && (
+              <div className="mt-4 flex items-center justify-center">
+                <button
+                  type="button"
+                  onClick={clearMaxPrice}
+                  className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent transition-colors hover:bg-accent/20"
+                >
+                  Max price: ${maxPrice}
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -96,7 +139,8 @@ const ToolsPage = () => {
                 <button
                   onClick={() => {
                     handleSearchChange("");
-                    setActive("All");
+                    handleCategoryChange("All");
+                    clearMaxPrice();
                   }}
                   className="mt-4 rounded-lg gradient-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-card transition-all hover:opacity-90"
                 >
