@@ -244,14 +244,29 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
               <div key={review.id} className="rounded-xl border border-border bg-card/80 p-5 shadow-card transition-all hover:shadow-card-hover">
               <div className="mb-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                 <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  {review.country_code && (
+                  {review.country_code ? (
                     <img
-                      src={`https://flagcdn.com/w40/${review.country_code}.png`}
-                      alt={countryNameOf(review.country_code)}
-                      title={countryNameOf(review.country_code)}
+                      src={`https://flagcdn.com/w40/${review.country_code.toLowerCase()}.png`}
+                      srcSet={`https://flagcdn.com/w40/${review.country_code.toLowerCase()}.png 1x, https://flagcdn.com/w80/${review.country_code.toLowerCase()}.png 2x`}
+                      alt={`Flag of ${countryNameOf(review.country_code) || review.country_code.toUpperCase()}`}
+                      title={countryNameOf(review.country_code) || review.country_code.toUpperCase()}
                       loading="lazy"
+                      width={24}
+                      height={16}
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).style.display = "none";
+                      }}
                       className="h-4 w-6 rounded-sm border border-border object-cover"
                     />
+                  ) : (
+                    <span
+                      role="img"
+                      aria-label="Country unknown"
+                      title="Country not specified"
+                      className="flex h-4 w-6 items-center justify-center rounded-sm border border-border bg-secondary text-[8px] font-bold text-muted-foreground"
+                    >
+                      ?
+                    </span>
                   )}
                   {review.reviewer_name}
                 </span>
