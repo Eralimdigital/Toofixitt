@@ -17,8 +17,45 @@ type Review = {
   rating: number;
   comment: string | null;
   created_at: string;
+  country_code: string | null;
   review_helpful_votes: { voter_key: string }[];
 };
+
+const COUNTRIES: { code: string; name: string }[] = [
+  { code: "us", name: "United States" },
+  { code: "gb", name: "United Kingdom" },
+  { code: "ca", name: "Canada" },
+  { code: "au", name: "Australia" },
+  { code: "de", name: "Germany" },
+  { code: "fr", name: "France" },
+  { code: "es", name: "Spain" },
+  { code: "it", name: "Italy" },
+  { code: "nl", name: "Netherlands" },
+  { code: "se", name: "Sweden" },
+  { code: "br", name: "Brazil" },
+  { code: "mx", name: "Mexico" },
+  { code: "ng", name: "Nigeria" },
+  { code: "gh", name: "Ghana" },
+  { code: "za", name: "South Africa" },
+  { code: "ke", name: "Kenya" },
+  { code: "in", name: "India" },
+  { code: "pk", name: "Pakistan" },
+  { code: "ae", name: "UAE" },
+  { code: "sa", name: "Saudi Arabia" },
+  { code: "cn", name: "China" },
+  { code: "jp", name: "Japan" },
+  { code: "kr", name: "South Korea" },
+  { code: "sg", name: "Singapore" },
+  { code: "ph", name: "Philippines" },
+  { code: "id", name: "Indonesia" },
+  { code: "tr", name: "Turkey" },
+  { code: "eg", name: "Egypt" },
+  { code: "ar", name: "Argentina" },
+  { code: "cl", name: "Chile" },
+];
+
+const countryNameOf = (code: string | null) =>
+  COUNTRIES.find((c) => c.code === code)?.name ?? "";
 
 const getVisitorKey = () => {
   const storageKey = "toolify-review-voter-key";
@@ -48,6 +85,7 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [country, setCountry] = useState("us");
   const [page, setPage] = useState(1);
   const voterKey = useMemo(getVisitorKey, []);
 
@@ -84,6 +122,7 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
         reviewer_name: name.trim(),
         rating,
         comment: comment.trim() || null,
+        country_code: country,
       });
       if (error) throw error;
     },
@@ -149,6 +188,28 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
           <label className="mb-1 block text-xs text-muted-foreground">Rating</label>
           <StarRating rating={rating} onRate={setRating} interactive />
         </div>
+        <div className="mb-3">
+          <label className="mb-1 block text-xs text-muted-foreground">Country</label>
+          <div className="flex items-center gap-2">
+            <img
+              src={`https://flagcdn.com/w40/${country}.png`}
+              alt=""
+              aria-hidden="true"
+              className="h-5 w-7 rounded-sm border border-border object-cover"
+            />
+            <select
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="flex-1 rounded-lg border border-border bg-background/80 px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+            >
+              {COUNTRIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <div className="mb-4">
           <label className="mb-1 block text-xs text-muted-foreground">Comment (optional)</label>
           <textarea
@@ -182,7 +243,18 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
             return (
               <div key={review.id} className="rounded-xl border border-border bg-card/80 p-5 shadow-card transition-all hover:shadow-card-hover">
               <div className="mb-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                <span className="text-sm font-semibold text-foreground">{review.reviewer_name}</span>
+                <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  {review.country_code && (
+                    <img
+                      src={`https://flagcdn.com/w40/${review.country_code}.png`}
+                      alt={countryNameOf(review.country_code)}
+                      title={countryNameOf(review.country_code)}
+                      loading="lazy"
+                      className="h-4 w-6 rounded-sm border border-border object-cover"
+                    />
+                  )}
+                  {review.reviewer_name}
+                </span>
                 <span className="text-xs text-muted-foreground">
                   {new Date(review.created_at).toLocaleDateString()}
                 </span>

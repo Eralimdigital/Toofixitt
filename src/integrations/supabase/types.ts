@@ -46,6 +46,7 @@ export type Database = {
       reviews: {
         Row: {
           comment: string | null
+          country_code: string | null
           created_at: string
           id: string
           rating: number
@@ -54,6 +55,7 @@ export type Database = {
         }
         Insert: {
           comment?: string | null
+          country_code?: string | null
           created_at?: string
           id?: string
           rating: number
@@ -62,6 +64,7 @@ export type Database = {
         }
         Update: {
           comment?: string | null
+          country_code?: string | null
           created_at?: string
           id?: string
           rating?: number
