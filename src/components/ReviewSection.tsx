@@ -17,8 +17,45 @@ type Review = {
   rating: number;
   comment: string | null;
   created_at: string;
+  country_code: string | null;
   review_helpful_votes: { voter_key: string }[];
 };
+
+const COUNTRIES: { code: string; name: string }[] = [
+  { code: "us", name: "United States" },
+  { code: "gb", name: "United Kingdom" },
+  { code: "ca", name: "Canada" },
+  { code: "au", name: "Australia" },
+  { code: "de", name: "Germany" },
+  { code: "fr", name: "France" },
+  { code: "es", name: "Spain" },
+  { code: "it", name: "Italy" },
+  { code: "nl", name: "Netherlands" },
+  { code: "se", name: "Sweden" },
+  { code: "br", name: "Brazil" },
+  { code: "mx", name: "Mexico" },
+  { code: "ng", name: "Nigeria" },
+  { code: "gh", name: "Ghana" },
+  { code: "za", name: "South Africa" },
+  { code: "ke", name: "Kenya" },
+  { code: "in", name: "India" },
+  { code: "pk", name: "Pakistan" },
+  { code: "ae", name: "UAE" },
+  { code: "sa", name: "Saudi Arabia" },
+  { code: "cn", name: "China" },
+  { code: "jp", name: "Japan" },
+  { code: "kr", name: "South Korea" },
+  { code: "sg", name: "Singapore" },
+  { code: "ph", name: "Philippines" },
+  { code: "id", name: "Indonesia" },
+  { code: "tr", name: "Turkey" },
+  { code: "eg", name: "Egypt" },
+  { code: "ar", name: "Argentina" },
+  { code: "cl", name: "Chile" },
+];
+
+const countryNameOf = (code: string | null) =>
+  COUNTRIES.find((c) => c.code === code)?.name ?? "";
 
 const getVisitorKey = () => {
   const storageKey = "toolify-review-voter-key";
@@ -48,6 +85,7 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [country, setCountry] = useState("us");
   const [page, setPage] = useState(1);
   const voterKey = useMemo(getVisitorKey, []);
 
@@ -84,6 +122,7 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
         reviewer_name: name.trim(),
         rating,
         comment: comment.trim() || null,
+        country_code: country,
       });
       if (error) throw error;
     },
