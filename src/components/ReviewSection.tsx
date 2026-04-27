@@ -243,7 +243,18 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
             return (
               <div key={review.id} className="rounded-xl border border-border bg-card/80 p-5 shadow-card transition-all hover:shadow-card-hover">
               <div className="mb-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                <span className="text-sm font-semibold text-foreground">{review.reviewer_name}</span>
+                <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  {review.country_code && (
+                    <img
+                      src={`https://flagcdn.com/w40/${review.country_code}.png`}
+                      alt={countryNameOf(review.country_code)}
+                      title={countryNameOf(review.country_code)}
+                      loading="lazy"
+                      className="h-4 w-6 rounded-sm border border-border object-cover"
+                    />
+                  )}
+                  {review.reviewer_name}
+                </span>
                 <span className="text-xs text-muted-foreground">
                   {new Date(review.created_at).toLocaleDateString()}
                 </span>
