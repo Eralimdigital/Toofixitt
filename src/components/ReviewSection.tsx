@@ -188,6 +188,28 @@ const ReviewSection = ({ toolSlug }: ReviewSectionProps) => {
           <label className="mb-1 block text-xs text-muted-foreground">Rating</label>
           <StarRating rating={rating} onRate={setRating} interactive />
         </div>
+        <div className="mb-3">
+          <label className="mb-1 block text-xs text-muted-foreground">Country</label>
+          <div className="flex items-center gap-2">
+            <img
+              src={`https://flagcdn.com/w40/${country}.png`}
+              alt=""
+              aria-hidden="true"
+              className="h-5 w-7 rounded-sm border border-border object-cover"
+            />
+            <select
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="flex-1 rounded-lg border border-border bg-background/80 px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+            >
+              {COUNTRIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <div className="mb-4">
           <label className="mb-1 block text-xs text-muted-foreground">Comment (optional)</label>
           <textarea
