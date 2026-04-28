@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
 import ToolFAQ from "@/components/ToolFAQ";
+import DownloadToolDialog from "@/components/DownloadToolDialog";
 import { tools } from "@/data/tools";
-import { AlertTriangle, CheckCircle2, CreditCard, Mail, ShieldCheck, Sparkles } from "lucide-react";
+import { AlertTriangle, CheckCircle2, CreditCard, Download, Mail, ShieldCheck, Sparkles } from "lucide-react";
 
 const ToolDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const tool = tools.find((t) => t.slug === slug);
+  const [downloadOpen, setDownloadOpen] = useState(false);
 
   if (!tool) {
     return (
@@ -94,6 +97,15 @@ const ToolDetailPage = () => {
                 Start Checkout
               </a>
 
+              <button
+                type="button"
+                onClick={() => setDownloadOpen(true)}
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-accent/40 bg-card px-8 py-3.5 text-center text-base font-semibold text-foreground shadow-card transition-all hover:-translate-y-0.5 hover:bg-accent/10"
+              >
+                <Download className="h-4 w-4 text-accent" />
+                Download Tool
+              </button>
+
               <div className="mt-4 rounded-lg border border-accent/30 bg-card/80 p-4 shadow-card">
                 <div className="mb-2 flex items-center gap-2 text-sm font-bold text-foreground">
                   <Sparkles className="h-4 w-4 text-accent" />
@@ -134,6 +146,13 @@ const ToolDetailPage = () => {
         </div>
       </section>
       <Footer />
+      <DownloadToolDialog
+        open={downloadOpen}
+        onOpenChange={setDownloadOpen}
+        toolSlug={tool.slug}
+        toolName={tool.name}
+        toolPrice={tool.price}
+      />
     </div>
   );
 };
