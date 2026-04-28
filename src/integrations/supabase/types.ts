@@ -73,6 +73,42 @@ export type Database = {
         }
         Relationships: []
       }
+      tool_delivery_requests: {
+        Row: {
+          buyer_name: string
+          created_at: string
+          id: string
+          payment_screenshot_url: string
+          status: string
+          technician_email: string
+          tool_name: string
+          tool_price: string
+          tool_slug: string
+        }
+        Insert: {
+          buyer_name: string
+          created_at?: string
+          id?: string
+          payment_screenshot_url: string
+          status?: string
+          technician_email: string
+          tool_name: string
+          tool_price: string
+          tool_slug: string
+        }
+        Update: {
+          buyer_name?: string
+          created_at?: string
+          id?: string
+          payment_screenshot_url?: string
+          status?: string
+          technician_email?: string
+          tool_name?: string
+          tool_price?: string
+          tool_slug?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
