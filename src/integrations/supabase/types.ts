@@ -78,34 +78,40 @@ export type Database = {
           buyer_name: string
           created_at: string
           id: string
-          payment_screenshot_url: string
+          order_reference: string | null
+          payment_screenshot_url: string | null
           status: string
           technician_email: string
           tool_name: string
           tool_price: string
           tool_slug: string
+          transaction_id: string | null
         }
         Insert: {
           buyer_name: string
           created_at?: string
           id?: string
-          payment_screenshot_url: string
+          order_reference?: string | null
+          payment_screenshot_url?: string | null
           status?: string
           technician_email: string
           tool_name: string
           tool_price: string
           tool_slug: string
+          transaction_id?: string | null
         }
         Update: {
           buyer_name?: string
           created_at?: string
           id?: string
-          payment_screenshot_url?: string
+          order_reference?: string | null
+          payment_screenshot_url?: string | null
           status?: string
           technician_email?: string
           tool_name?: string
           tool_price?: string
           tool_slug?: string
+          transaction_id?: string | null
         }
         Relationships: []
       }
