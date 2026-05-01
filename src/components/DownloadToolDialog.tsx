@@ -115,7 +115,7 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
               {success}
             </p>
             <p className="mb-6 text-xs text-muted-foreground">
-              Our team will verify your payment screenshot and deliver the tool within 1–2 hours.
+              Our team will verify your transaction ID and deliver the tool within 1–2 hours.
             </p>
             <Button onClick={() => handleClose(false)} className="w-full bg-accent text-accent-foreground hover:opacity-90">
               Done
