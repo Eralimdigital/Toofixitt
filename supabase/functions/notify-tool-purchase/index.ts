@@ -11,6 +11,7 @@ const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_mail/gmail/v1"
 const NOTIFY_TO = "smithmove0@gmail.com";
 const SITE_URL = "https://toolfixit.lovable.app";
 const FROM_NAME = "ToolifyHQ Orders";
+const FUNCTIONS_URL = "https://wvcozqxokjeoiacdkhsh.supabase.co/functions/v1";
 
 const BodySchema = z.object({
   toolSlug: z.string().min(1).max(200),
@@ -20,6 +21,7 @@ const BodySchema = z.object({
   technicianEmail: z.string().email().max(254),
   transactionId: z.string().min(3).max(128),
   orderReference: z.string().min(3).max(64),
+  approvalToken: z.string().min(10).max(128),
 });
 
 function escapeHtml(s: string) {
@@ -80,7 +82,11 @@ function buildHtml(d: z.infer<typeof BodySchema>) {
         <tr><td style="padding:20px 32px 28px;">
           <div style="background:linear-gradient(135deg,rgba(166,77,255,0.08) 0%,rgba(204,102,255,0.08) 100%);border:1px solid rgba(166,77,255,0.25);border-radius:10px;padding:16px 18px;">
             <div style="font-size:13px;font-weight:700;color:#7a3dcc;margin-bottom:6px;">⚡ Action required</div>
-            <div style="font-size:13px;color:#3a3a4e;line-height:1.55;">Verify the transaction ID in your payment dashboard, then deliver <strong>${escapeHtml(d.toolName)}</strong> to the technician email above.</div>
+            <div style="font-size:13px;color:#3a3a4e;line-height:1.55;margin-bottom:14px;">Verify the transaction ID in your payment dashboard. Then click <strong>Approve &amp; Send</strong> to auto-deliver the tool ZIP to the technician, or <strong>Reject</strong> if the payment looks fake.</div>
+            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tr>
+              <td style="padding-right:8px;"><a href="${FUNCTIONS_URL}/approve-tool-delivery?token=${encodeURIComponent(d.approvalToken)}&action=approve" style="display:inline-block;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:700;font-size:14px;">✓ Approve &amp; Send Tool</a></td>
+              <td style="padding-left:8px;"><a href="${FUNCTIONS_URL}/approve-tool-delivery?token=${encodeURIComponent(d.approvalToken)}&action=reject" style="display:inline-block;background:#ffffff;color:#dc2626;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:700;font-size:14px;border:1.5px solid #dc2626;">✕ Reject</a></td>
+            </tr></table>
           </div>
         </td></tr>
 

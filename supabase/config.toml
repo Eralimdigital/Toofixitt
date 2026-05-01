@@ -1,1 +1,4 @@
 project_id = "wvcozqxokjeoiacdkhsh"
+
+[functions.approve-tool-delivery]
+verify_jwt = false

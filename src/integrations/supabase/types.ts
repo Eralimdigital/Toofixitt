@@ -75,39 +75,57 @@ export type Database = {
       }
       tool_delivery_requests: {
         Row: {
+          approval_token: string
+          approved_at: string | null
           buyer_name: string
           created_at: string
+          delivered_at: string | null
           id: string
+          license_key: string | null
           order_reference: string | null
           payment_screenshot_url: string | null
+          rejected_at: string | null
           status: string
           technician_email: string
+          tool_image_url: string | null
           tool_name: string
           tool_price: string
           tool_slug: string
           transaction_id: string | null
         }
         Insert: {
+          approval_token?: string
+          approved_at?: string | null
           buyer_name: string
           created_at?: string
+          delivered_at?: string | null
           id?: string
+          license_key?: string | null
           order_reference?: string | null
           payment_screenshot_url?: string | null
+          rejected_at?: string | null
           status?: string
           technician_email: string
+          tool_image_url?: string | null
           tool_name: string
           tool_price: string
           tool_slug: string
           transaction_id?: string | null
         }
         Update: {
+          approval_token?: string
+          approved_at?: string | null
           buyer_name?: string
           created_at?: string
+          delivered_at?: string | null
           id?: string
+          license_key?: string | null
           order_reference?: string | null
           payment_screenshot_url?: string | null
+          rejected_at?: string | null
           status?: string
           technician_email?: string
+          tool_image_url?: string | null
           tool_name?: string
           tool_price?: string
           tool_slug?: string
