@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Download, Loader2, CheckCircle2, Upload, Mail } from "lucide-react";
+import { Download, Loader2, CheckCircle2, Mail, ShieldCheck } from "lucide-react";
 import { z } from "zod";
 
 interface DownloadToolDialogProps {
@@ -19,22 +19,24 @@ interface DownloadToolDialogProps {
 const formSchema = z.object({
   buyerName: z.string().trim().min(2, "Name must be at least 2 characters").max(120, "Name too long"),
   technicianEmail: z.string().trim().email("Enter a valid technician email").max(254),
+  transactionId: z
+    .string()
+    .trim()
+    .min(6, "Transaction ID must be at least 6 characters")
+    .max(128, "Transaction ID too long"),
 });
-
-const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5MB
-const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
 
 export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, toolPrice }: DownloadToolDialogProps) => {
   const [buyerName, setBuyerName] = useState("");
   const [technicianEmail, setTechnicianEmail] = useState("");
-  const [file, setFile] = useState<File | null>(null);
+  const [transactionId, setTransactionId] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
 
   const reset = () => {
     setBuyerName("");
     setTechnicianEmail("");
-    setFile(null);
+    setTransactionId("");
     setSuccess(null);
   };
 
@@ -48,48 +50,43 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const parsed = formSchema.safeParse({ buyerName, technicianEmail });
+    const parsed = formSchema.safeParse({ buyerName, technicianEmail, transactionId });
     if (!parsed.success) {
       toast.error(parsed.error.errors[0].message);
-      return;
-    }
-    if (!file) {
-      toast.error("Please attach your payment screenshot");
-      return;
-    }
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      toast.error("Screenshot must be PNG, JPG, or WEBP");
-      return;
-    }
-    if (file.size > MAX_FILE_BYTES) {
-      toast.error("Screenshot must be under 5MB");
       return;
     }
 
     setSubmitting(true);
     try {
-      const ext = file.name.split(".").pop()?.toLowerCase() || "png";
-      const filePath = `${toolSlug}/${crypto.randomUUID()}.${ext}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("payment-screenshots")
-        .upload(filePath, file, { contentType: file.type, upsert: false });
-
-      if (uploadError) throw uploadError;
-
-      const { data: urlData } = supabase.storage.from("payment-screenshots").getPublicUrl(filePath);
-      const screenshotUrl = urlData.publicUrl;
-
-      const { error: insertError } = await supabase.from("tool_delivery_requests").insert({
-        tool_slug: toolSlug,
-        tool_name: toolName,
-        tool_price: toolPrice,
-        buyer_name: parsed.data.buyerName,
-        technician_email: parsed.data.technicianEmail,
-        payment_screenshot_url: screenshotUrl,
-      });
+      const { data: inserted, error: insertError } = await supabase
+        .from("tool_delivery_requests")
+        .insert({
+          tool_slug: toolSlug,
+          tool_name: toolName,
+          tool_price: toolPrice,
+          buyer_name: parsed.data.buyerName,
+          technician_email: parsed.data.technicianEmail,
+          transaction_id: parsed.data.transactionId,
+        })
+        .select("order_reference")
+        .single();
 
       if (insertError) throw insertError;
+
+      // Fire-and-forget notification email — failure must NOT block the buyer
+      supabase.functions
+        .invoke("notify-tool-purchase", {
+          body: {
+            toolSlug,
+            toolName,
+            toolPrice,
+            buyerName: parsed.data.buyerName,
+            technicianEmail: parsed.data.technicianEmail,
+            transactionId: parsed.data.transactionId,
+            orderReference: inserted?.order_reference ?? "",
+          },
+        })
+        .catch((e) => console.warn("notify email failed", e));
 
       setSuccess(parsed.data.technicianEmail);
       toast.success("Request submitted! Tool will be sent to the technician.");
@@ -118,7 +115,7 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
               {success}
             </p>
             <p className="mb-6 text-xs text-muted-foreground">
-              Our team will verify your payment screenshot and deliver the tool within 1–2 hours.
+              Our team will verify your transaction ID and deliver the tool within 1–2 hours.
             </p>
             <Button onClick={() => handleClose(false)} className="w-full bg-accent text-accent-foreground hover:opacity-90">
               Done
@@ -129,7 +126,7 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
             <DialogHeader>
               <DialogTitle className="text-xl">Download {toolName}</DialogTitle>
               <DialogDescription>
-                Provide your payment proof and technician email — we'll deliver the tool to them directly.
+                Enter your payment Transaction ID and technician email — we'll verify and deliver the tool directly.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -158,21 +155,20 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
                 <p className="mt-1 text-xs text-muted-foreground">The tool will be delivered to this email.</p>
               </div>
               <div>
-                <Label htmlFor="screenshot">Payment screenshot</Label>
-                <label
-                  htmlFor="screenshot"
-                  className="mt-1 flex cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed border-input bg-secondary/40 px-4 py-6 text-sm text-muted-foreground transition-colors hover:bg-secondary"
-                >
-                  <Upload className="h-4 w-4" />
-                  {file ? <span className="font-medium text-foreground">{file.name}</span> : <span>Click to upload (PNG/JPG, max 5MB)</span>}
-                </label>
-                <input
-                  id="screenshot"
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp"
-                  className="hidden"
-                  onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                <Label htmlFor="transactionId">Payment Transaction ID</Label>
+                <Input
+                  id="transactionId"
+                  value={transactionId}
+                  onChange={(e) => setTransactionId(e.target.value)}
+                  placeholder="e.g. ch_3PqA9b2eZvKYlo2C... or PayPal txn ID"
+                  maxLength={128}
+                  required
+                  className="font-mono text-sm"
                 />
+                <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+                  <ShieldCheck className="h-3.5 w-3.5 text-accent" />
+                  Find this in your Stripe / PayPal / bank receipt. We verify it before delivery.
+                </p>
               </div>
               <div className="rounded-lg border border-border bg-secondary/50 p-3 text-xs text-muted-foreground">
                 <span className="font-semibold text-foreground">Order:</span> {toolName} — <span className="font-semibold text-accent">{toolPrice}</span>
