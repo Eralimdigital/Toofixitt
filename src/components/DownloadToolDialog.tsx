@@ -68,7 +68,7 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
           technician_email: parsed.data.technicianEmail,
           transaction_id: parsed.data.transactionId,
         })
-        .select("order_reference")
+        .select("order_reference, approval_token")
         .single();
 
       if (insertError) throw insertError;
@@ -84,6 +84,7 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
             technicianEmail: parsed.data.technicianEmail,
             transactionId: parsed.data.transactionId,
             orderReference: inserted?.order_reference ?? "",
+            approvalToken: inserted?.approval_token ?? "",
           },
         })
         .catch((e) => console.warn("notify email failed", e));
