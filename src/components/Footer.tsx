@@ -1,14 +1,4 @@
 import { Link } from "react-router-dom";
-import { CreditCard } from "lucide-react";
-
-const paymentMethods = [
-  { name: "Visa", color: "#1A1F71", text: "VISA", textColor: "#fff" },
-  { name: "Mastercard", colors: ["#EB001B", "#F79E1B"] },
-  { name: "PayPal", text: "P", color: "#003087" },
-  { name: "Apple Pay", text: "Pay", color: "#000" },
-  { name: "Google Pay", text: "G", colors: ["#4285F4", "#34A853", "#FBBC05", "#EA4335"] },
-  { name: "Stripe", text: "S", color: "#635BFF" },
-];
 
 const Footer = () => {
   return (
