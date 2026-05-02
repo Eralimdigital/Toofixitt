@@ -5,6 +5,38 @@ import ToolCard from "@/components/ToolCard";
 import ToolSearch from "@/components/ToolSearch";
 import { tools } from "@/data/tools";
 import { ShieldCheck, Zap, Download, Mail, Send, CreditCard } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+
+const homeFaqs = [
+  {
+    q: "How do I pay for a tool?",
+    a: "Click \"Start Checkout\" on any tool page — this opens an email to our team. We'll reply with the exact payment amount and method (PayPal, bank transfer, crypto, etc.). Simply complete the payment using the instructions we provide.",
+  },
+  {
+    q: "What is a Transaction ID and where do I find it?",
+    a: "A Transaction ID is a unique reference code generated when you make a payment. You'll find it in your PayPal receipt, bank transfer confirmation, or crypto wallet history. It usually looks like a long string of letters and numbers.",
+  },
+  {
+    q: "How do I submit my Transaction ID after paying?",
+    a: "Go back to the tool page and click \"Download Tool\". A form will appear where you enter your name, your technician's email address, and the Transaction ID from your payment receipt. Then hit \"Submit & Send to Technician\".",
+  },
+  {
+    q: "How long does approval take?",
+    a: "We manually verify every transaction for your safety. Most orders are approved within 1–2 hours during business hours. Once approved, the tool is automatically delivered to your technician's email.",
+  },
+  {
+    q: "How is the tool delivered?",
+    a: "After we approve your Transaction ID, a ZIP package containing a PDF guide, setup instructions, usage docs, and a unique license key is automatically sent to the technician email you provided.",
+  },
+  {
+    q: "What if my Transaction ID is rejected?",
+    a: "If we can't verify your payment, we'll contact you via email with next steps. Make sure to double-check the Transaction ID before submitting — typos are the most common issue.",
+  },
+  {
+    q: "Can I get a refund?",
+    a: "Please review our Refund Policy page for full details. In general, we handle refund requests on a case-by-case basis — reach out to smithmove0@gmail.com if you have any concerns.",
+  },
+];
 
 const featuredTools = tools.slice(0, 6);
 
@@ -166,6 +198,38 @@ const Index = () => {
               View All Tools
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      {/* FAQ */}
+      <section className="border-b border-border bg-background/40 py-20">
+        <div className="container max-w-3xl">
+          <div className="mb-10 text-center">
+            <span className="mb-3 inline-block rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent">
+              Got Questions?
+            </span>
+            <h2 className="mb-3 text-3xl font-bold text-foreground">Frequently Asked Questions</h2>
+            <p className="text-muted-foreground">
+              Everything you need to know about purchasing and receiving your tools.
+            </p>
+          </div>
+          <Accordion type="single" collapsible className="space-y-3">
+            {homeFaqs.map((faq, i) => (
+              <AccordionItem
+                key={i}
+                value={`faq-${i}`}
+                className="rounded-xl border border-border bg-card/80 px-5 shadow-card backdrop-blur-sm"
+              >
+                <AccordionTrigger className="text-left text-sm font-semibold text-foreground hover:no-underline">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </section>
 
