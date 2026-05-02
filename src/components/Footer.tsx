@@ -37,6 +37,44 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
+          <div className="mb-4 flex flex-wrap items-center justify-center gap-3">
+            {/* Visa */}
+            <div className="flex h-8 w-12 items-center justify-center rounded bg-white shadow-sm">
+              <span className="text-[10px] font-extrabold italic tracking-tight text-[#1A1F71]">VISA</span>
+            </div>
+            {/* Mastercard */}
+            <div className="flex h-8 w-12 items-center justify-center rounded bg-white shadow-sm">
+              <div className="flex">
+                <div className="h-4 w-4 rounded-full bg-[#EB001B] opacity-90" />
+                <div className="-ml-1.5 h-4 w-4 rounded-full bg-[#F79E1B] opacity-90" />
+              </div>
+            </div>
+            {/* PayPal */}
+            <div className="flex h-8 w-12 items-center justify-center rounded bg-white shadow-sm">
+              <span className="text-[10px] font-bold text-[#003087]">Pay<span className="text-[#009CDE]">Pal</span></span>
+            </div>
+            {/* Apple Pay */}
+            <div className="flex h-8 w-12 items-center justify-center rounded bg-white shadow-sm">
+              <span className="text-[10px] font-semibold text-black"> Pay</span>
+            </div>
+            {/* Google Pay */}
+            <div className="flex h-8 w-12 items-center justify-center rounded bg-white shadow-sm">
+              <span className="text-[10px] font-semibold text-[#5F6368]">G Pay</span>
+            </div>
+            {/* Stripe */}
+            <div className="flex h-8 w-12 items-center justify-center rounded bg-[#635BFF] shadow-sm">
+              <span className="text-[10px] font-bold text-white">stripe</span>
+            </div>
+            {/* Discover */}
+            <div className="flex h-8 w-12 items-center justify-center rounded bg-white shadow-sm">
+              <span className="text-[8px] font-bold text-[#FF6600]">DISCOVER</span>
+            </div>
+            {/* Amex */}
+            <div className="flex h-8 w-12 items-center justify-center rounded bg-[#006FCF] shadow-sm">
+              <span className="text-[8px] font-bold text-white">AMEX</span>
+            </div>
+          </div>
+          <p className="mb-2 text-xs text-muted-foreground">Secure payments accepted worldwide</p>
           © {new Date().getFullYear()} ToolifyHQ. All rights reserved.
         </div>
       </div>
