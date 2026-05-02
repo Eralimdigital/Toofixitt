@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import ToolCard from "@/components/ToolCard";
 import ToolSearch from "@/components/ToolSearch";
 import { tools } from "@/data/tools";
-import { ShieldCheck, Zap, Download, Mail, FileCheck, Send, CreditCard } from "lucide-react";
+import { ShieldCheck, Zap, Download, Mail, Send, CreditCard } from "lucide-react";
 
 const featuredTools = tools.slice(0, 6);
 
