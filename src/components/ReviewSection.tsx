@@ -73,7 +73,7 @@ const StarRating = ({ rating, onRate, interactive = false }: { rating: number; o
     {[1, 2, 3, 4, 5].map((star) => (
       <Star
         key={star}
-        className={`h-4 w-4 ${star <= rating ? "fill-accent text-accent" : "text-muted-foreground/30"} ${interactive ? "cursor-pointer" : ""}`}
+        className={`h-4 w-4 ${star <= rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30"} ${interactive ? "cursor-pointer" : ""}`}
         onClick={() => interactive && onRate?.(star)}
       />
     ))}

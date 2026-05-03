@@ -52,7 +52,7 @@ const ToolCard = ({ tool }: ToolCardProps) => {
                 key={star}
                 className={`h-3.5 w-3.5 ${
                   star <= Math.round(avgRating)
-                    ? "fill-accent text-accent"
+                    ? "fill-yellow-400 text-yellow-400"
                     : "text-muted-foreground/30"
                 }`}
               />
