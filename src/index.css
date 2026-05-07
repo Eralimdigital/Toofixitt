@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    --background: 265 60% 7%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 10%;
 
-    --card: 264 50% 12%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 99%;
+    --card-foreground: 240 10% 10%;
 
-    --popover: 264 50% 12%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
 
-    --primary: 275 100% 65%;
+    --primary: 270 80% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 268 45% 18%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 270 30% 96%;
+    --secondary-foreground: 240 10% 20%;
 
-    --accent: 282 100% 70%;
+    --accent: 270 80% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 266 38% 16%;
-    --muted-foreground: 270 25% 78%;
+    --muted: 270 20% 95%;
+    --muted-foreground: 240 5% 46%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 272 50% 28%;
-    --input: 272 50% 28%;
-    --ring: 282 100% 70%;
+    --border: 270 15% 90%;
+    --input: 270 15% 90%;
+    --ring: 270 80% 55%;
 
     --radius: 0.85rem;
 
-    --accent-orange: 282 100% 70%;
+    --accent-orange: 270 80% 55%;
     --accent-orange-foreground: 0 0% 100%;
-    --accent-orange-light: 270 55% 20%;
+    --accent-orange-light: 270 60% 95%;
 
-    --sidebar-background: 265 60% 7%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 275 100% 65%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 10% 10%;
+    --sidebar-primary: 270 80% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 268 45% 18%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 272 50% 28%;
-    --sidebar-ring: 282 100% 70%;
+    --sidebar-accent: 270 30% 96%;
+    --sidebar-accent-foreground: 240 10% 20%;
+    --sidebar-border: 270 15% 90%;
+    --sidebar-ring: 270 80% 55%;
   }
 }
 
@@ -58,12 +58,6 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background-image:
-      radial-gradient(circle at 15% -5%, hsl(282 100% 65% / 0.35), transparent 34rem),
-      radial-gradient(circle at 90% 15%, hsl(265 100% 60% / 0.28), transparent 30rem),
-      radial-gradient(circle at 50% 100%, hsl(290 100% 70% / 0.18), transparent 36rem),
-      linear-gradient(180deg, hsl(var(--background)), hsl(268 65% 5%));
-    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -73,34 +67,31 @@
 
 @layer utilities {
   .gradient-primary {
-    background: linear-gradient(135deg, hsl(268, 100%, 58%), hsl(285, 100%, 72%) 55%, hsl(300, 95%, 78%));
+    background: linear-gradient(135deg, hsl(270, 80%, 55%), hsl(280, 90%, 65%) 55%, hsl(290, 85%, 70%));
   }
 
   .gradient-accent {
-    background: linear-gradient(135deg, hsl(282, 100%, 70%), hsl(260, 100%, 75%));
+    background: linear-gradient(135deg, hsl(270, 80%, 55%), hsl(260, 80%, 65%));
   }
 
   .gradient-hero {
-    background:
-      radial-gradient(ellipse at top left, hsl(282 100% 60% / 0.35), transparent 50%),
-      radial-gradient(ellipse at bottom right, hsl(268 100% 55% / 0.3), transparent 55%),
-      linear-gradient(135deg, hsl(265, 65%, 9%) 0%, hsl(274, 60%, 15%) 50%, hsl(285, 70%, 20%) 100%);
+    background: linear-gradient(180deg, hsl(270 60% 98%) 0%, hsl(270 40% 95%) 100%);
   }
 
   .shadow-card {
-    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.08) inset, 0 18px 50px -28px hsl(282 100% 70% / 0.55);
+    box-shadow: 0 1px 3px hsl(270 20% 50% / 0.08), 0 4px 16px hsl(270 30% 50% / 0.06);
   }
 
   .shadow-card-hover {
-    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.16) inset, 0 28px 70px -22px hsl(282 100% 70% / 0.65);
+    box-shadow: 0 2px 6px hsl(270 20% 50% / 0.12), 0 8px 24px hsl(270 30% 50% / 0.10);
   }
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(285, 100%, 88%) 50%, hsl(282, 100%, 72%) 100%);
+    background-image: linear-gradient(135deg, hsl(270, 80%, 55%) 0%, hsl(290, 85%, 60%) 50%, hsl(310, 80%, 55%) 100%);
   }
 
   .glow-purple {
-    box-shadow: 0 0 40px hsl(282 100% 70% / 0.4), 0 0 80px hsl(275 100% 60% / 0.25);
+    box-shadow: 0 0 20px hsl(270 80% 55% / 0.15), 0 0 40px hsl(270 80% 55% / 0.08);
   }
 }
