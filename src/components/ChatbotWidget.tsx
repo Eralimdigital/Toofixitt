@@ -193,14 +193,14 @@ const ChatbotWidget = () => {
         className="fixed bottom-5 right-5 z-50 group flex h-14 w-14 items-center justify-center rounded-full text-primary-foreground shadow-card-hover glow-purple transition-transform hover:scale-110"
         style={{
           background:
-            "linear-gradient(135deg, hsl(277,65%,25%) 0%, hsl(285,60%,35%) 55%, hsl(290,55%,45%) 100%)",
+            "linear-gradient(135deg, hsl(268,100%,58%) 0%, hsl(285,100%,72%) 55%, hsl(28,100%,62%) 100%)",
         }}
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
         {!open && (
           <span className="absolute -top-1 -right-1 flex h-3 w-3">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-primary"></span>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[hsl(28,100%,62%)] opacity-75"></span>
+            <span className="relative inline-flex h-3 w-3 rounded-full bg-[hsl(28,100%,62%)]"></span>
           </span>
         )}
       </button>
@@ -212,7 +212,7 @@ const ChatbotWidget = () => {
             className="relative flex items-center gap-3 px-4 py-3.5"
             style={{
               background:
-                "linear-gradient(135deg, hsl(277,65%,20%) 0%, hsl(282,60%,30%) 60%, hsl(290,55%,40%) 130%)",
+                "linear-gradient(135deg, hsl(268,100%,40%) 0%, hsl(282,100%,55%) 60%, hsl(28,100%,55%) 130%)",
             }}
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 ring-2 ring-white/30 backdrop-blur">
@@ -350,7 +350,7 @@ const ChatbotWidget = () => {
               className="flex h-10 w-10 items-center justify-center rounded-full text-primary-foreground shadow-card transition-transform hover:scale-105 disabled:opacity-40 disabled:hover:scale-100"
               style={{
                 background:
-                "linear-gradient(135deg, hsl(277,65%,25%) 0%, hsl(285,60%,35%) 60%, hsl(290,55%,45%) 110%)",
+                  "linear-gradient(135deg, hsl(268,100%,58%) 0%, hsl(285,100%,72%) 60%, hsl(28,100%,62%) 110%)",
               }}
             >
               <Send className="h-4 w-4" />
