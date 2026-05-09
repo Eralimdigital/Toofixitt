@@ -3,12 +3,38 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useCart } from "@/contexts/CartContext";
-import { Trash2, ShoppingCart, ArrowRight } from "lucide-react";
+import { Trash2, ShoppingCart, Mail, PackageCheck } from "lucide-react";
 import CheckoutCartDialog from "@/components/CheckoutCartDialog";
 
 const Cart = () => {
   const { items, remove, clear, total } = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [paymentRequested, setPaymentRequested] = useState(false);
+
+  const SUPPORT_EMAIL = "smithmove0@gmail.com";
+
+  const buildMailto = () => {
+    const subject = `Payment request for ${items.length} tool${items.length > 1 ? "s" : ""} ($${total.toLocaleString()})`;
+    const lines = [
+      "Hi ToolifyHQ team,",
+      "",
+      "I'd like to purchase the following tools and need the payment details:",
+      "",
+      ...items.map((it, i) => `${i + 1}. ${it.name} — ${it.price}`),
+      "",
+      `Estimated total: $${total.toLocaleString()}`,
+      "",
+      "Please send me the payment instructions. Once paid, I'll come back to the website to request delivery.",
+      "",
+      "Thanks!",
+    ];
+    return `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+  };
+
+  const handleRequestPayment = () => {
+    window.location.href = buildMailto();
+    setPaymentRequested(true);
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -75,14 +101,31 @@ const Cart = () => {
                   >
                     Clear cart
                   </button>
+                  <a
+                    href={buildMailto()}
+                    onClick={() => setPaymentRequested(true)}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90"
+                  >
+                    <Mail className="h-4 w-4" /> Checkout (email us for payment)
+                  </a>
                   <button
                     type="button"
                     onClick={() => setCheckoutOpen(true)}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90"
+                    disabled={!paymentRequested}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    Checkout all <ArrowRight className="h-4 w-4" />
+                    <PackageCheck className="h-4 w-4" /> I've paid — Request delivery
                   </button>
                 </div>
+              </div>
+
+              <div className="mt-4 rounded-2xl border border-dashed border-border bg-secondary/40 p-4 text-xs text-muted-foreground">
+                <p className="mb-1 font-semibold text-foreground">How checkout works</p>
+                <ol className="ml-4 list-decimal space-y-1">
+                  <li>Click <span className="font-semibold text-foreground">Checkout</span> to email us — we'll reply with secure payment details for all tools in your cart.</li>
+                  <li>Complete the payment using the instructions we send.</li>
+                  <li>Come back here and click <span className="font-semibold text-foreground">I've paid — Request delivery</span> to submit your transaction ID and technician email. We deliver every tool within 1–2 hours.</li>
+                </ol>
               </div>
             </>
           )}
