@@ -6,12 +6,16 @@ import ReviewSection from "@/components/ReviewSection";
 import ToolFAQ from "@/components/ToolFAQ";
 import DownloadToolDialog from "@/components/DownloadToolDialog";
 import { tools } from "@/data/tools";
-import { AlertTriangle, CheckCircle2, CreditCard, Download, Mail, ShieldCheck, Sparkles } from "lucide-react";
+import { AlertTriangle, CheckCircle2, CreditCard, Download, Mail, ShieldCheck, ShoppingCart, Check, Sparkles } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 const ToolDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const tool = tools.find((t) => t.slug === slug);
   const [downloadOpen, setDownloadOpen] = useState(false);
+  const { add, has } = useCart();
+  const inCart = tool ? has(tool.slug) : false;
 
   if (!tool) {
     return (
@@ -104,6 +108,23 @@ const ToolDetailPage = () => {
               >
                 <Download className="h-4 w-4 text-accent" />
                 Download Tool
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (inCart) return;
+                  add(tool);
+                  toast.success(`${tool.name} added to cart`);
+                }}
+                disabled={inCart}
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-border bg-secondary/70 px-8 py-3.5 text-center text-base font-semibold text-foreground shadow-card transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/10 disabled:cursor-default disabled:opacity-80 disabled:hover:translate-y-0"
+              >
+                {inCart ? (
+                  <><Check className="h-4 w-4 text-accent" /> Added to cart</>
+                ) : (
+                  <><ShoppingCart className="h-4 w-4 text-accent" /> Add to cart</>
+                )}
               </button>
 
               <div className="mt-4 rounded-lg border border-accent/30 bg-card/80 p-4 shadow-card">
