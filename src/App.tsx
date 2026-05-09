@@ -14,29 +14,34 @@ import Refund from "./pages/Refund.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ChatbotWidget from "./components/ChatbotWidget";
 import PurchaseNotifications from "./components/PurchaseNotifications";
+import Cart from "./pages/Cart.tsx";
+import { CartProvider } from "./contexts/CartContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/tools" element={<ToolsPage />} />
-          <Route path="/tools/:slug" element={<ToolDetailPage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/refund" element={<Refund />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <ChatbotWidget />
-        <PurchaseNotifications />
-      </BrowserRouter>
+      <CartProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/tools" element={<ToolsPage />} />
+            <Route path="/tools/:slug" element={<ToolDetailPage />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <ChatbotWidget />
+          <PurchaseNotifications />
+        </BrowserRouter>
+      </CartProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

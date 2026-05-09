@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Search, ShoppingCart } from "lucide-react";
 import logo from "@/assets/logo.png";
 import ToolSearch from "@/components/ToolSearch";
+import { useCart } from "@/contexts/CartContext";
 
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
+  const { count } = useCart();
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -67,6 +69,18 @@ const Navbar = () => {
             >
               <Search className="h-4 w-4" />
             </button>
+            <Link
+              to="/cart"
+              aria-label={`Cart (${count} item${count === 1 ? "" : "s"})`}
+              className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card/80 text-accent shadow-card transition-all hover:border-accent/60"
+            >
+              <ShoppingCart className="h-4 w-4" />
+              {count > 0 && (
+                <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground shadow-card">
+                  {count}
+                </span>
+              )}
+            </Link>
             <Link
               to="/tools"
               className="hidden rounded-lg gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-95 sm:inline-block"

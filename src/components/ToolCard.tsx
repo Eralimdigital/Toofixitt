@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Star } from "lucide-react";
+import { Star, ShoppingCart, Check } from "lucide-react";
 import type { Tool } from "@/data/tools";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 interface ToolCardProps {
   tool: Tool;
 }
 
 const ToolCard = ({ tool }: ToolCardProps) => {
+  const { add, has } = useCart();
+  const inCart = has(tool.slug);
   const { data: reviews } = useQuery({
     queryKey: ["reviews-summary", tool.slug],
     queryFn: async () => {
@@ -63,14 +67,33 @@ const ToolCard = ({ tool }: ToolCardProps) => {
           </span>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <span className="text-lg font-bold text-primary">{tool.price}</span>
-          <Link
-            to={`/tools/${tool.slug}`}
-            className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-all hover:opacity-90"
-          >
-            View Tool
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                if (inCart) return;
+                add(tool);
+                toast.success(`${tool.name} added to cart`);
+              }}
+              aria-label={inCart ? "In cart" : "Add to cart"}
+              className={`flex h-9 w-9 items-center justify-center rounded-lg border transition-all ${
+                inCart
+                  ? "border-accent/60 bg-accent/10 text-accent"
+                  : "border-border bg-card text-foreground hover:border-accent/60 hover:text-accent"
+              }`}
+            >
+              {inCart ? <Check className="h-4 w-4" /> : <ShoppingCart className="h-4 w-4" />}
+            </button>
+            <Link
+              to={`/tools/${tool.slug}`}
+              className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-all hover:opacity-90"
+            >
+              View
+            </Link>
+          </div>
         </div>
       </div>
     </div>
