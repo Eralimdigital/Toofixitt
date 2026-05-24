@@ -440,4 +440,20 @@ export const tools: Tool[] = [
     category: "SEO",
     imagePrompt: "crawler",
   },
+  {
+    id: "40",
+    name: "Sold-Out Fixing Software",
+    slug: "sold-out-fixing-software",
+    description: "Automatically detect and fix sold-out products, broken inventory syncing, and Zendrop supplier issues so customers can buy without seeing sold-out notices.",
+    price: "$200",
+    priceValue: 200,
+    benefits: [
+      "Detect sold-out & sync issues fast",
+      "Fix Zendrop supplier problems",
+      "Restore unavailable variants",
+      "Boost trust, conversions & sales",
+    ],
+    category: "Error Fixing",
+    imagePrompt: "sold-out-fixing",
+  },
 ];
