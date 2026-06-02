@@ -13,16 +13,29 @@ const SITE_URL = "https://toolfixit.lovable.app";
 const FROM_NAME = "ToolifyHQ Orders";
 const FUNCTIONS_URL = "https://wvcozqxokjeoiacdkhsh.supabase.co/functions/v1";
 
-const BodySchema = z.object({
+const ItemSchema = z.object({
   toolSlug: z.string().min(1).max(200),
   toolName: z.string().min(1).max(200),
   toolPrice: z.string().min(1).max(40),
+});
+
+const BodySchema = z.object({
+  items: z.array(ItemSchema).min(1).max(50),
   buyerName: z.string().min(1).max(120),
   technicianEmail: z.string().email().max(254),
   transactionId: z.string().min(3).max(128),
-  orderReference: z.string().min(3).max(64),
-  approvalToken: z.string().min(10).max(128),
 });
+
+type EmailData = {
+  toolSlug: string;
+  toolName: string;
+  toolPrice: string;
+  buyerName: string;
+  technicianEmail: string;
+  transactionId: string;
+  orderReference: string;
+  approvalToken: string;
+};
 
 function escapeHtml(s: string) {
   return s
@@ -33,7 +46,7 @@ function escapeHtml(s: string) {
     .replace(/'/g, "&#39;");
 }
 
-function buildHtml(d: z.infer<typeof BodySchema>) {
+function buildHtml(d: EmailData) {
   const imageUrl = `${SITE_URL}/images/tools/${encodeURIComponent(d.toolSlug)}.jpg`;
   const toolUrl = `${SITE_URL}/tools/${encodeURIComponent(d.toolSlug)}`;
   const ts = new Date().toLocaleString("en-US", {
