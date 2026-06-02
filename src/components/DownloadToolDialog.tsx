@@ -58,36 +58,15 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
 
     setSubmitting(true);
     try {
-      const { data: inserted, error: insertError } = await supabase
-        .from("tool_delivery_requests")
-        .insert({
-          tool_slug: toolSlug,
-          tool_name: toolName,
-          tool_price: toolPrice,
-          buyer_name: parsed.data.buyerName,
-          technician_email: parsed.data.technicianEmail,
-          transaction_id: parsed.data.transactionId,
-        })
-        .select("order_reference, approval_token")
-        .single();
-
-      if (insertError) throw insertError;
-
-      // Fire-and-forget notification email — failure must NOT block the buyer
-      supabase.functions
-        .invoke("notify-tool-purchase", {
-          body: {
-            toolSlug,
-            toolName,
-            toolPrice,
-            buyerName: parsed.data.buyerName,
-            technicianEmail: parsed.data.technicianEmail,
-            transactionId: parsed.data.transactionId,
-            orderReference: inserted?.order_reference ?? "",
-            approvalToken: inserted?.approval_token ?? "",
-          },
-        })
-        .catch((e) => console.warn("notify email failed", e));
+      const { error: fnError } = await supabase.functions.invoke("notify-tool-purchase", {
+        body: {
+          items: [{ toolSlug, toolName, toolPrice }],
+          buyerName: parsed.data.buyerName,
+          technicianEmail: parsed.data.technicianEmail,
+          transactionId: parsed.data.transactionId,
+        },
+      });
+      if (fnError) throw fnError;
 
       setSuccess(parsed.data.technicianEmail);
       toast.success("Request submitted! Tool will be sent to the technician.");
