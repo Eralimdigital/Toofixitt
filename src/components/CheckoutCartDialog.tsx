@@ -59,39 +59,19 @@ const CheckoutCartDialog = ({ open, onOpenChange, items, onSuccess }: CheckoutCa
 
     setSubmitting(true);
     try {
-      const rows = items.map((it) => ({
-        tool_slug: it.slug,
-        tool_name: it.name,
-        tool_price: it.price,
-        buyer_name: parsed.data.buyerName,
-        technician_email: parsed.data.technicianEmail,
-        transaction_id: parsed.data.transactionId,
-      }));
-
-      const { data: inserted, error: insertError } = await supabase
-        .from("tool_delivery_requests")
-        .insert(rows)
-        .select("order_reference, approval_token, tool_slug, tool_name, tool_price");
-
-      if (insertError) throw insertError;
-
-      // Fire-and-forget notifications (one per tool)
-      (inserted || []).forEach((row) => {
-        supabase.functions
-          .invoke("notify-tool-purchase", {
-            body: {
-              toolSlug: row.tool_slug,
-              toolName: row.tool_name,
-              toolPrice: row.tool_price,
-              buyerName: parsed.data.buyerName,
-              technicianEmail: parsed.data.technicianEmail,
-              transactionId: parsed.data.transactionId,
-              orderReference: row.order_reference ?? "",
-              approvalToken: row.approval_token ?? "",
-            },
-          })
-          .catch((err) => console.warn("notify email failed", err));
+      const { error: fnError } = await supabase.functions.invoke("notify-tool-purchase", {
+        body: {
+          items: items.map((it) => ({
+            toolSlug: it.slug,
+            toolName: it.name,
+            toolPrice: it.price,
+          })),
+          buyerName: parsed.data.buyerName,
+          technicianEmail: parsed.data.technicianEmail,
+          transactionId: parsed.data.transactionId,
+        },
       });
+      if (fnError) throw fnError;
 
       setSuccess(parsed.data.technicianEmail);
       clear();

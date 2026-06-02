@@ -13,16 +13,29 @@ const SITE_URL = "https://toolfixit.lovable.app";
 const FROM_NAME = "ToolifyHQ Orders";
 const FUNCTIONS_URL = "https://wvcozqxokjeoiacdkhsh.supabase.co/functions/v1";
 
-const BodySchema = z.object({
+const ItemSchema = z.object({
   toolSlug: z.string().min(1).max(200),
   toolName: z.string().min(1).max(200),
   toolPrice: z.string().min(1).max(40),
+});
+
+const BodySchema = z.object({
+  items: z.array(ItemSchema).min(1).max(50),
   buyerName: z.string().min(1).max(120),
   technicianEmail: z.string().email().max(254),
   transactionId: z.string().min(3).max(128),
-  orderReference: z.string().min(3).max(64),
-  approvalToken: z.string().min(10).max(128),
 });
+
+type EmailData = {
+  toolSlug: string;
+  toolName: string;
+  toolPrice: string;
+  buyerName: string;
+  technicianEmail: string;
+  transactionId: string;
+  orderReference: string;
+  approvalToken: string;
+};
 
 function escapeHtml(s: string) {
   return s
@@ -33,7 +46,7 @@ function escapeHtml(s: string) {
     .replace(/'/g, "&#39;");
 }
 
-function buildHtml(d: z.infer<typeof BodySchema>) {
+function buildHtml(d: EmailData) {
   const imageUrl = `${SITE_URL}/images/tools/${encodeURIComponent(d.toolSlug)}.jpg`;
   const toolUrl = `${SITE_URL}/tools/${encodeURIComponent(d.toolSlug)}`;
   const ts = new Date().toLocaleString("en-US", {
@@ -135,8 +148,13 @@ Deno.serve(async (req) => {
   try {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const GOOGLE_MAIL_API_KEY = Deno.env.get("GOOGLE_MAIL_API_KEY");
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
     if (!GOOGLE_MAIL_API_KEY) throw new Error("GOOGLE_MAIL_API_KEY not configured");
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+      throw new Error("Supabase service credentials not configured");
+    }
 
     const json = await req.json();
     const parsed = BodySchema.safeParse(json);
@@ -146,32 +164,69 @@ Deno.serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
-    const data = parsed.data;
+    const { items, buyerName, technicianEmail, transactionId } = parsed.data;
 
-    const html = buildHtml(data);
-    const subject = `🛒 New order: ${data.toolName} — ${data.toolPrice} (${data.orderReference})`;
-    const raw = buildRawEmail(NOTIFY_TO, subject, html);
-
-    const response = await fetch(`${GATEWAY_URL}/users/me/messages/send`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "X-Connection-Api-Key": GOOGLE_MAIL_API_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ raw }),
+    const admin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+      auth: { persistSession: false },
     });
 
-    const result = await response.json();
-    if (!response.ok) {
-      console.error("Gmail send failed", response.status, result);
-      throw new Error(`Gmail API failed [${response.status}]: ${JSON.stringify(result)}`);
+    const rows = items.map((it) => ({
+      tool_slug: it.toolSlug,
+      tool_name: it.toolName,
+      tool_price: it.toolPrice,
+      buyer_name: buyerName,
+      technician_email: technicianEmail,
+      transaction_id: transactionId,
+    }));
+
+    const { data: inserted, error: insertError } = await admin
+      .from("tool_delivery_requests")
+      .insert(rows)
+      .select("tool_slug, tool_name, tool_price, order_reference, approval_token");
+
+    if (insertError) {
+      console.error("Insert failed", insertError);
+      throw new Error(`Failed to record order: ${insertError.message}`);
     }
 
-    return new Response(JSON.stringify({ success: true, messageId: result.id }), {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    const results: { ok: boolean; messageId?: string; error?: string }[] = [];
+    for (const row of inserted ?? []) {
+      const emailData: EmailData = {
+        toolSlug: row.tool_slug,
+        toolName: row.tool_name,
+        toolPrice: row.tool_price,
+        buyerName,
+        technicianEmail,
+        transactionId,
+        orderReference: row.order_reference ?? "",
+        approvalToken: row.approval_token ?? "",
+      };
+      const html = buildHtml(emailData);
+      const subject = `🛒 New order: ${row.tool_name} — ${row.tool_price} (${row.order_reference ?? ""})`;
+      const raw = buildRawEmail(NOTIFY_TO, subject, html);
+
+      const response = await fetch(`${GATEWAY_URL}/users/me/messages/send`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "X-Connection-Api-Key": GOOGLE_MAIL_API_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ raw }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        console.error("Gmail send failed", response.status, result);
+        results.push({ ok: false, error: `Gmail [${response.status}]` });
+      } else {
+        results.push({ ok: true, messageId: result.id });
+      }
+    }
+
+    return new Response(
+      JSON.stringify({ success: true, count: inserted?.length ?? 0, results }),
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
     console.error("notify-tool-purchase error:", msg);

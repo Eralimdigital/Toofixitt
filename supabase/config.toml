@@ -2,3 +2,6 @@ project_id = "wvcozqxokjeoiacdkhsh"
 
 [functions.approve-tool-delivery]
 verify_jwt = false
+
+[functions.notify-tool-purchase]
+verify_jwt = false
