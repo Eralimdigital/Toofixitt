@@ -47,6 +47,7 @@ export const tools: Tool[] = [
     category: "Integration",
     imagePrompt: "shopify-tiktok",
   },
+  {
     id: "1",
     name: "SEO Optimization Tool",
     slug: "seo-optimization-tool",
