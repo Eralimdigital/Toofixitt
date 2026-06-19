@@ -12,6 +12,25 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    id: "43",
+    name: "VSA AI Tool",
+    slug: "vsa-ai-tool",
+    description: "AI-powered shopping assistant that helps visitors discover products, receive personalized recommendations, and make confident purchasing decisions.",
+    price: "$300",
+    priceValue: 300,
+    benefits: [
+      "Personalized product recommendations",
+      "Instant customer assistance",
+      "Smart product discovery",
+      "Improved shopping experience",
+      "Reduced purchase hesitation",
+      "Increased conversion opportunities",
+      "24/7 virtual sales support",
+    ],
+    category: "AI",
+    imagePrompt: "vsa-ai",
+  },
+  {
     id: "41",
     name: "Market & Product Research Tool",
     slug: "market-product-research-tool",
