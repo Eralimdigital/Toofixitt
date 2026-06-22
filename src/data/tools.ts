@@ -16,8 +16,8 @@ export const tools: Tool[] = [
     name: "VSA AI Tool",
     slug: "vsa-ai-tool",
     description: "AI-powered shopping assistant that helps visitors discover products, receive personalized recommendations, and make confident purchasing decisions.",
-    price: "$300",
-    priceValue: 300,
+    price: "$200",
+    priceValue: 200,
     benefits: [
       "Personalized product recommendations",
       "Instant customer assistance",
