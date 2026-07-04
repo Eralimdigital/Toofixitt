@@ -6,6 +6,8 @@ import ToolSearch from "@/components/ToolSearch";
 import { tools } from "@/data/tools";
 import { ShieldCheck, Zap, Download, Mail, Send, CreditCard, Sparkles, PartyPopper, Store, Globe2, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import AnniversaryCountdown from "@/components/AnniversaryCountdown";
+import { anniversaryConfig, isAnniversaryActive } from "@/config/anniversary";
 
 const homeFaqs = [
   {
@@ -39,12 +41,6 @@ const homeFaqs = [
 ];
 
 const featuredTools = tools.slice(0, 6);
-
-// 🎉 5-YEAR ANNIVERSARY CAMPAIGN — auto-hides after ANNIVERSARY_END.
-// To remove manually earlier: delete this block and the two <AnniversaryHero /> / <MilestoneStats /> usages below,
-// then restore the original hero (see git history).
-const ANNIVERSARY_END = new Date("2026-07-11T23:59:59");
-const isAnniversaryActive = () => new Date() <= ANNIVERSARY_END;
 
 const Index = () => {
   const anniversary = isAnniversaryActive();
@@ -86,18 +82,25 @@ const Index = () => {
           </h1>
           <p className="mx-auto mb-10 max-w-xl text-lg text-muted-foreground">
             {anniversary
-              ? "Thank you for 5 incredible years! Use code TOOLIFY5 for 25% OFF any tool this week only."
+              ? `Thank you for 5 incredible years! Use code ${anniversaryConfig.promoCode} for ${anniversaryConfig.discountLabel} any tool this week only.`
               : "Automate, optimize, and scale your Shopify store with powerful ready-to-use tools."}
           </p>
           {anniversary && (
-            <div className="mx-auto mb-8 inline-flex items-center gap-3 rounded-xl border border-accent/40 bg-card/80 px-5 py-3 shadow-card backdrop-blur-sm">
-              <Sparkles className="h-5 w-5 text-accent" />
-              <span className="text-sm font-semibold text-foreground">
-                Promo Code:{" "}
-                <span className="rounded-md bg-accent/15 px-2 py-0.5 font-mono text-accent">TOOLIFY5</span>
-              </span>
-              <span className="hidden text-xs text-muted-foreground sm:inline">Ends July 11</span>
-            </div>
+            <>
+              <AnniversaryCountdown endsAt={anniversaryConfig.endsAt} />
+              <div className="mx-auto mb-8 inline-flex items-center gap-3 rounded-xl border border-accent/40 bg-card/80 px-5 py-3 shadow-card backdrop-blur-sm">
+                <Sparkles className="h-5 w-5 text-accent" />
+                <span className="text-sm font-semibold text-foreground">
+                  Promo Code:{" "}
+                  <span className="rounded-md bg-accent/15 px-2 py-0.5 font-mono text-accent">
+                    {anniversaryConfig.promoCode}
+                  </span>
+                </span>
+                <span className="hidden text-xs text-muted-foreground sm:inline">
+                  Save {anniversaryConfig.discountLabel}
+                </span>
+              </div>
+            </>
           )}
           <div className="mx-auto mb-8 max-w-2xl">
             <ToolSearch />
