@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import ToolCard from "@/components/ToolCard";
 import ToolSearch from "@/components/ToolSearch";
 import { tools } from "@/data/tools";
-import { ShieldCheck, Zap, Download, Mail, Send, CreditCard } from "lucide-react";
+import { ShieldCheck, Zap, Download, Mail, Send, CreditCard, Sparkles, PartyPopper, Store, Globe2, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const homeFaqs = [
@@ -40,24 +40,65 @@ const homeFaqs = [
 
 const featuredTools = tools.slice(0, 6);
 
+// 🎉 5-YEAR ANNIVERSARY CAMPAIGN — auto-hides after ANNIVERSARY_END.
+// To remove manually earlier: delete this block and the two <AnniversaryHero /> / <MilestoneStats /> usages below,
+// then restore the original hero (see git history).
+const ANNIVERSARY_END = new Date("2026-07-11T23:59:59");
+const isAnniversaryActive = () => new Date() <= ANNIVERSARY_END;
+
 const Index = () => {
+  const anniversary = isAnniversaryActive();
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
 
       {/* Hero */}
-      <section className="gradient-hero border-b border-border py-24 md:py-32">
+      <section className="gradient-hero relative overflow-hidden border-b border-border py-24 md:py-32">
+        {anniversary && (
+          <>
+            <div className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
+            <div className="pointer-events-none absolute -right-24 bottom-10 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
+          </>
+        )}
         <div className="container text-center">
-          <span className="mb-6 inline-block rounded-full border border-border bg-secondary/80 px-4 py-1.5 text-xs font-semibold text-secondary-foreground shadow-card">
-            🚀 The #1 Shopify Tools Marketplace
-          </span>
+          {anniversary ? (
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent shadow-card">
+              <PartyPopper className="h-3.5 w-3.5" />
+              Celebrating 5 Years of ToolifyHQ — Limited-Time Offer
+            </span>
+          ) : (
+            <span className="mb-6 inline-block rounded-full border border-border bg-secondary/80 px-4 py-1.5 text-xs font-semibold text-secondary-foreground shadow-card">
+              🚀 The #1 Shopify Tools Marketplace
+            </span>
+          )}
           <h1 className="mx-auto mb-6 max-w-3xl text-4xl font-extrabold leading-tight text-foreground md:text-5xl lg:text-6xl">
-            Premium Shopify Tools for{" "}
-            <span className="text-gradient">Serious Store Owners</span>
+            {anniversary ? (
+              <>
+                5 Years of Powering{" "}
+                <span className="text-gradient">Shopify Store Owners</span>
+              </>
+            ) : (
+              <>
+                Premium Shopify Tools for{" "}
+                <span className="text-gradient">Serious Store Owners</span>
+              </>
+            )}
           </h1>
           <p className="mx-auto mb-10 max-w-xl text-lg text-muted-foreground">
-            Automate, optimize, and scale your Shopify store with powerful ready-to-use tools.
+            {anniversary
+              ? "Thank you for 5 incredible years! Use code TOOLIFY5 for 25% OFF any tool this week only."
+              : "Automate, optimize, and scale your Shopify store with powerful ready-to-use tools."}
           </p>
+          {anniversary && (
+            <div className="mx-auto mb-8 inline-flex items-center gap-3 rounded-xl border border-accent/40 bg-card/80 px-5 py-3 shadow-card backdrop-blur-sm">
+              <Sparkles className="h-5 w-5 text-accent" />
+              <span className="text-sm font-semibold text-foreground">
+                Promo Code:{" "}
+                <span className="rounded-md bg-accent/15 px-2 py-0.5 font-mono text-accent">TOOLIFY5</span>
+              </span>
+              <span className="hidden text-xs text-muted-foreground sm:inline">Ends July 11</span>
+            </div>
+          )}
           <div className="mx-auto mb-8 max-w-2xl">
             <ToolSearch />
             <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
@@ -89,6 +130,42 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* 5-Year Milestone Stats (anniversary campaign) */}
+      {anniversary && (
+        <section className="border-b border-border bg-background/40 py-16">
+          <div className="container">
+            <div className="mb-10 text-center">
+              <span className="mb-3 inline-block rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent">
+                Our Journey
+              </span>
+              <h2 className="mb-3 text-3xl font-bold text-foreground">5 Years. Countless Stores Scaled.</h2>
+              <p className="mx-auto max-w-lg text-muted-foreground">
+                A huge thank you to every store owner who trusted us along the way.
+              </p>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                { icon: PartyPopper, value: "5", label: "Years Serving Shopify" },
+                { icon: Zap, value: `${tools.length}+`, label: "Premium Tools Launched" },
+                { icon: Store, value: "12,000+", label: "Stores Helped" },
+                { icon: Globe2, value: "60+", label: "Countries Served" },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  className="rounded-xl border border-border bg-card/90 p-6 text-center shadow-card backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-accent/60"
+                >
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10">
+                    <s.icon className="h-6 w-6 text-accent" />
+                  </div>
+                  <div className="mb-1 text-3xl font-extrabold text-gradient">{s.value}</div>
+                  <div className="text-sm text-muted-foreground">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Features */}
       {/* How It Works */}
