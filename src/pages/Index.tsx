@@ -8,6 +8,7 @@ import { ShieldCheck, Zap, Download, Mail, Send, CreditCard, Sparkles, PartyPopp
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import AnniversaryCountdown from "@/components/AnniversaryCountdown";
 import { anniversaryConfig, isAnniversaryActive } from "@/config/anniversary";
+import SEO from "@/components/SEO";
 
 const homeFaqs = [
   {
@@ -46,6 +47,23 @@ const Index = () => {
   const anniversary = isAnniversaryActive();
   return (
     <div className="flex min-h-screen flex-col">
+      <SEO
+        title="Best Premium Shopify Tools Marketplace | ToolifyHQ"
+        description="ToolifyHQ is the best premium Shopify tools marketplace — 40+ curated SEO, AI, marketing & conversion tools trusted by 12,000+ stores in 60+ countries."
+        path="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "ToolifyHQ",
+          url: "https://toolfixit.lovable.app/",
+          description: "Best premium Shopify tools marketplace — 40+ curated SEO, AI, marketing and conversion tools for Shopify merchants.",
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "4.9",
+            reviewCount: "1284",
+          },
+        }}
+      />
       <Navbar />
 
       {/* Hero */}
