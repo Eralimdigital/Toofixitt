@@ -219,6 +219,30 @@ Deno.serve(async (req) => {
         console.error("Gmail send failed", response.status, result);
         results.push({ ok: false, error: `Gmail [${response.status}]` });
       } else {
+        // Self-sent Gmail messages land only in "Sent" — force them into INBOX + UNREAD
+        // so the owner actually receives a notification.
+        if (result.id) {
+          try {
+            const modRes = await fetch(
+              `${GATEWAY_URL}/users/me/messages/${result.id}/modify`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${LOVABLE_API_KEY}`,
+                  "X-Connection-Api-Key": GOOGLE_MAIL_API_KEY,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ addLabelIds: ["INBOX", "UNREAD"] }),
+              },
+            );
+            if (!modRes.ok) {
+              const modErr = await modRes.text();
+              console.error("Gmail label modify failed", modRes.status, modErr);
+            }
+          } catch (e) {
+            console.error("Gmail label modify threw", e);
+          }
+        }
         results.push({ ok: true, messageId: result.id });
       }
     }
