@@ -43,14 +43,16 @@ const ToolDetailPage = () => {
 
            <div className="mt-6 grid gap-10 rounded-2xl border border-border bg-card/70 p-6 shadow-card backdrop-blur-sm md:grid-cols-2">
             {/* Image */}
-            <div className="overflow-hidden rounded-xl border border-border bg-secondary shadow-card">
-              <img
-                src={`/images/tools/${tool.slug}.jpg`}
-                alt={tool.name}
-                width={500}
-                height={350}
-                className="h-full w-full object-cover"
-              />
+            <div className="overflow-hidden rounded-xl border border-border bg-secondary shadow-card md:col-span-2">
+              <div className="aspect-[16/9] w-full">
+                <img
+                  src={`/images/tools/${tool.slug}.jpg`}
+                  alt={tool.name}
+                  width={1280}
+                  height={720}
+                  className="h-full w-full object-contain"
+                />
+              </div>
             </div>
 
             {/* Info */}
