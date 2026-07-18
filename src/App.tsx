@@ -14,6 +14,7 @@ import Refund from "./pages/Refund.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ChatbotWidget from "./components/ChatbotWidget";
 import PurchaseNotifications from "./components/PurchaseNotifications";
+import AmbientMusicPlayer from "./components/AmbientMusicPlayer";
 import Cart from "./pages/Cart.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
@@ -44,6 +45,7 @@ const App = () => (
           </Routes>
           <ChatbotWidget />
           <PurchaseNotifications />
+          <AmbientMusicPlayer />
         </BrowserRouter>
       </CartProvider>
     </TooltipProvider>
