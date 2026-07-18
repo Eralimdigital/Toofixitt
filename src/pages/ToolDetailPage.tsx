@@ -50,6 +50,10 @@ const ToolDetailPage = () => {
                   alt={tool.name}
                   width={1280}
                   height={720}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                  sizes="(min-width: 768px) 768px, 100vw"
                   className="h-full w-full object-contain"
                 />
               </div>
