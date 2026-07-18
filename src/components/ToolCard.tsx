@@ -33,9 +33,11 @@ const ToolCard = ({ tool }: ToolCardProps) => {
     <div className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover">
       <div className="aspect-[16/10] overflow-hidden bg-secondary">
         <img
-          src={`/images/tools/${tool.slug}.jpg`}
+          src={`/images/tools/${tool.slug}.webp`}
           alt={tool.name}
           loading="lazy"
+          decoding="async"
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           width={400}
           height={250}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"

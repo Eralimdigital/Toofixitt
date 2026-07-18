@@ -46,10 +46,14 @@ const ToolDetailPage = () => {
             <div className="mb-8 overflow-hidden rounded-xl border border-border bg-secondary shadow-card">
               <div className="aspect-[16/9] w-full">
                 <img
-                  src={`/images/tools/${tool.slug}.jpg`}
+                  src={`/images/tools/${tool.slug}.webp`}
                   alt={tool.name}
                   width={1280}
                   height={720}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                  sizes="(min-width: 768px) 768px, 100vw"
                   className="h-full w-full object-contain"
                 />
               </div>
