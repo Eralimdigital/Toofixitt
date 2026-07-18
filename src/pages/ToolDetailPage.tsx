@@ -41,9 +41,9 @@ const ToolDetailPage = () => {
             ← Back to Tools
           </Link>
 
-           <div className="mt-6 grid gap-10 rounded-2xl border border-border bg-card/70 p-6 shadow-card backdrop-blur-sm md:grid-cols-2">
+           <div className="mt-6 rounded-2xl border border-border bg-card/70 p-6 shadow-card backdrop-blur-sm">
             {/* Image */}
-            <div className="overflow-hidden rounded-xl border border-border bg-secondary shadow-card md:col-span-2">
+            <div className="mb-8 overflow-hidden rounded-xl border border-border bg-secondary shadow-card">
               <div className="aspect-[16/9] w-full">
                 <img
                   src={`/images/tools/${tool.slug}.jpg`}
