@@ -62,7 +62,7 @@ const Cart = () => {
                 {items.map((it) => (
                   <div key={it.slug} className="flex items-center gap-4 rounded-xl border border-border bg-secondary/60 p-3">
                     <img
-                      src={`/images/tools/${it.slug}.jpg`}
+                      src={`/images/tools/${it.slug}.webp`}
                       alt={it.name}
                       width={72}
                       height={48}
