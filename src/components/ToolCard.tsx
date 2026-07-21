@@ -5,6 +5,7 @@ import { Star, ShoppingCart, Check } from "lucide-react";
 import type { Tool } from "@/data/tools";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
+import { playAddToCart } from "@/lib/sfx";
 
 interface ToolCardProps {
   tool: Tool;
@@ -78,6 +79,7 @@ const ToolCard = ({ tool }: ToolCardProps) => {
                 e.preventDefault();
                 if (inCart) return;
                 add(tool);
+                playAddToCart();
                 toast.success(`${tool.name} added to cart`);
               }}
               aria-label={inCart ? "In cart" : "Add to cart"}
