@@ -15,6 +15,8 @@ import NotFound from "./pages/NotFound.tsx";
 import ChatbotWidget from "./components/ChatbotWidget";
 import PurchaseNotifications from "./components/PurchaseNotifications";
 import AmbientMusicPlayer from "./components/AmbientMusicPlayer";
+import SoundSettings from "./components/SoundSettings";
+import WelcomeVoice from "./components/WelcomeVoice";
 import Cart from "./pages/Cart.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
@@ -46,6 +48,8 @@ const App = () => (
           <ChatbotWidget />
           <PurchaseNotifications />
           <AmbientMusicPlayer />
+          <SoundSettings />
+          <WelcomeVoice />
         </BrowserRouter>
       </CartProvider>
     </TooltipProvider>

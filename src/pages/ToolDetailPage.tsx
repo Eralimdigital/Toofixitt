@@ -9,6 +9,7 @@ import { tools } from "@/data/tools";
 import { AlertTriangle, CheckCircle2, CreditCard, Download, Mail, ShieldCheck, ShoppingCart, Check, Sparkles } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
+import { playAddToCart, playConfirm } from "@/lib/sfx";
 
 const ToolDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -109,7 +110,10 @@ const ToolDetailPage = () => {
 
               <button
                 type="button"
-                onClick={() => setDownloadOpen(true)}
+                onClick={() => {
+                  playConfirm();
+                  setDownloadOpen(true);
+                }}
                 className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-accent/40 bg-card px-8 py-3.5 text-center text-base font-semibold text-foreground shadow-card transition-all hover:-translate-y-0.5 hover:bg-accent/10"
               >
                 <Download className="h-4 w-4 text-accent" />
@@ -121,6 +125,7 @@ const ToolDetailPage = () => {
                 onClick={() => {
                   if (inCart) return;
                   add(tool);
+                  playAddToCart();
                   toast.success(`${tool.name} added to cart`);
                 }}
                 disabled={inCart}
