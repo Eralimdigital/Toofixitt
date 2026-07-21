@@ -37,7 +37,9 @@ export const soundSettings = {
   },
   subscribe: (l: Listener) => {
     listeners.add(l);
-    return () => listeners.delete(l);
+    return () => {
+      listeners.delete(l);
+    };
   },
 };
 
