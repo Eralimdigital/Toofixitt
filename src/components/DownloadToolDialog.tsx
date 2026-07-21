@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Download, Loader2, CheckCircle2, Mail, ShieldCheck } from "lucide-react";
 import { z } from "zod";
+import { playConfirm } from "@/lib/sfx";
 
 interface DownloadToolDialogProps {
   open: boolean;
@@ -69,6 +70,7 @@ export const DownloadToolDialog = ({ open, onOpenChange, toolSlug, toolName, too
       if (fnError) throw fnError;
 
       setSuccess(parsed.data.technicianEmail);
+      playConfirm();
       toast.success("Request submitted! Tool will be sent to the technician.");
     } catch (err) {
       console.error("Submission error:", err);
