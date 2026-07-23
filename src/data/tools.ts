@@ -12,6 +12,24 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    id: "44",
+    name: "Influencer & Creator Email List",
+    slug: "influencer-creator-email-list",
+    description: "Targeted email list of vetted influencers and content creators across niches. Priced at $0.5 per email, so you only pay for the exact volume you need.",
+    price: "$0.50 / email",
+    priceValue: 0.5,
+    benefits: [
+      "Vetted influencer & creator contacts",
+      "Pay only for the emails you need ($0.50 each)",
+      "Filter by niche, platform and audience size",
+      "Kickstart outreach and UGC campaigns",
+      "Boost brand partnerships and collabs",
+      "Scale influencer marketing on any budget",
+    ],
+    category: "Marketing",
+    imagePrompt: "influencer-email-list",
+  },
+  {
     id: "43",
     name: "VSA AI Tool",
     slug: "vsa-ai-tool",
