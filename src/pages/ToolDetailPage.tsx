@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -6,6 +6,7 @@ import ReviewSection from "@/components/ReviewSection";
 import ToolFAQ from "@/components/ToolFAQ";
 import DownloadToolDialog from "@/components/DownloadToolDialog";
 import { tools } from "@/data/tools";
+import type { ToolPackage } from "@/data/tools";
 import { AlertTriangle, CheckCircle2, CreditCard, Download, Mail, ShieldCheck, ShoppingCart, Check, Sparkles } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
@@ -16,7 +17,25 @@ const ToolDetailPage = () => {
   const tool = tools.find((t) => t.slug === slug);
   const [downloadOpen, setDownloadOpen] = useState(false);
   const { add, has } = useCart();
-  const inCart = tool ? has(tool.slug) : false;
+  const packages = tool?.packages;
+  const [selectedPkgId, setSelectedPkgId] = useState<string | null>(
+    packages ? (packages.find((p) => p.popular)?.id ?? packages[0].id) : null,
+  );
+  const selectedPkg: ToolPackage | undefined = packages?.find((p) => p.id === selectedPkgId);
+  const cartSlug = tool ? (selectedPkg ? `${tool.slug}--${selectedPkg.id}` : tool.slug) : "";
+  const displayName = tool ? (selectedPkg ? `${tool.name} — ${selectedPkg.name}` : tool.name) : "";
+  const displayPrice = selectedPkg ? selectedPkg.price : tool?.price ?? "";
+  const displayPriceValue = selectedPkg ? selectedPkg.priceValue : tool?.priceValue ?? 0;
+  const inCart = tool ? has(cartSlug) : false;
+  const packagesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!packages) return;
+    const t = window.setTimeout(() => {
+      packagesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 250);
+    return () => window.clearTimeout(t);
+  }, [packages, slug]);
 
   if (!tool) {
     return (
