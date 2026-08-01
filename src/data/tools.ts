@@ -1,3 +1,16 @@
+export interface ToolPackage {
+  id: string;
+  name: string;
+  tagline: string;
+  price: string;
+  priceValue: number;
+  accent: "basic" | "pro" | "premium";
+  popular?: boolean;
+  bestFor: string;
+  features: string[];
+  benefits: string[];
+}
+
 export interface Tool {
   id: string;
   name: string;
@@ -8,6 +21,7 @@ export interface Tool {
   benefits: string[];
   category: string;
   imagePrompt: string;
+  packages?: ToolPackage[];
 }
 
 export const tools: Tool[] = [
