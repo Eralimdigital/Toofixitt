@@ -31,10 +31,14 @@ const Footer = () => {
           </div>
           <div>
             <h4 className="mb-3 text-sm font-semibold text-foreground">Support</h4>
-            <p className="text-sm text-muted-foreground">Need help? Email us:</p>
+            <p className="text-sm text-muted-foreground">ToolifyHQ — independent, owner-operated online store.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Need help? Email us:</p>
             <a href="mailto:smithmove0@gmail.com" className="mt-1 inline-block text-sm font-semibold text-accent hover:underline">
               smithmove0@gmail.com
             </a>
+            <Link to="/contact#business-details" className="mt-2 block text-sm text-muted-foreground hover:text-foreground">
+              Business details
+            </Link>
           </div>
         </div>
         <div className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
