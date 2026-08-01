@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { Sparkles, Target, Users, ShieldCheck } from "lucide-react";
+import { Sparkles, Target, Users, ShieldCheck, Building2, Mail, Globe } from "lucide-react";
 
 const About = () => {
   return (
