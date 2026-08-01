@@ -62,7 +62,7 @@ const Cart = () => {
                 {items.map((it) => (
                   <div key={it.slug} className="flex items-center gap-4 rounded-xl border border-border bg-secondary/60 p-3">
                     <img
-                      src={`/images/tools/${it.slug}.webp`}
+                      src={`/images/tools/${it.slug.split("--")[0]}.webp`}
                       alt={it.name}
                       width={72}
                       height={48}
@@ -70,7 +70,7 @@ const Cart = () => {
                       className="h-14 w-20 shrink-0 rounded-lg object-cover"
                     />
                     <div className="min-w-0 flex-1">
-                      <Link to={`/tools/${it.slug}`} className="block truncate text-sm font-semibold text-foreground hover:text-accent">
+                      <Link to={`/tools/${it.slug.split("--")[0]}`} className="block truncate text-sm font-semibold text-foreground hover:text-accent">
                         {it.name}
                       </Link>
                       <p className="text-sm font-bold text-accent">{it.price}</p>
