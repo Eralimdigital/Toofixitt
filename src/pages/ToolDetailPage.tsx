@@ -99,13 +99,101 @@ const ToolDetailPage = () => {
                 </ul>
               </div>
 
+              {packages && (
+                <div ref={packagesRef} className="mb-8 scroll-mt-24">
+                  <h2 className="mb-1 text-xl font-extrabold text-foreground">Choose your package</h2>
+                  <p className="mb-5 text-sm text-muted-foreground">
+                    Pick the resource upgrade that matches your catalog size. One-time upgrade, no subscription.
+                  </p>
+                  <div className="grid gap-4 md:grid-cols-3">
+                    {packages.map((pkg) => {
+                      const active = pkg.id === selectedPkgId;
+                      return (
+                        <button
+                          key={pkg.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedPkgId(pkg.id);
+                            playAddToCart();
+                          }}
+                          aria-pressed={active}
+                          className={`relative flex h-full flex-col rounded-2xl border p-5 text-left shadow-card transition-all ${
+                            active
+                              ? "border-accent bg-accent/10 ring-2 ring-accent/40"
+                              : "border-border bg-card/80 hover:-translate-y-0.5 hover:border-accent/60"
+                          }`}
+                        >
+                          {pkg.popular && (
+                            <span className="absolute -top-2.5 right-4 rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-accent-foreground">
+                              Most popular
+                            </span>
+                          )}
+                          <span
+                            className={`mb-3 h-2.5 w-2.5 rounded-full ${
+                              pkg.accent === "basic"
+                                ? "bg-emerald-500"
+                                : pkg.accent === "pro"
+                                ? "bg-sky-500"
+                                : "bg-primary"
+                            }`}
+                          />
+                          <p className="text-base font-bold text-foreground">{pkg.name}</p>
+                          <p className="mb-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                            {pkg.tagline}
+                          </p>
+                          <p className="text-3xl font-extrabold text-accent">{pkg.price}</p>
+                          <p className="mb-4 text-xs text-muted-foreground">One-time upgrade</p>
+                          <p className="mb-4 text-xs text-muted-foreground">{pkg.bestFor}</p>
+
+                          <p className="mb-2 text-xs font-semibold text-foreground">What's included</p>
+                          <ul className="mb-4 space-y-1.5">
+                            {pkg.features.map((f) => (
+                              <li key={f} className="flex gap-2 text-xs text-muted-foreground">
+                                <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" />
+                                <span>{f}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <p className="mb-2 text-xs font-semibold text-foreground">Benefits</p>
+                          <ul className="mb-5 space-y-1.5">
+                            {pkg.benefits.map((b) => (
+                              <li key={b} className="flex gap-2 text-xs text-muted-foreground">
+                                <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" />
+                                <span>{b}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <span
+                            className={`mt-auto block rounded-lg px-4 py-2.5 text-center text-sm font-semibold ${
+                              active
+                                ? "bg-accent text-accent-foreground"
+                                : "border border-border bg-secondary text-secondary-foreground"
+                            }`}
+                          >
+                            {active ? "Selected" : "Select package"}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-4 rounded-xl border border-dashed border-border bg-secondary/40 p-4 text-xs text-muted-foreground">
+                    <span className="font-semibold text-foreground">Recommended for: </span>
+                    Shopify stores experiencing sold-out inventory issues due to catalog growth. These resource upgrades ensure your
+                    inventory system can properly support your product catalog, maintain accurate stock availability, and scale with your
+                    business as it continues to grow.
+                  </p>
+                </div>
+              )}
+
               <div className="mb-6 grid gap-4 rounded-xl border border-border bg-secondary/70 p-4 shadow-card backdrop-blur-sm">
                 <div className="flex items-start justify-between gap-4 border-b border-border pb-4">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Order summary</p>
-                    <p className="mt-1 font-bold text-foreground">{tool.name}</p>
+                    <p className="mt-1 font-bold text-foreground">{displayName}</p>
                   </div>
-                  <div className="text-right text-3xl font-extrabold text-accent">{tool.price}</div>
+                  <div className="text-right text-3xl font-extrabold text-accent">{displayPrice}</div>
                 </div>
                 <div className="grid gap-3 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
@@ -120,7 +208,7 @@ const ToolDetailPage = () => {
               </div>
 
               <a
-                href={`mailto:smithmove0@gmail.com?subject=${encodeURIComponent(`Purchase: ${tool.name} (${tool.price})`)}&body=${encodeURIComponent(`Hi, I'd like to purchase ${tool.name} (${tool.price}). Please send me the details.`)}`}
+                href={`mailto:smithmove0@gmail.com?subject=${encodeURIComponent(`Purchase: ${displayName} (${displayPrice})`)}&body=${encodeURIComponent(`Hi, I'd like to purchase ${displayName} (${displayPrice}). Please send me the details.`)}`}
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90"
               >
                 <Mail className="h-4 w-4" />
@@ -143,9 +231,9 @@ const ToolDetailPage = () => {
                 type="button"
                 onClick={() => {
                   if (inCart) return;
-                  add(tool);
+                  add({ ...tool, slug: cartSlug, name: displayName, price: displayPrice, priceValue: displayPriceValue });
                   playAddToCart();
-                  toast.success(`${tool.name} added to cart`);
+                  toast.success(`${displayName} added to cart`);
                 }}
                 disabled={inCart}
                 className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-border bg-secondary/70 px-8 py-3.5 text-center text-base font-semibold text-foreground shadow-card transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/10 disabled:cursor-default disabled:opacity-80 disabled:hover:translate-y-0"
