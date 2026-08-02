@@ -134,7 +134,6 @@ const AmbientMusicPlayer = () => {
       o2.connect(g);
       g.connect(lp);
       lp.connect(hp);
-      g.connect(hp);
       g.connect(delay);
       o.start(t);
       o2.start(t);
