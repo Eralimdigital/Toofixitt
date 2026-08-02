@@ -115,20 +115,70 @@ const AmbientMusicPlayer = () => {
       });
     };
 
-    const scale = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5];
-    const lead = (t: number, f: number) => {
+    const lead = (t: number, f: number, dur = 0.25, vol = 0.09) => {
       const o = ctx.createOscillator();
+      const o2 = ctx.createOscillator();
       const g = ctx.createGain();
-      o.type = "square";
+      o.type = "triangle";
+      o2.type = "sawtooth";
       o.frequency.setValueAtTime(f, t);
+      o2.frequency.setValueAtTime(f * 1.005, t);
       g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.05, t + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      g.gain.linearRampToValueAtTime(vol, t + 0.02);
+      g.gain.setValueAtTime(vol * 0.7, t + dur * 0.6);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      const lp = ctx.createBiquadFilter();
+      lp.type = "lowpass";
+      lp.frequency.value = 3200;
       o.connect(g);
+      o2.connect(g);
+      g.connect(lp);
+      lp.connect(hp);
       g.connect(hp);
       g.connect(delay);
       o.start(t);
-      o.stop(t + 0.3);
+      o2.start(t);
+      o.stop(t + dur + 0.05);
+      o2.stop(t + dur + 0.05);
+    };
+
+    // Named notes for a singable hook (C major / A minor pentatonic-friendly).
+    const N: Record<string, number> = {
+      G3: 196.0, A3: 220.0, B3: 246.94,
+      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.0, A4: 440.0, B4: 493.88,
+      C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99, A5: 880.0,
+    };
+
+    // A real 4-bar melodic hook: [note, startStep(8ths), lengthSteps]
+    type Step = [string, number, number];
+    const hook: Step[][] = [
+      // bar 1 over C
+      [["E5", 0, 1], ["G5", 1, 1], ["E5", 2, 2], ["C5", 4, 2], ["D5", 6, 2]],
+      // bar 2 over G
+      [["D5", 0, 1], ["B4", 1, 1], ["D5", 2, 2], ["G5", 4, 3], ["F5", 7, 1]],
+      // bar 3 over Am
+      [["E5", 0, 2], ["C5", 2, 1], ["A4", 3, 1], ["C5", 4, 2], ["E5", 6, 2]],
+      // bar 4 over F
+      [["F5", 0, 1], ["E5", 1, 1], ["D5", 2, 2], ["C5", 4, 4]],
+    ];
+
+    // Counter-melody arpeggio that keeps the track moving between phrases.
+    const arp = (t: number, notes: number[]) => {
+      for (let i = 0; i < 8; i++) {
+        const f = notes[i % notes.length] * (i >= 4 ? 2 : 1);
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = "sine";
+        o.frequency.setValueAtTime(f, t + i * step);
+        g.gain.setValueAtTime(0, t + i * step);
+        g.gain.linearRampToValueAtTime(0.045, t + i * step + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.001, t + i * step + step * 0.9);
+        o.connect(g);
+        g.connect(hp);
+        g.connect(delay);
+        o.start(t + i * step);
+        o.stop(t + i * step + step);
+      }
     };
 
     let bar = 0;
@@ -144,10 +194,21 @@ const AmbientMusicPlayer = () => {
       }
       stab(startT + beat, chord.notes);
       stab(startT + 3 * beat, chord.notes);
-      if (barIdx % 2 === 1) {
-        for (let i = 0; i < 4; i++) {
-          lead(startT + (1 + i * 0.5) * beat, scale[Math.floor(Math.random() * scale.length)]);
+
+      // 8-bar song form: bars 0-3 intro/arp, bars 4-7 melody hook, then repeat.
+      const phrase = barIdx % 8;
+      if (phrase < 4) {
+        arp(startT, chord.notes);
+        if (phrase === 3) {
+          // pickup into the hook
+          lead(startT + 3 * beat, N.G4, step * 0.9, 0.07);
+          lead(startT + 3.5 * beat, N.B4, step * 0.9, 0.07);
         }
+      } else {
+        arp(startT, chord.notes);
+        hook[phrase - 4].forEach(([name, s, len]) => {
+          lead(startT + s * step, N[name], len * step * 0.95, 0.1);
+        });
       }
     };
 
