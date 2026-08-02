@@ -91,7 +91,7 @@ const PurchaseNotifications = () => {
 
   return (
     <div
-      className={`pointer-events-none fixed bottom-5 left-5 z-40 max-w-[320px] transition-all duration-500 ${
+      className={`pointer-events-none fixed bottom-24 left-5 z-40 max-w-[320px] transition-all duration-500 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >
