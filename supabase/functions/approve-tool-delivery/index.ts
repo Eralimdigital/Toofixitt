@@ -2,6 +2,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import JSZip from "https://esm.sh/jszip@3.10.1";
 import { jsPDF } from "https://esm.sh/jspdf@2.5.1";
+import { generateCodeProject } from "./codegen.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -181,7 +182,11 @@ async function buildZip(req: any, licenseKey: string): Promise<Uint8Array> {
       `  - INSTALL.txt                (setup instructions)\n` +
       `  - USAGE.txt                  (how to use)\n` +
       `  - SUPPORT.txt                (how to reach us)\n` +
-      `  - license.txt                (your unique license key)\n\n` +
+      `  - license.txt                (your unique license key)\n` +
+      `  - source/${req.tool_slug}/    (full TypeScript/Node.js source project)\n\n` +
+      `Developer note: the source/ folder is the actual software package.\n` +
+      `It requires Node.js 18+ and a developer to install and configure.\n` +
+      `Start at source/${req.tool_slug}/README.md.\n\n` +
       `Need help? Email ${NOTIFY_TO}\n`,
   );
 
@@ -213,6 +218,20 @@ async function buildZip(req: any, licenseKey: string): Promise<Uint8Array> {
     "license.txt",
     `TOOLIFYHQ LICENSE\n\nTool        : ${req.tool_name}\nLicensed to : ${req.buyer_name}\nTechnician  : ${req.technician_email}\nOrder ref   : ${req.order_reference}\nLicense key : ${licenseKey}\nIssued      : ${new Date().toUTCString()}\n\nThis license is non-transferable and tied to the buyer above.\n`,
   );
+
+  // ---- Source code project (TypeScript / Node.js) ----
+  const codeFiles = generateCodeProject({
+    toolName: req.tool_name,
+    toolSlug: req.tool_slug,
+    description: req.description ?? `Premium ${req.tool_name} package delivered by ToolifyHQ.`,
+    benefits: req.benefits ?? ["Professional-grade tool", "Priority email support"],
+    licenseKey,
+    orderReference: req.order_reference,
+    buyerName: req.buyer_name,
+  });
+  for (const [path, content] of Object.entries(codeFiles)) {
+    zip.file(`source/${path}`, content as string);
+  }
 
   const out = await zip.generateAsync({ type: "uint8array" });
   return out;
