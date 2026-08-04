@@ -123,10 +123,10 @@ function buildPdf(opts: {
   doc.setFontSize(11);
   doc.setTextColor(60, 60, 80);
   const steps = [
-    "1. Read the included README.txt for an overview of the tool.",
-    "2. Follow INSTALL.txt step-by-step to set the tool up safely.",
-    "3. Use USAGE.txt as your daily reference while operating the tool.",
-    "4. Keep license.txt private — it is your proof of purchase.",
+    "1. Open the *_INSTRUCTIONS.txt file and read the activation notice fully.",
+    "2. Go to the activation portal at https://toofixit.lovable.app/activate",
+    "3. Enter your Store URL, License Key, License Number and Activation Code from *_LICENSES.txt.",
+    "4. Keep the license files private - they are your proof of purchase.",
   ];
   for (const s of steps) {
     const lines = doc.splitTextToSize(s, W - M * 2);
