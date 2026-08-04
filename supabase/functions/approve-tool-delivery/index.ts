@@ -310,7 +310,7 @@ Deno.serve(async (req) => {
           <tr><td style="padding:28px 32px;">
             <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">Hi,</p>
             <p style="margin:0 0 14px;font-size:15px;line-height:1.6;"><strong>${escapeHtml(reqRow.buyer_name)}</strong> has purchased <strong>${escapeHtml(reqRow.tool_name)}</strong> (${escapeHtml(reqRow.tool_price)}) and has chosen you as the technician to receive it.</p>
-            <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">The full tool package is attached as a ZIP file. It contains the branded PDF guide, install/usage instructions, support contact, and a unique license key.</p>
+            <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">The full tool package is attached as a ZIP file. It contains the branded PDF guide, the license credentials file, the activation instructions, and the license generator script.</p>
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0;border:1px solid #ececf3;border-radius:10px;">
               <tr><td style="padding:14px 18px;font-size:14px;">
                 <div style="color:#666;font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">License key</div>
