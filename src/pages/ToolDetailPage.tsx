@@ -180,9 +180,8 @@ const ToolDetailPage = () => {
                   </div>
                   <p className="mt-4 rounded-xl border border-dashed border-border bg-secondary/40 p-4 text-xs text-muted-foreground">
                     <span className="font-semibold text-foreground">Recommended for: </span>
-                    Shopify stores experiencing sold-out inventory issues due to catalog growth. These resource upgrades ensure your
-                    inventory system can properly support your product catalog, maintain accurate stock availability, and scale with your
-                    business as it continues to grow.
+                    {tool.packagesRecommendedFor ??
+                      "Shopify stores experiencing sold-out inventory issues due to catalog growth. These resource upgrades ensure your inventory system can properly support your product catalog, maintain accurate stock availability, and scale with your business as it continues to grow."}
                   </p>
                 </div>
               )}
