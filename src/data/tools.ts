@@ -22,6 +22,7 @@ export interface Tool {
   category: string;
   imagePrompt: string;
   packages?: ToolPackage[];
+  packagesRecommendedFor?: string;
 }
 
 export const tools: Tool[] = [
@@ -30,8 +31,8 @@ export const tools: Tool[] = [
     name: "Influencer & Creator Email List",
     slug: "influencer-creator-email-list",
     description: "Targeted email list of vetted influencers and content creators across niches. Priced at $0.5 per email, so you only pay for the exact volume you need.",
-    price: "$0.50 / email",
-    priceValue: 0.5,
+    price: "$149",
+    priceValue: 149,
     benefits: [
       "Vetted influencer & creator contacts",
       "Pay only for the emails you need ($0.50 each)",
@@ -42,6 +43,99 @@ export const tools: Tool[] = [
     ],
     category: "Marketing",
     imagePrompt: "influencer-email-list",
+    packagesRecommendedFor:
+      "Shopify brands that want to work with influencers and content creators to increase brand awareness, generate authentic content, and create more opportunities to reach qualified customers through strategic outreach.",
+    packages: [
+      {
+        id: "basic",
+        name: "Basic Package",
+        tagline: "Influencer Outreach Starter",
+        price: "$149",
+        priceValue: 149,
+        accent: "basic",
+        bestFor:
+          "Perfect for new Shopify stores looking to begin influencer marketing with a targeted list of creators.",
+        features: [
+          "50–100 verified influencer & creator leads",
+          "Niche-specific research",
+          "Verified email addresses",
+          "Instagram, TikTok & YouTube creators",
+          "Creator name & social media profile links",
+          "Follower count",
+          "Engagement rate",
+          "Country & location (where available)",
+          "Contact type (direct email or management)",
+          "Spreadsheet delivered in Excel or CSV format",
+        ],
+        benefits: [
+          "Start reaching relevant creators quickly",
+          "Save hours of manual research",
+          "Connect with creators in your niche",
+          "Build your first influencer outreach campaign",
+          "Increase brand awareness with targeted collaborations",
+        ],
+      },
+      {
+        id: "standard",
+        name: "Standard Package",
+        tagline: "Influencer Growth Database",
+        price: "$299",
+        priceValue: 299,
+        accent: "pro",
+        popular: true,
+        bestFor:
+          "Designed for stores ready to scale their influencer outreach and build consistent creator partnerships.",
+        features: [
+          "101–300 verified influencer & creator leads",
+          "Everything in the Basic Package",
+          "Advanced niche & audience filtering",
+          "Micro & mid-tier influencer selection",
+          "Audience location analysis (where available)",
+          "Brand collaboration information (where available)",
+          "Creator categorization by platform",
+          "Duplicate removal & quality verification",
+          "Outreach strategy guide",
+          "Priority delivery",
+        ],
+        benefits: [
+          "Reach a larger pool of qualified creators",
+          "Improve outreach efficiency",
+          "Increase opportunities for collaborations",
+          "Build a stronger influencer marketing pipeline",
+          "Generate more authentic brand exposure",
+        ],
+      },
+      {
+        id: "premium",
+        name: "Premium Package",
+        tagline: "Influencer Partnership Accelerator",
+        price: "$499",
+        priceValue: 499,
+        accent: "premium",
+        bestFor:
+          "A comprehensive influencer research package for brands looking to build large-scale creator campaigns.",
+        features: [
+          "301–500 verified influencer & creator leads",
+          "Everything in the Standard Package",
+          "Highly targeted creator research",
+          "Premium engagement filtering",
+          "Multi-platform creator database",
+          "Influencer priority ranking",
+          "Contact verification review",
+          "Personalized outreach recommendations",
+          "Campaign planning consultation",
+          "Priority support",
+        ],
+        benefits: [
+          "Access a large database of qualified creators",
+          "Scale influencer outreach with confidence",
+          "Build long-term creator partnerships",
+          "Increase brand visibility across multiple platforms",
+          "Support sustainable sales growth through influencer marketing",
+          "Save significant time on research and lead generation",
+        ],
+      },
+    ],
   },
   {
     id: "43",
