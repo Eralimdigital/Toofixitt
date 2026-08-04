@@ -20,6 +20,7 @@ import WelcomeVoice from "./components/WelcomeVoice";
 import Cart from "./pages/Cart.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
+import Activate from "./pages/Activate.tsx";
 import { CartProvider } from "./contexts/CartContext";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/tools/:slug" element={<ToolDetailPage />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/activate" element={<Activate />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/about" element={<About />} />
