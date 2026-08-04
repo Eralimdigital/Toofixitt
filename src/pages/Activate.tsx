@@ -37,6 +37,7 @@ const Activate = () => {
       <SEO
         title="Product Activation Portal | ToolifyHQ"
         description="Activate your purchased ToolifyHQ tool using your store URL, license key, license number and activation code."
+        path="/activate"
       />
       <Navbar />
       <section className="gradient-hero border-b border-border py-16">
