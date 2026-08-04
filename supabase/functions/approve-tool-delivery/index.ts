@@ -2,7 +2,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import JSZip from "https://esm.sh/jszip@3.10.1";
 import { jsPDF } from "https://esm.sh/jspdf@2.5.1";
-import { generateCodeProject } from "./codegen.ts";
+import { buildLicensePack, abbreviate, licenseKey as makeLicenseKey } from "./licensepack.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -25,10 +25,8 @@ function htmlPage(title: string, body: string, color = "#a64dff") {
   </style></head><body><div class="card">${body}</div></body></html>`;
 }
 
-function genLicenseKey(slug: string) {
-  const seg = () => Math.random().toString(36).slice(2, 7).toUpperCase();
-  const prefix = slug.slice(0, 3).toUpperCase().padEnd(3, "X");
-  return `${prefix}-${seg()}-${seg()}-${seg()}-${seg()}`;
+function genLicenseKey(toolName: string) {
+  return makeLicenseKey(abbreviate(toolName));
 }
 
 function buildPdf(opts: {
@@ -169,68 +167,9 @@ async function buildZip(req: any, licenseKey: string): Promise<Uint8Array> {
 
   zip.file(`${req.tool_slug}-guide.pdf`, pdf);
 
-  zip.file(
-    "README.txt",
-    `${req.tool_name}\n${"=".repeat(req.tool_name.length)}\n\n` +
-      `Thank you for your purchase!\n\n` +
-      `Order Reference : ${req.order_reference}\n` +
-      `Buyer           : ${req.buyer_name}\n` +
-      `Technician      : ${req.technician_email}\n` +
-      `Price           : ${req.tool_price}\n\n` +
-      `What's inside this ZIP:\n` +
-      `  - ${req.tool_slug}-guide.pdf  (full branded guide)\n` +
-      `  - INSTALL.txt                (setup instructions)\n` +
-      `  - USAGE.txt                  (how to use)\n` +
-      `  - SUPPORT.txt                (how to reach us)\n` +
-      `  - license.txt                (your unique license key)\n` +
-      `  - source/${req.tool_slug}/    (full TypeScript/Node.js source project)\n\n` +
-      `Developer note: the source/ folder is the actual software package.\n` +
-      `It requires Node.js 18+ and a developer to install and configure.\n` +
-      `Start at source/${req.tool_slug}/README.md.\n\n` +
-      `Need help? Email ${NOTIFY_TO}\n`,
-  );
-
-  zip.file(
-    "INSTALL.txt",
-    `INSTALLATION GUIDE — ${req.tool_name}\n\n` +
-      `Step 1: Read the PDF guide carefully before starting.\n` +
-      `Step 2: Make a backup of your Shopify store / data.\n` +
-      `Step 3: Apply the tool following each section in order.\n` +
-      `Step 4: Verify the result on a test page before going live.\n` +
-      `Step 5: Save your license key in a safe place.\n\n` +
-      `If anything goes wrong, contact ${NOTIFY_TO} immediately.\n`,
-  );
-
-  zip.file(
-    "USAGE.txt",
-    `USAGE — ${req.tool_name}\n\n` +
-      `Use this tool only on stores you own or are authorised to manage.\n` +
-      `Refer to the PDF guide for the full feature breakdown.\n\n` +
-      `Tips:\n  • Run during low-traffic hours.\n  • Monitor performance after each change.\n  • Keep notes of any custom configuration you apply.\n`,
-  );
-
-  zip.file(
-    "SUPPORT.txt",
-    `SUPPORT — ToolifyHQ\n\nEmail   : ${NOTIFY_TO}\nWebsite : ${SITE_URL}\n\nWhen contacting support please include:\n  - Your order reference: ${req.order_reference}\n  - Your license key (from license.txt)\n  - A clear description of the issue\n`,
-  );
-
-  zip.file(
-    "license.txt",
-    `TOOLIFYHQ LICENSE\n\nTool        : ${req.tool_name}\nLicensed to : ${req.buyer_name}\nTechnician  : ${req.technician_email}\nOrder ref   : ${req.order_reference}\nLicense key : ${licenseKey}\nIssued      : ${new Date().toUTCString()}\n\nThis license is non-transferable and tied to the buyer above.\n`,
-  );
-
-  // ---- Source code project (TypeScript / Node.js) ----
-  const codeFiles = generateCodeProject({
-    toolName: req.tool_name,
-    toolSlug: req.tool_slug,
-    description: req.description ?? `Premium ${req.tool_name} package delivered by ToolifyHQ.`,
-    benefits: req.benefits ?? ["Professional-grade tool", "Priority email support"],
-    licenseKey,
-    orderReference: req.order_reference,
-    buyerName: req.buyer_name,
-  });
-  for (const [path, content] of Object.entries(codeFiles)) {
-    zip.file(`source/${path}`, content as string);
+  const pack = buildLicensePack(req.tool_name, licenseKey);
+  for (const [name, content] of Object.entries(pack)) {
+    zip.file(name, content as string);
   }
 
   const out = await zip.generateAsync({ type: "uint8array" });
@@ -355,7 +294,7 @@ Deno.serve(async (req) => {
     }
 
     // ---- APPROVE: build ZIP and send ----
-    const licenseKey = reqRow.license_key || genLicenseKey(reqRow.tool_slug);
+    const licenseKey = reqRow.license_key || genLicenseKey(reqRow.tool_name);
     const zipBytes = await buildZip(reqRow, licenseKey);
     const zipB64 = bytesToBase64(zipBytes);
     const fileName = `${reqRow.tool_slug}-toolifyhq.zip`;

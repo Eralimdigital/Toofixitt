@@ -207,13 +207,14 @@ Please adhere strictly to the above guidelines.
 `;
 }
 
-export function buildLicensePack(toolName: string): Record<string, string> & { primaryKey: string } {
+export function buildLicensePack(toolName: string, forcedKey?: string): Record<string, string> {
   const abbr = abbreviate(toolName);
   const base = fileBase(toolName);
   const sets = generateLicenseSets(abbr, 10);
+  if (forcedKey) sets[0].license_key = forcedKey;
   const files: Record<string, string> = {};
   files[`${base}_license_generator.py`] = buildGeneratorScript(toolName, abbr);
   files[`${base}_LICENSES.txt`] = buildLicensesFile(toolName, sets);
   files[`${base}_INSTRUCTIONS.txt`] = buildInstructionsFile(toolName, sets[0]);
-  return Object.assign(files, { primaryKey: sets[0].license_key });
+  return files;
 }
