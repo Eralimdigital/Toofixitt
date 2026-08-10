@@ -308,7 +308,7 @@ Deno.serve(async (req) => {
 
     // ---- APPROVE: build ZIP and send ----
     const licenseKey = reqRow.license_key || genLicenseKey(reqRow.tool_name);
-    const zipBytes = await buildZip(reqRow, licenseKey);
+    const zipBytes = await buildZip(reqRow, licenseKey, supabase);
     const zipB64 = bytesToBase64(zipBytes);
     const fileName = `${reqRow.tool_slug}-toolifyhq.zip`;
 
