@@ -93,4 +93,4 @@ const ToolCard = ({ tool }: ToolCardProps) => {
   );
 };
 
-export default ToolCard;
+export default memo(ToolCard);
