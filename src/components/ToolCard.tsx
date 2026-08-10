@@ -1,6 +1,6 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useReviewSummaries } from "@/hooks/useReviewSummaries";
 import { Star, ShoppingCart, Check } from "lucide-react";
 import type { Tool } from "@/data/tools";
 import { useCart } from "@/contexts/CartContext";
@@ -14,21 +14,10 @@ interface ToolCardProps {
 const ToolCard = ({ tool }: ToolCardProps) => {
   const { add, has } = useCart();
   const inCart = has(tool.slug);
-  const { data: reviews } = useQuery({
-    queryKey: ["reviews-summary", tool.slug],
-    queryFn: async () => {
-      const { data } = await supabase
-        .from("reviews")
-        .select("rating")
-        .eq("tool_slug", tool.slug);
-      return data || [];
-    },
-  });
-
-  const avgRating = reviews?.length
-    ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
-    : 0;
-  const count = reviews?.length || 0;
+  const { data: summaries } = useReviewSummaries();
+  const summary = summaries?.[tool.slug];
+  const avgRating = summary?.avg ?? 0;
+  const count = summary?.count ?? 0;
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover">
@@ -104,4 +93,4 @@ const ToolCard = ({ tool }: ToolCardProps) => {
   );
 };
 
-export default ToolCard;
+export default memo(ToolCard);
