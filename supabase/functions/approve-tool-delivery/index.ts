@@ -151,8 +151,21 @@ function buildPdf(opts: {
   return new Uint8Array(ab);
 }
 
-async function buildZip(req: any, licenseKey: string): Promise<Uint8Array> {
-  const zip = new JSZip();
+// Tools that ship a real pre-built package stored in the `tool-packages` bucket.
+const PACKAGED_TOOLS: Record<string, string> = {
+  "premium-shopify-themes": "premium-shopify-themes/Impulse_Theme_M.zip",
+};
+
+async function buildZip(req: any, licenseKey: string, supabase: any): Promise<Uint8Array> {
+  let zip = new JSZip();
+
+  const packagedPath = PACKAGED_TOOLS[req.tool_slug];
+  if (packagedPath) {
+    const { data, error } = await supabase.storage.from("tool-packages").download(packagedPath);
+    if (error) throw new Error(`Failed to load packaged tool: ${error.message}`);
+    const buf = new Uint8Array(await data.arrayBuffer());
+    zip = await JSZip.loadAsync(buf);
+  }
 
   const pdf = buildPdf({
     toolName: req.tool_name,
