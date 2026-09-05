@@ -1,5 +1,5 @@
 // @ts-nocheck
-// Generates the ToolifyHQ license pack delivered inside every tool ZIP.
+// Builds the ToolifyHQ license documents delivered inside every tool ZIP.
 
 const BRAND = "TOOLIFYHQ";
 const BRAND_NAME = "ToolifyHQ";
@@ -57,80 +57,6 @@ function fileBase(toolName: string) {
   return toolName.replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "");
 }
 
-export function buildGeneratorScript(toolName: string, abbr: string): string {
-  return `import random
-import string
-from pathlib import Path
-
-
-PRODUCT_NAME = "${toolName}"
-PRODUCT_ABBREVIATION = "${abbr}"
-
-
-def generate_license_key() -> str:
-    version = f"V{random.randint(100, 999)}"
-    segment_one = "".join(random.choices(string.ascii_uppercase + string.digits, k=4))
-    segment_two = "".join(random.choices(string.ascii_uppercase + string.digits, k=4))
-    ending = str(random.randint(1000, 9999))
-    return f"{PRODUCT_ABBREVIATION}-{version}-{segment_one}-{segment_two}-{ending}"
-
-
-def generate_license_number() -> str:
-    return "".join(random.choices(string.ascii_uppercase + string.digits, k=16))
-
-
-def generate_activation_code(section_length: int = 16, sections: int = 8) -> str:
-    allowed = string.ascii_letters + string.digits + "!@#$%^&*()-_=+"
-    parts = []
-    for _ in range(sections):
-        part = "".join(random.choices(allowed, k=section_length))
-        parts.append(part)
-    return "-".join(parts)
-
-
-def generate_license_set() -> dict:
-    return {
-        "product_name": PRODUCT_NAME,
-        "license_key": generate_license_key(),
-        "license_number": generate_license_number(),
-        "activation_code": generate_activation_code(),
-    }
-
-
-def save_credentials(filename: str = None, total_codes: int = 10) -> Path:
-    if filename is None:
-        filename = PRODUCT_NAME.replace(" ", "_").replace("/", "_") + "_license_credentials.txt"
-
-    output_path = Path(filename)
-    with output_path.open("w", encoding="utf-8") as file:
-        file.write("${BRAND} PRODUCT LICENSE FILE\\n")
-        file.write("==============================\\n\\n")
-        file.write(f"Product Name: {PRODUCT_NAME}\\n")
-        file.write("Activation URL:\\n")
-        file.write("${ACTIVATE_URL}\\n\\n")
-        file.write("Activation Input:\\n")
-        file.write("1. Store URL\\n")
-        file.write("2. License Key\\n")
-        file.write("3. License Number\\n")
-        file.write("4. Activation Code\\n\\n")
-        file.write("LICENSE CREDENTIALS:\\n\\n")
-
-        for index in range(1, total_codes + 1):
-            license_set = generate_license_set()
-            file.write(f"License Set {index}\\n")
-            file.write(f"License Key: {license_set['license_key']}\\n")
-            file.write(f"License Number: {license_set['license_number']}\\n")
-            file.write(f"Activation Code: {license_set['activation_code']}\\n\\n")
-
-    return output_path
-
-
-if __name__ == "__main__":
-    saved_file = save_credentials(total_codes=10)
-    print(f"License credentials saved to: {saved_file.resolve()}")
-`;
-}
-
 export function buildLicensesFile(toolName: string, sets: LicenseSet[]): string {
   let out =
     `${BRAND} PRODUCT LICENSE FILE\n` +
@@ -159,7 +85,7 @@ INSTRUCTIONS FOR ACTIVATION:
 1. Secure Handling:
    - Only an experienced software developer or IT specialist should handle this activation process.
    - Do NOT share this file with unauthorized personnel.
-   - The license credentials provided for this product are generated exclusively for the original purchaser.
+   - The license credentials provided for this product are issued exclusively to the original purchaser.
    - Any attempt to reuse, replicate, or redistribute these credentials is prohibited.
 
 2. Activation Process:
@@ -213,7 +139,6 @@ export function buildLicensePack(toolName: string, forcedKey?: string): Record<s
   const sets = generateLicenseSets(abbr, 10);
   if (forcedKey) sets[0].license_key = forcedKey;
   const files: Record<string, string> = {};
-  files[`${base}_license_generator.py`] = buildGeneratorScript(toolName, abbr);
   files[`${base}_LICENSES.txt`] = buildLicensesFile(toolName, sets);
   files[`${base}_INSTRUCTIONS.txt`] = buildInstructionsFile(toolName, sets[0]);
   return files;
