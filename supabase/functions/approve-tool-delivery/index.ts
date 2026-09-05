@@ -189,36 +189,25 @@ async function buildZip(req: any, licenseKey: string, supabase: any): Promise<Ui
   return out;
 }
 
-function buildRawEmailWithAttachment(
-  to: string,
-  subject: string,
-  html: string,
-  text: string,
-  attachmentName: string,
-  attachmentB64: string,
-): string {
+function buildRawEmail(to: string, subject: string, html: string, text: string): string {
   const boundary = `bnd_${crypto.randomUUID()}`;
-  // Split base64 into 76-char lines for MIME compliance
-  const wrapped = attachmentB64.replace(/(.{76})/g, "$1\r\n");
   const lines = [
     `From: ${FROM_NAME} <${NOTIFY_TO}>`,
     `To: ${to}`,
     `Subject: ${subject}`,
     "MIME-Version: 1.0",
-    `Content-Type: multipart/mixed; boundary="${boundary}"`,
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    "",
+    `--${boundary}`,
+    'Content-Type: text/plain; charset="UTF-8"',
+    "",
+    text,
     "",
     `--${boundary}`,
     'Content-Type: text/html; charset="UTF-8"',
     "Content-Transfer-Encoding: 7bit",
     "",
     html,
-    "",
-    `--${boundary}`,
-    `Content-Type: application/zip; name="${attachmentName}"`,
-    "Content-Transfer-Encoding: base64",
-    `Content-Disposition: attachment; filename="${attachmentName}"`,
-    "",
-    wrapped,
     "",
     `--${boundary}--`,
   ];
@@ -227,13 +216,32 @@ function buildRawEmailWithAttachment(
   return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
-function bytesToBase64(bytes: Uint8Array): string {
-  let s = "";
-  const CHUNK = 0x8000;
-  for (let i = 0; i < bytes.length; i += CHUNK) {
-    s += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + CHUNK)));
+async function createDeliveryDownload(
+  reqRow: any,
+  zipBytes: Uint8Array,
+  fileName: string,
+  supabase: any,
+) {
+  const storagePath = `deliveries/${reqRow.id}/${fileName}`;
+  const { error: uploadError } = await supabase.storage
+    .from("tool-packages")
+    .upload(storagePath, zipBytes, {
+      contentType: "application/zip",
+      cacheControl: "3600",
+      upsert: true,
+    });
+
+  if (uploadError) throw new Error(`Failed to store delivery package: ${uploadError.message}`);
+
+  const { data, error: signedUrlError } = await supabase.storage
+    .from("tool-packages")
+    .createSignedUrl(storagePath, 60 * 60 * 24 * 7, { download: fileName });
+
+  if (signedUrlError || !data?.signedUrl) {
+    throw new Error(`Failed to create secure download link: ${signedUrlError?.message ?? "Unknown error"}`);
   }
-  return btoa(s);
+
+  return data.signedUrl;
 }
 
 function escapeHtml(s: string) {
@@ -291,8 +299,9 @@ Deno.serve(async (req) => {
       return htmlResp(404, htmlPage("Not found", `<div class="badge" style="background:#dc2626;">Not found</div><h1>Request not found</h1><p>This approval token does not match any order.</p>`));
     }
 
-    if (reqRow.status === "delivered" || reqRow.delivered_at) {
-      return htmlResp(200, htmlPage("Already delivered", `<div class="badge" style="background:#16a34a;">Delivered</div><h1>Already delivered ✓</h1><p><strong>${escapeHtml(reqRow.tool_name)}</strong> was already sent to <strong>${escapeHtml(reqRow.technician_email)}</strong>.</p><p style="font-size:13px;color:#888;">Order ${escapeHtml(reqRow.order_reference)}</p>`, "#16a34a"));
+    if ((reqRow.status === "delivered" || reqRow.delivered_at) && action !== "resend") {
+      const resendUrl = `${url.origin}${url.pathname}?token=${encodeURIComponent(token)}&action=resend`;
+      return htmlResp(200, htmlPage("Already delivered", `<div class="badge" style="background:#16a34a;">Delivered</div><h1>Already delivered</h1><p><strong>${escapeHtml(reqRow.tool_name)}</strong> was already sent to <strong>${escapeHtml(reqRow.technician_email)}</strong>.</p><p style="font-size:13px;color:#888;">Order ${escapeHtml(reqRow.order_reference)}</p><p style="margin-top:22px;"><a href="${resendUrl}" style="display:inline-block;background:#a64dff;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:700;">Send a secure download link again</a></p>`, "#16a34a"));
     }
     if (reqRow.status === "rejected" || reqRow.rejected_at) {
       return htmlResp(200, htmlPage("Already rejected", `<div class="badge" style="background:#dc2626;">Rejected</div><h1>Order rejected</h1><p>This order was already marked as rejected and the tool was not delivered.</p>`, "#dc2626"));
@@ -309,21 +318,23 @@ Deno.serve(async (req) => {
     // ---- APPROVE: build ZIP and send ----
     const licenseKey = reqRow.license_key || genLicenseKey(reqRow.tool_name);
     const zipBytes = await buildZip(reqRow, licenseKey, supabase);
-    const zipB64 = bytesToBase64(zipBytes);
     const fileName = `${reqRow.tool_slug}-toolifyhq.zip`;
+    const downloadUrl = await createDeliveryDownload(reqRow, zipBytes, fileName, supabase);
 
     const html = `<!doctype html><html><body style="margin:0;padding:0;background:#f4f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:24px 0;"><tr><td align="center">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
           <tr><td style="background:linear-gradient(135deg,#a64dff 0%,#cc66ff 100%);padding:28px 32px;color:#fff;">
             <div style="font-size:13px;letter-spacing:1px;text-transform:uppercase;opacity:.85;margin-bottom:6px;">ToolifyHQ Tool Delivery</div>
-            <div style="font-size:24px;font-weight:700;">Your tool is ready ✓</div>
+            <div style="font-size:24px;font-weight:700;">Your tool is ready</div>
             <div style="margin-top:10px;font-size:13px;opacity:.9;">Order Ref: <strong style="font-family:monospace;">${escapeHtml(reqRow.order_reference)}</strong></div>
           </td></tr>
           <tr><td style="padding:28px 32px;">
             <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">Hi,</p>
             <p style="margin:0 0 14px;font-size:15px;line-height:1.6;"><strong>${escapeHtml(reqRow.buyer_name)}</strong> has purchased <strong>${escapeHtml(reqRow.tool_name)}</strong> (${escapeHtml(reqRow.tool_price)}) and has chosen you as the technician to receive it.</p>
-            <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">The full tool package is attached as a ZIP file. It contains the branded PDF guide, the license credentials file, the activation instructions, and the license generator script.</p>
+            <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">Your complete tool package is ready. It contains the branded PDF guide, license credentials, activation instructions, and the source files.</p>
+            <p style="margin:22px 0;text-align:center;"><a href="${escapeHtml(downloadUrl)}" style="display:inline-block;background:#a64dff;color:#fff;text-decoration:none;padding:14px 24px;border-radius:8px;font-weight:700;font-size:15px;">Download your tool package</a></p>
+            <p style="margin:0 0 14px;font-size:13px;line-height:1.55;color:#666;">This secure download link expires in 7 days. If it expires, contact us and we will issue a new link.</p>
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0;border:1px solid #ececf3;border-radius:10px;">
               <tr><td style="padding:14px 18px;font-size:14px;">
                 <div style="color:#666;font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">License key</div>
@@ -338,26 +349,22 @@ Deno.serve(async (req) => {
     </body></html>`;
 
     const subject = `${reqRow.tool_name} — your ToolifyHQ delivery (${reqRow.order_reference})`;
-    const raw = buildRawEmailWithAttachment(
+    const raw = buildRawEmail(
       reqRow.technician_email,
       subject,
       html,
-      `Your ToolifyHQ tool ${reqRow.tool_name} is attached as ${fileName}. License: ${licenseKey}`,
-      fileName,
-      zipB64,
+      `Your ToolifyHQ tool ${reqRow.tool_name} is ready. Download it here: ${downloadUrl}\n\nThis link expires in 7 days. License: ${licenseKey}`,
     );
 
     await sendGmail(reqRow.technician_email, raw);
 
     // also notify the admin
     try {
-      const adminRaw = buildRawEmailWithAttachment(
+      const adminRaw = buildRawEmail(
         NOTIFY_TO,
         `[Delivered] ${reqRow.tool_name} → ${reqRow.technician_email}`,
-        `<p>Tool <strong>${escapeHtml(reqRow.tool_name)}</strong> was delivered to <strong>${escapeHtml(reqRow.technician_email)}</strong>.</p><p>Order: ${escapeHtml(reqRow.order_reference)}<br/>License: ${escapeHtml(licenseKey)}</p>`,
-        `Delivered ${reqRow.tool_name} to ${reqRow.technician_email}. License ${licenseKey}.`,
-        fileName,
-        zipB64,
+        `<p>Tool <strong>${escapeHtml(reqRow.tool_name)}</strong> was delivered to <strong>${escapeHtml(reqRow.technician_email)}</strong>.</p><p>Order: ${escapeHtml(reqRow.order_reference)}<br/>License: ${escapeHtml(licenseKey)}</p><p><a href="${escapeHtml(downloadUrl)}">Download package</a> (link expires in 7 days)</p>`,
+        `Delivered ${reqRow.tool_name} to ${reqRow.technician_email}. Download: ${downloadUrl}. License ${licenseKey}.`,
       );
       await sendGmail(NOTIFY_TO, adminRaw);
     } catch (e) {
@@ -380,7 +387,7 @@ Deno.serve(async (req) => {
         "Tool delivered",
         `<div class="badge" style="background:#16a34a;">Sent ✓</div>
          <h1>Tool delivered successfully</h1>
-         <p><strong>${escapeHtml(reqRow.tool_name)}</strong> has been emailed to <strong>${escapeHtml(reqRow.technician_email)}</strong> with the full ZIP package attached.</p>
+         <p><strong>${escapeHtml(reqRow.tool_name)}</strong> has been emailed to <strong>${escapeHtml(reqRow.technician_email)}</strong> with a secure download link.</p>
          <p style="font-size:13px;color:#888;">Order ${escapeHtml(reqRow.order_reference)} · License ${escapeHtml(licenseKey)}</p>`,
         "#16a34a",
       ),
