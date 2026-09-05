@@ -142,7 +142,7 @@ function buildPdf(opts: {
   doc.setFontSize(9);
   doc.setTextColor(140, 140, 160);
   doc.text(
-    `ToolifyHQ — ${SITE_URL}  •  Support: ${NOTIFY_TO}  •  Generated ${new Date().toUTCString()}`,
+    `ToolifyHQ — ${SITE_URL}  •  Support: ${NOTIFY_TO}  •  Issued ${new Date().toUTCString()}`,
     M,
     H - 40,
   );
