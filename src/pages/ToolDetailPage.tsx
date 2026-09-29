@@ -103,7 +103,7 @@ const ToolDetailPage = () => {
                 <div ref={packagesRef} className="mb-8 scroll-mt-24">
                   <h2 className="mb-1 text-xl font-extrabold text-foreground">Choose your package</h2>
                   <p className="mb-5 text-sm text-muted-foreground">
-                    Pick the resource upgrade that matches your catalog size. One-time upgrade, no subscription.
+                     Choose the package that fits your store. One-time purchase, no subscription.
                   </p>
                   <div className="grid gap-4 md:grid-cols-3">
                     {packages.map((pkg) => {
@@ -142,7 +142,7 @@ const ToolDetailPage = () => {
                             {pkg.tagline}
                           </p>
                           <p className="text-3xl font-extrabold text-accent">{pkg.price}</p>
-                          <p className="mb-4 text-xs text-muted-foreground">One-time upgrade</p>
+                           <p className="mb-4 text-xs text-muted-foreground">One-time purchase</p>
                           <p className="mb-4 text-xs text-muted-foreground">{pkg.bestFor}</p>
 
                           <p className="mb-2 text-xs font-semibold text-foreground">What's included</p>
@@ -287,9 +287,9 @@ const ToolDetailPage = () => {
       <DownloadToolDialog
         open={downloadOpen}
         onOpenChange={setDownloadOpen}
-        toolSlug={tool.slug}
-        toolName={tool.name}
-        toolPrice={tool.price}
+         toolSlug={cartSlug}
+         toolName={displayName}
+         toolPrice={displayPrice}
       />
     </div>
   );

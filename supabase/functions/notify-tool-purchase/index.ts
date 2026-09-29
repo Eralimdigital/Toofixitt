@@ -47,8 +47,9 @@ function escapeHtml(s: string) {
 }
 
 function buildHtml(d: EmailData) {
-  const imageUrl = `${SITE_URL}/images/tools/${encodeURIComponent(d.toolSlug)}.jpg`;
-  const toolUrl = `${SITE_URL}/tools/${encodeURIComponent(d.toolSlug)}`;
+  const baseSlug = d.toolSlug.split("--")[0];
+  const imageUrl = `${SITE_URL}/images/tools/${encodeURIComponent(baseSlug)}.webp`;
+  const toolUrl = `${SITE_URL}/tools/${encodeURIComponent(baseSlug)}`;
   const ts = new Date().toLocaleString("en-US", {
     timeZone: "UTC",
     dateStyle: "medium",
