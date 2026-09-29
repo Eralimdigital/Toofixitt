@@ -13,7 +13,7 @@ interface ToolCardProps {
 
 const ToolCard = ({ tool }: ToolCardProps) => {
   const { add, has } = useCart();
-  const inCart = has(tool.slug);
+  const inCart = has(tool.packages ? `${tool.slug}--${tool.packages[0].id}` : tool.slug);
   const { data: summaries } = useReviewSummaries();
   const summary = summaries?.[tool.slug];
   const avgRating = summary?.avg ?? 0;
@@ -67,7 +67,8 @@ const ToolCard = ({ tool }: ToolCardProps) => {
               onClick={(e) => {
                 e.preventDefault();
                 if (inCart) return;
-                add(tool);
+                 const firstPackage = tool.packages?.[0];
+                 add(firstPackage ? { ...tool, slug: `${tool.slug}--${firstPackage.id}`, name: `${tool.name} — ${firstPackage.name}`, price: firstPackage.price, priceValue: firstPackage.priceValue } : tool);
                 playAddToCart();
                 toast.success(`${tool.name} added to cart`);
               }}

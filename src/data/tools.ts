@@ -27,6 +27,44 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    id: "48",
+    name: "Social Commerce Setup Resource",
+    slug: "social-commerce-setup-resource",
+    description: "Set up a new sales channel for your Shopify store with a focused TikTok, Meta, or complete social commerce launch package. Choose the channels you need and receive a practical setup handoff.",
+    price: "$299",
+    priceValue: 299,
+    category: "Integration",
+    imagePrompt: "purple robot guiding Shopify social commerce setup",
+    benefits: [
+      "Prepare your Shopify catalog for social shopping",
+      "Connect products to the channels in your chosen package",
+      "Check product tagging and shopping readiness",
+      "Review catalog sync and the customer shopping experience",
+      "Receive a clear setup guide and handoff checklist",
+    ],
+    packagesRecommendedFor: "Shopify stores that want to establish TikTok, Facebook and Instagram as additional product discovery channels. Platform eligibility and approval depend on the store and the relevant social networks.",
+    packages: [
+      {
+        id: "basic", name: "Basic", tagline: "TikTok Commerce Launch", price: "$299", priceValue: 299, accent: "basic",
+        bestFor: "Shopify stores looking to establish TikTok as an additional sales channel.",
+        features: ["TikTok Shop setup", "Shopify–TikTok connection", "Product catalog synchronization", "Product listing preparation", "Collection and product organization", "TikTok shopping configuration", "Product tagging readiness", "Store and shopping experience testing", "Basic commerce optimization"],
+        benefits: ["Open a new product discovery channel", "Make eligible products available to TikTok shoppers", "Connect TikTok content with Shopify products", "Prepare for future TikTok marketing campaigns"],
+      },
+      {
+        id: "professional", name: "Professional", tagline: "Meta Commerce Launch", price: "$499", priceValue: 499, accent: "pro",
+        bestFor: "Shopify stores that want to turn Facebook and Instagram into shopping channels.",
+        features: ["Facebook Shop setup", "Instagram Shop setup", "Shopify–Meta connection", "Product catalog synchronization", "Product and collection organization", "Facebook shopping configuration", "Instagram shopping configuration", "Product tagging readiness", "Commerce settings configuration", "Shopping experience testing", "Basic commerce optimization"],
+        benefits: ["Create more ways for customers to discover products", "Connect social content with your product catalog", "Build a foundation for organic social selling", "Prepare for future Meta advertising and retargeting"],
+      },
+      {
+        id: "premium", name: "Premium", tagline: "Complete Social Commerce Launch", price: "$699", priceValue: 699, accent: "premium",
+        bestFor: "Shopify stores seeking TikTok, Facebook and Instagram shopping channels together.",
+        features: ["TikTok Shop setup", "Facebook Shop setup", "Instagram Shop setup", "Shopify integration across all channels", "Product catalog synchronization", "Product and collection organization", "Social shopping configuration", "Product tagging readiness", "Commerce settings configuration", "Shopping experience testing", "Cross-platform commerce review", "Basic sales-channel optimization", "Final social commerce readiness check"],
+        benefits: ["Establish three social commerce channels", "Expand product discovery opportunities", "Connect your Shopify catalog across major social shopping platforms", "Build a stronger foundation for organic and paid customer acquisition"],
+      },
+    ],
+  },
+  {
     id: "44",
     name: "Influencer & Creator Email List",
     slug: "influencer-creator-email-list",

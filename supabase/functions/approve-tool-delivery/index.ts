@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import JSZip from "https://esm.sh/jszip@3.10.1";
 import { jsPDF } from "https://esm.sh/jspdf@2.5.1";
 import { buildLicensePack, abbreviate, licenseKey as makeLicenseKey } from "./licensepack.ts";
+import { socialCommerceDocument } from "./socialcommerce.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -158,6 +159,27 @@ const PACKAGED_TOOLS: Record<string, string> = {
 
 async function buildZip(req: any, licenseKey: string, supabase: any): Promise<Uint8Array> {
   let zip = new JSZip();
+
+  const commerceGuide = socialCommerceDocument(req.tool_slug);
+  if (commerceGuide) {
+    zip.file(commerceGuide.name, commerceGuide.content);
+    const pdf = new jsPDF({ unit: "pt", format: "a4" });
+    const margin = 48;
+    let y = margin;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    for (const line of commerceGuide.content.split("\n")) {
+      const wrapped = pdf.splitTextToSize(line.replace(/[^\x20-\x7E]/g, "-"), pdf.internal.pageSize.getWidth() - margin * 2);
+      if (y + wrapped.length * 14 > pdf.internal.pageSize.getHeight() - margin) {
+        pdf.addPage();
+        y = margin;
+      }
+      pdf.text(wrapped, margin, y);
+      y += Math.max(1, wrapped.length) * 14;
+    }
+    zip.file("Social_Commerce_Setup_Guide.pdf", new Uint8Array(pdf.output("arraybuffer")));
+    return zip.generateAsync({ type: "uint8array" });
+  }
 
   const packagedPath = PACKAGED_TOOLS[req.tool_slug];
   if (packagedPath) {
@@ -316,7 +338,8 @@ Deno.serve(async (req) => {
     }
 
     // ---- APPROVE: build ZIP and send ----
-    const licenseKey = reqRow.license_key || genLicenseKey(reqRow.tool_name);
+     const isCommerce = Boolean(socialCommerceDocument(reqRow.tool_slug));
+     const licenseKey = isCommerce ? "" : (reqRow.license_key || genLicenseKey(reqRow.tool_name));
     const zipBytes = await buildZip(reqRow, licenseKey, supabase);
     const fileName = `${reqRow.tool_slug}-toolifyhq.zip`;
     const downloadUrl = await createDeliveryDownload(reqRow, zipBytes, fileName, supabase);
@@ -332,15 +355,15 @@ Deno.serve(async (req) => {
           <tr><td style="padding:28px 32px;">
             <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">Hi,</p>
             <p style="margin:0 0 14px;font-size:15px;line-height:1.6;"><strong>${escapeHtml(reqRow.buyer_name)}</strong> has purchased <strong>${escapeHtml(reqRow.tool_name)}</strong> (${escapeHtml(reqRow.tool_price)}) and has chosen you as the technician to receive it.</p>
-            <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">Your complete tool package is ready. It contains the branded PDF guide, license credentials, activation instructions, and the source files.</p>
+             <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">${isCommerce ? "Your package-specific social commerce setup guide and handoff checklist are ready. Account setup requires your authorized access and may depend on platform approval; this document does not mean setup has been completed." : "Your complete tool package is ready. It contains the branded PDF guide, license credentials, activation instructions, and the source files."}</p>
             <p style="margin:22px 0;text-align:center;"><a href="${escapeHtml(downloadUrl)}" style="display:inline-block;background:#a64dff;color:#fff;text-decoration:none;padding:14px 24px;border-radius:8px;font-weight:700;font-size:15px;">Download your tool package</a></p>
             <p style="margin:0 0 14px;font-size:13px;line-height:1.55;color:#666;">This secure download link expires in 7 days. If it expires, contact us and we will issue a new link.</p>
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0;border:1px solid #ececf3;border-radius:10px;">
+             ${isCommerce ? "" : `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0;border:1px solid #ececf3;border-radius:10px;">
               <tr><td style="padding:14px 18px;font-size:14px;">
                 <div style="color:#666;font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">License key</div>
                 <div style="font-family:'SF Mono',Menlo,monospace;font-size:15px;font-weight:700;color:#a64dff;">${escapeHtml(licenseKey)}</div>
               </td></tr>
-            </table>
+             </table>`}
             <p style="margin:0 0 6px;font-size:13px;color:#666;">Need help? Reply to this email or contact <a href="mailto:${NOTIFY_TO}" style="color:#a64dff;">${NOTIFY_TO}</a>.</p>
           </td></tr>
           <tr><td style="background:#1a1a2e;padding:18px 32px;text-align:center;color:#a8a8b8;font-size:12px;">ToolifyHQ · <a href="${SITE_URL}" style="color:#cc66ff;text-decoration:none;">toolfixit.lovable.app</a></td></tr>
@@ -353,7 +376,7 @@ Deno.serve(async (req) => {
       reqRow.technician_email,
       subject,
       html,
-      `Your ToolifyHQ tool ${reqRow.tool_name} is ready. Download it here: ${downloadUrl}\n\nThis link expires in 7 days. License: ${licenseKey}`,
+       `Your ToolifyHQ ${reqRow.tool_name} package is ready. Download it here: ${downloadUrl}\n\nThis link expires in 7 days.${isCommerce ? " Setup requires authorized account access and platform approval." : ` License: ${licenseKey}`}`,
     );
 
     await sendGmail(reqRow.technician_email, raw);
@@ -363,8 +386,8 @@ Deno.serve(async (req) => {
       const adminRaw = buildRawEmail(
         NOTIFY_TO,
         `[Delivered] ${reqRow.tool_name} → ${reqRow.technician_email}`,
-        `<p>Tool <strong>${escapeHtml(reqRow.tool_name)}</strong> was delivered to <strong>${escapeHtml(reqRow.technician_email)}</strong>.</p><p>Order: ${escapeHtml(reqRow.order_reference)}<br/>License: ${escapeHtml(licenseKey)}</p><p><a href="${escapeHtml(downloadUrl)}">Download package</a> (link expires in 7 days)</p>`,
-        `Delivered ${reqRow.tool_name} to ${reqRow.technician_email}. Download: ${downloadUrl}. License ${licenseKey}.`,
+         `<p>Tool <strong>${escapeHtml(reqRow.tool_name)}</strong> was delivered to <strong>${escapeHtml(reqRow.technician_email)}</strong>.</p><p>Order: ${escapeHtml(reqRow.order_reference)}${isCommerce ? "" : `<br/>License: ${escapeHtml(licenseKey)}`}</p><p><a href="${escapeHtml(downloadUrl)}">Download package</a> (link expires in 7 days)</p>`,
+         `Delivered ${reqRow.tool_name} to ${reqRow.technician_email}. Download: ${downloadUrl}.${isCommerce ? "" : ` License ${licenseKey}.`}`,
       );
       await sendGmail(NOTIFY_TO, adminRaw);
     } catch (e) {
@@ -377,7 +400,7 @@ Deno.serve(async (req) => {
         status: "delivered",
         approved_at: new Date().toISOString(),
         delivered_at: new Date().toISOString(),
-        license_key: licenseKey,
+         license_key: licenseKey || null,
       })
       .eq("id", reqRow.id);
 
@@ -388,7 +411,7 @@ Deno.serve(async (req) => {
         `<div class="badge" style="background:#16a34a;">Sent ✓</div>
          <h1>Tool delivered successfully</h1>
          <p><strong>${escapeHtml(reqRow.tool_name)}</strong> has been emailed to <strong>${escapeHtml(reqRow.technician_email)}</strong> with a secure download link.</p>
-         <p style="font-size:13px;color:#888;">Order ${escapeHtml(reqRow.order_reference)} · License ${escapeHtml(licenseKey)}</p>`,
+          <p style="font-size:13px;color:#888;">Order ${escapeHtml(reqRow.order_reference)}${isCommerce ? "" : ` · License ${escapeHtml(licenseKey)}`}</p>`,
         "#16a34a",
       ),
     );
