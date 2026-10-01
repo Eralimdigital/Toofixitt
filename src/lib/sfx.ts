@@ -1,12 +1,11 @@
-// Lightweight Web Audio SFX + shopper voice/sfx settings.
+// Lightweight Web Audio shopping sound effects and their setting.
 // No external assets, no network calls. Safe to import anywhere.
 
-type Setting = "sfx" | "voice";
+type Setting = "sfx";
 type Listener = () => void;
 
 const STORAGE = {
   sfx: "toofix.sfxEnabled",
-  voice: "toofix.voiceEnabled",
 };
 
 const readBool = (key: string, fallback: boolean) => {
@@ -18,7 +17,6 @@ const readBool = (key: string, fallback: boolean) => {
 
 const state = {
   sfx: readBool(STORAGE.sfx, true),
-  voice: readBool(STORAGE.voice, true),
 };
 
 const listeners = new Set<Listener>();
