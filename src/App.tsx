@@ -24,9 +24,7 @@ const Activate = lazy(() => import("./pages/Activate.tsx"));
 const Toaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
 const ChatbotWidget = lazy(() => import("./components/ChatbotWidget"));
 const PurchaseNotifications = lazy(() => import("./components/PurchaseNotifications"));
-const AmbientMusicPlayer = lazy(() => import("./components/AmbientMusicPlayer"));
 const SoundSettings = lazy(() => import("./components/SoundSettings"));
-const WelcomeVoice = lazy(() => import("./components/WelcomeVoice"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,9 +63,7 @@ const App = () => (
             <Toaster />
             <ChatbotWidget />
             <PurchaseNotifications />
-            <AmbientMusicPlayer />
             <SoundSettings />
-            <WelcomeVoice />
           </Suspense>
         </BrowserRouter>
       </CartProvider>

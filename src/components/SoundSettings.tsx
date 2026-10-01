@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
-import { Settings2, Volume2, VolumeX, Megaphone, MicOff } from "lucide-react";
+import { Settings2, Volume2, VolumeX } from "lucide-react";
 import { soundSettings } from "@/lib/sfx";
 
 /**
- * Floating sound settings panel — lets shoppers toggle the click/confirm SFX
- * and the welcome voice on every page. Sits next to the ambient music button.
+ * Floating sound settings panel for shopping action sounds.
  */
 const SoundSettings = () => {
   const [open, setOpen] = useState(false);
   const [sfx, setSfx] = useState(soundSettings.get("sfx"));
-  const [voice, setVoice] = useState(soundSettings.get("voice"));
 
   useEffect(() => {
     return soundSettings.subscribe(() => {
       setSfx(soundSettings.get("sfx"));
-      setVoice(soundSettings.get("voice"));
     });
   }, []);
 
   return (
-    <div className="fixed bottom-6 left-24 z-40">
+    <div className="fixed bottom-6 left-6 z-40">
       {open && (
         <div className="absolute bottom-14 left-0 w-60 rounded-xl border border-accent/40 bg-card/95 p-3 shadow-card-hover backdrop-blur-md">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -40,23 +37,6 @@ const SoundSettings = () => {
             </span>
             <span className={`text-xs font-bold ${sfx ? "text-accent" : "text-muted-foreground"}`}>
               {sfx ? "ON" : "OFF"}
-            </span>
-          </button>
-          <button
-            type="button"
-            onClick={() => soundSettings.set("voice", !voice)}
-            className="flex w-full items-center justify-between rounded-lg border border-border bg-secondary/70 px-3 py-2 text-sm text-foreground transition-colors hover:border-accent/50"
-          >
-            <span className="flex items-center gap-2">
-              {voice ? (
-                <Megaphone className="h-4 w-4 text-accent" />
-              ) : (
-                <MicOff className="h-4 w-4 text-muted-foreground" />
-              )}
-              Welcome voice
-            </span>
-            <span className={`text-xs font-bold ${voice ? "text-accent" : "text-muted-foreground"}`}>
-              {voice ? "ON" : "OFF"}
             </span>
           </button>
         </div>
