@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { Download, Loader2, CheckCircle2, Mail, ShieldCheck } from "lucide-react";
 import { z } from "zod";
 import { useCart, type CartItem } from "@/contexts/CartContext";
-import { playConfirm } from "@/lib/sfx";
 
 interface CheckoutCartDialogProps {
   open: boolean;
@@ -77,7 +76,6 @@ const CheckoutCartDialog = ({ open, onOpenChange, items, onSuccess }: CheckoutCa
       setSuccess(parsed.data.technicianEmail);
       clear();
       onSuccess?.();
-      playConfirm();
       toast.success(`${items.length} tool${items.length > 1 ? "s" : ""} requested!`);
     } catch (err) {
       console.error("Submission error:", err);

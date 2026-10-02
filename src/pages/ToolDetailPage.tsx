@@ -10,7 +10,6 @@ import type { ToolPackage } from "@/data/tools";
 import { AlertTriangle, CheckCircle2, CreditCard, Download, Mail, ShieldCheck, ShoppingCart, Check, Sparkles } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
-import { playAddToCart, playConfirm } from "@/lib/sfx";
 
 const ToolDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -114,7 +113,6 @@ const ToolDetailPage = () => {
                           type="button"
                           onClick={() => {
                             setSelectedPkgId(pkg.id);
-                            playAddToCart();
                           }}
                           aria-pressed={active}
                           className={`relative flex h-full flex-col rounded-2xl border p-5 text-left shadow-card transition-all ${
@@ -217,7 +215,6 @@ const ToolDetailPage = () => {
               <button
                 type="button"
                 onClick={() => {
-                  playConfirm();
                   setDownloadOpen(true);
                 }}
                 className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-accent/40 bg-card px-8 py-3.5 text-center text-base font-semibold text-foreground shadow-card transition-all hover:-translate-y-0.5 hover:bg-accent/10"
@@ -231,7 +228,6 @@ const ToolDetailPage = () => {
                 onClick={() => {
                   if (inCart) return;
                   add({ ...tool, slug: cartSlug, name: displayName, price: displayPrice, priceValue: displayPriceValue });
-                  playAddToCart();
                   toast.success(`${displayName} added to cart`);
                 }}
                 disabled={inCart}
