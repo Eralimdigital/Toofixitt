@@ -5,7 +5,6 @@ import { Star, ShoppingCart, Check } from "lucide-react";
 import type { Tool } from "@/data/tools";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
-import { playAddToCart } from "@/lib/sfx";
 
 interface ToolCardProps {
   tool: Tool;
@@ -69,7 +68,6 @@ const ToolCard = ({ tool }: ToolCardProps) => {
                 if (inCart) return;
                  const firstPackage = tool.packages?.[0];
                  add(firstPackage ? { ...tool, slug: `${tool.slug}--${firstPackage.id}`, name: `${tool.name} — ${firstPackage.name}`, price: firstPackage.price, priceValue: firstPackage.priceValue } : tool);
-                playAddToCart();
                 toast.success(`${tool.name} added to cart`);
               }}
               aria-label={inCart ? "In cart" : "Add to cart"}
