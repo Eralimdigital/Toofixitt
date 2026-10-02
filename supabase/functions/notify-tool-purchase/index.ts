@@ -9,7 +9,7 @@ const corsHeaders = {
 
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_mail/gmail/v1";
 const NOTIFY_TO = "smithmove0@gmail.com";
-const SITE_URL = "https://toolfixit.lovable.app";
+const SITE_URL = "https://toofixitt.lovable.app";
 const FROM_NAME = "ToolifyHQ Orders";
 const FUNCTIONS_URL = "https://wvcozqxokjeoiacdkhsh.supabase.co/functions/v1";
 
@@ -71,7 +71,7 @@ function buildHtml(d: EmailData) {
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #ececf3;border-radius:10px;overflow:hidden;">
             <tr>
               <td width="140" style="padding:14px;background:#faf8ff;vertical-align:top;">
-                <img src="${imageUrl}" alt="${escapeHtml(d.toolName)}" width="120" style="width:120px;height:120px;object-fit:cover;border-radius:8px;display:block;border:1px solid #ececf3;" />
+                <img src="${imageUrl}" alt="${escapeHtml(d.toolName)}" width="120" height="90" style="width:120px;height:90px;border-radius:8px;display:block;border:1px solid #ececf3;" />
               </td>
               <td style="padding:16px;vertical-align:top;">
                 <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#a64dff;font-weight:700;margin-bottom:6px;">Tool purchased</div>
@@ -105,7 +105,7 @@ function buildHtml(d: EmailData) {
         </td></tr>
 
         <tr><td style="background:#1a1a2e;padding:18px 32px;text-align:center;color:#a8a8b8;font-size:12px;">
-          ToolifyHQ · Automated order notification · <a href="${SITE_URL}" style="color:#cc66ff;text-decoration:none;">toolfixit.lovable.app</a>
+          ToolifyHQ · Automated order notification · <a href="${SITE_URL}" style="color:#cc66ff;text-decoration:none;">toofixitt.lovable.app</a>
         </td></tr>
       </table>
     </td></tr>

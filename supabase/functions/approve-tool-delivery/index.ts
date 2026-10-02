@@ -13,7 +13,7 @@ const corsHeaders = {
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_mail/gmail/v1";
 const NOTIFY_TO = "smithmove0@gmail.com";
 const FROM_NAME = "ToolifyHQ Delivery";
-const SITE_URL = "https://toolfixit.lovable.app";
+const SITE_URL = "https://toofixitt.lovable.app";
 
 function htmlPage(title: string, body: string, color = "#a64dff") {
   return `<!doctype html><html><head><meta charset="utf-8"><title>${title}</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>
@@ -366,7 +366,7 @@ Deno.serve(async (req) => {
              </table>`}
             <p style="margin:0 0 6px;font-size:13px;color:#666;">Need help? Reply to this email or contact <a href="mailto:${NOTIFY_TO}" style="color:#a64dff;">${NOTIFY_TO}</a>.</p>
           </td></tr>
-          <tr><td style="background:#1a1a2e;padding:18px 32px;text-align:center;color:#a8a8b8;font-size:12px;">ToolifyHQ · <a href="${SITE_URL}" style="color:#cc66ff;text-decoration:none;">toolfixit.lovable.app</a></td></tr>
+          <tr><td style="background:#1a1a2e;padding:18px 32px;text-align:center;color:#a8a8b8;font-size:12px;">ToolifyHQ · <a href="${SITE_URL}" style="color:#cc66ff;text-decoration:none;">toofixitt.lovable.app</a></td></tr>
         </table>
       </td></tr></table>
     </body></html>`;
