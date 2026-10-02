@@ -324,8 +324,8 @@ export const tools: Tool[] = [
     name: "Market & Product Research",
     slug: "market-product-research-tool",
     description: "Discover the most profitable markets and trending products with data-driven research.",
-    price: "$50",
-    priceValue: 50,
+    price: "$100",
+    priceValue: 100,
     benefits: [
       "Find profitable and underserved markets",
       "Discover trending and winning products",
