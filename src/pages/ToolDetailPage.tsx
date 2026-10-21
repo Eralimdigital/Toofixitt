@@ -204,13 +204,25 @@ const ToolDetailPage = () => {
                 </div>
               </div>
 
-              <a
-                href={`mailto:smithmove0@gmail.com?subject=${encodeURIComponent(`Purchase: ${displayName} (${displayPrice})`)}&body=${encodeURIComponent(`Hi, I'd like to purchase ${displayName} (${displayPrice}). Please send me the details.`)}`}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90"
-              >
-                <Mail className="h-4 w-4" />
-                Start Checkout
-              </a>
+              {tool.paymentUrl ? (
+                <a
+                  href={tool.paymentUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90"
+                >
+                  <CreditCard className="h-4 w-4" />
+                  Buy Now — Pay Securely
+                </a>
+              ) : (
+                <a
+                  href={`mailto:smithmove0@gmail.com?subject=${encodeURIComponent(`Purchase: ${displayName} (${displayPrice})`)}&body=${encodeURIComponent(`Hi, I'd like to purchase ${displayName} (${displayPrice}). Please send me the details.`)}`}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90"
+                >
+                  <Mail className="h-4 w-4" />
+                  Start Checkout
+                </a>
+              )}
 
               <button
                 type="button"
