@@ -29,6 +29,22 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    id: "50",
+    name: "Sherpas Plugin",
+    slug: "sherpas-plugin",
+    description: "A powerful all-in-one optimization plugin that improves your Shopify store's visibility, speed, indexing, and product discoverability across Google and AI search.",
+    price: "$250",
+    priceValue: 250,
+    category: "SEO",
+    imagePrompt: "purple robot optimizing Shopify search visibility and store speed",
+    paymentUrl: "https://checkout.bachs.io/pay/pl_df099c98725e",
+    benefits: [
+      "Better search visibility",
+      "Improved site performance",
+      "Greater product discoverability",
+    ],
+  },
+  {
     id: "48",
     name: "Social Commerce Setup Resource",
     slug: "social-commerce-setup-resource",
