@@ -23,6 +23,8 @@ export interface Tool {
   imagePrompt: string;
   packages?: ToolPackage[];
   packagesRecommendedFor?: string;
+  /** Direct payment link for this tool. When set, "Start Checkout" opens it; otherwise the email request flow is used. */
+  paymentUrl?: string;
 }
 
 export const tools: Tool[] = [
