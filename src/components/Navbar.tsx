@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, ShoppingCart } from "lucide-react";
+import { Search, ShoppingCart, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import logo from "@/assets/logo.png";
 import ToolSearch from "@/components/ToolSearch";
 import { useCart } from "@/contexts/CartContext";
+import { collections } from "@/data/collections";
 
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -40,9 +49,29 @@ const Navbar = () => {
             <Link to="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
               Home
             </Link>
-            <Link to="/tools" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-              Tools
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-none">
+                  Collections
+                  <ChevronDown className="h-3.5 w-3.5" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="max-h-[420px] w-60 overflow-y-auto">
+                <DropdownMenuItem asChild>
+                  <Link to="/tools" className="font-semibold">All Tools</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground">Shop by collection</DropdownMenuLabel>
+                {collections.map((c) => (
+                  <DropdownMenuItem key={c.slug} asChild>
+                    <Link to={`/collections/${c.slug}`} className="flex justify-between">
+                      <span>{c.name}</span>
+                      <span className="text-xs text-muted-foreground">{c.items.length}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Link to="/blog" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
               Blog
             </Link>
