@@ -12,7 +12,7 @@ const corsHeaders = {
 
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_mail/gmail/v1";
 const NOTIFY_TO = "smithmove0@gmail.com";
-const FROM_NAME = "ToolifyHQ Delivery";
+const FROM_NAME = "Toofixitt Delivery";
 const SITE_URL = "https://toofixitt.lovable.app";
 
 function htmlPage(title: string, body: string, color = "#a64dff") {
@@ -143,7 +143,7 @@ function buildPdf(opts: {
   doc.setFontSize(9);
   doc.setTextColor(140, 140, 160);
   doc.text(
-    `ToolifyHQ — ${SITE_URL}  •  Support: ${NOTIFY_TO}  •  Issued ${new Date().toUTCString()}`,
+    `Toofixitt — ${SITE_URL}  •  Support: ${NOTIFY_TO}  •  Issued ${new Date().toUTCString()}`,
     M,
     H - 40,
   );
@@ -196,7 +196,7 @@ async function buildZip(req: any, licenseKey: string, supabase: any): Promise<Ui
     technicianEmail: req.technician_email,
     orderReference: req.order_reference,
     licenseKey,
-    description: req.description ?? `Premium ${req.tool_name} package delivered by ToolifyHQ.`,
+    description: req.description ?? `Premium ${req.tool_name} package delivered by Toofixitt.`,
     benefits: req.benefits ?? ["Professional-grade tool", "Step-by-step instructions included", "Priority email support"],
   });
 
@@ -348,7 +348,7 @@ Deno.serve(async (req) => {
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:24px 0;"><tr><td align="center">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
           <tr><td style="background:linear-gradient(135deg,#a64dff 0%,#cc66ff 100%);padding:28px 32px;color:#fff;">
-            <div style="font-size:13px;letter-spacing:1px;text-transform:uppercase;opacity:.85;margin-bottom:6px;">ToolifyHQ Tool Delivery</div>
+            <div style="font-size:13px;letter-spacing:1px;text-transform:uppercase;opacity:.85;margin-bottom:6px;">Toofixitt Tool Delivery</div>
             <div style="font-size:24px;font-weight:700;">Your tool is ready</div>
             <div style="margin-top:10px;font-size:13px;opacity:.9;">Order Ref: <strong style="font-family:monospace;">${escapeHtml(reqRow.order_reference)}</strong></div>
           </td></tr>
@@ -366,17 +366,17 @@ Deno.serve(async (req) => {
              </table>`}
             <p style="margin:0 0 6px;font-size:13px;color:#666;">Need help? Reply to this email or contact <a href="mailto:${NOTIFY_TO}" style="color:#a64dff;">${NOTIFY_TO}</a>.</p>
           </td></tr>
-          <tr><td style="background:#1a1a2e;padding:18px 32px;text-align:center;color:#a8a8b8;font-size:12px;">ToolifyHQ · <a href="${SITE_URL}" style="color:#cc66ff;text-decoration:none;">toofixitt.lovable.app</a></td></tr>
+          <tr><td style="background:#1a1a2e;padding:18px 32px;text-align:center;color:#a8a8b8;font-size:12px;">Toofixitt · <a href="${SITE_URL}" style="color:#cc66ff;text-decoration:none;">toofixitt.lovable.app</a></td></tr>
         </table>
       </td></tr></table>
     </body></html>`;
 
-    const subject = `${reqRow.tool_name} — your ToolifyHQ delivery (${reqRow.order_reference})`;
+    const subject = `${reqRow.tool_name} — your Toofixitt delivery (${reqRow.order_reference})`;
     const raw = buildRawEmail(
       reqRow.technician_email,
       subject,
       html,
-       `Your ToolifyHQ ${reqRow.tool_name} package is ready. Download it here: ${downloadUrl}\n\nThis link expires in 7 days.${isCommerce ? " Setup requires authorized account access and platform approval." : ` License: ${licenseKey}`}`,
+       `Your Toofixitt ${reqRow.tool_name} package is ready. Download it here: ${downloadUrl}\n\nThis link expires in 7 days.${isCommerce ? " Setup requires authorized account access and platform approval." : ` License: ${licenseKey}`}`,
     );
 
     await sendGmail(reqRow.technician_email, raw);

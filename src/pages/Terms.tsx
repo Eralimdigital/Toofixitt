@@ -12,10 +12,10 @@ const Terms = () => {
 
           <div className="space-y-8 rounded-2xl border border-border bg-card/80 p-8 shadow-card backdrop-blur-md">
             <Section title="1. Acceptance of Terms">
-              By accessing or purchasing from ToolifyHQ, you agree to these Terms of Service. If you do not agree, please do not use the site.
+              By accessing or purchasing from Toofixitt, you agree to these Terms of Service. If you do not agree, please do not use the site.
             </Section>
             <Section title="2. Products & Services">
-              ToolifyHQ sells digital Shopify tools, plugins, and related services. All products are delivered via email after order confirmation.
+              Toofixitt sells digital Shopify tools, plugins, and related services. All products are delivered via email after order confirmation.
             </Section>
             <Section title="3. Payments">
               Orders are placed by email and payment is confirmed before delivery. Prices are listed in USD. We reserve the right to update pricing at any time.
@@ -27,7 +27,7 @@ const Terms = () => {
               Each purchase includes setup notes and direct email support via <a className="text-accent hover:underline" href="mailto:smithmove0@gmail.com">smithmove0@gmail.com</a>.
             </Section>
             <Section title="6. Liability">
-              ToolifyHQ provides tools "as is" and is not liable for any indirect or consequential damages arising from improper use. Some tools require expert-level Shopify knowledge for safe implementation.
+              Toofixitt provides tools "as is" and is not liable for any indirect or consequential damages arising from improper use. Some tools require expert-level Shopify knowledge for safe implementation.
             </Section>
             <Section title="7. Account & Conduct">
               You agree not to misuse the site, attempt unauthorized access, or use our tools to violate any applicable laws.

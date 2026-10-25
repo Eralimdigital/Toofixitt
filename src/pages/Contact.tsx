@@ -51,7 +51,7 @@ const Contact = () => {
             </div>
 
             <a
-              href="mailto:smithmove0@gmail.com?subject=ToolifyHQ%20Support%20Request"
+              href="mailto:smithmove0@gmail.com?subject=Toofixitt%20Support%20Request"
               className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg gradient-primary px-8 py-4 text-base font-semibold text-primary-foreground shadow-card transition-all hover:-translate-y-0.5"
             >
               <Mail className="h-4 w-4" />
@@ -72,7 +72,7 @@ const Contact = () => {
             <dl className="grid gap-5 sm:grid-cols-2">
               <div>
                 <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Trading name</dt>
-                <dd className="mt-1 text-sm font-medium text-foreground">ToolifyHQ</dd>
+                <dd className="mt-1 text-sm font-medium text-foreground">Toofixitt</dd>
               </div>
               <div>
                 <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Business type</dt>

@@ -17,7 +17,7 @@ const BlogPost = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <SEO
-        title={`${post.title} | ToolifyHQ`}
+        title={`${post.title} | Toofixitt`}
         description={post.description}
         path={`/blog/${post.slug}`}
         type="article"
@@ -32,7 +32,7 @@ const BlogPost = () => {
             author: { "@type": "Organization", name: post.author },
             publisher: {
               "@type": "Organization",
-              name: "ToolifyHQ",
+              name: "Toofixitt",
               url: "https://toolfixit.lovable.app/",
             },
             mainEntityOfPage: `https://toolfixit.lovable.app/blog/${post.slug}`,

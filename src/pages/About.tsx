@@ -10,13 +10,13 @@ const About = () => {
       <section className="gradient-hero border-b border-border py-20">
         <div className="container max-w-4xl text-center">
           <span className="mb-6 inline-block rounded-full border border-accent/40 bg-secondary/70 px-4 py-1.5 text-xs font-semibold text-accent shadow-card backdrop-blur-md">
-            About ToolifyHQ
+            About Toofixitt
           </span>
           <h1 className="mb-6 text-4xl font-extrabold leading-tight md:text-5xl">
             Built for store owners who want to <span className="text-gradient">scale faster</span>
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            ToolifyHQ is a premium marketplace of battle-tested Shopify tools, plugins, and growth assets — handpicked to help serious merchants automate, optimize, and scale.
+            Toofixitt is a premium marketplace of battle-tested Shopify tools, plugins, and growth assets — handpicked to help serious merchants automate, optimize, and scale.
           </p>
         </div>
       </section>
@@ -53,7 +53,7 @@ const About = () => {
             <dl className="grid gap-5 sm:grid-cols-2">
               <div>
                 <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Trading name</dt>
-                <dd className="mt-1 text-sm font-medium text-foreground">ToolifyHQ</dd>
+                <dd className="mt-1 text-sm font-medium text-foreground">Toofixitt</dd>
               </div>
               <div>
                 <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Business type</dt>
@@ -79,7 +79,7 @@ const About = () => {
               </div>
             </dl>
             <p className="mt-6 border-t border-border pt-5 text-xs text-muted-foreground">
-              Only ToolifyHQ.com content and orders confirmed from the support email above are official. If you were sent a
+              Only Toofixitt.com content and orders confirmed from the support email above are official. If you were sent a
               lookalike store or a different payment address, contact us before paying. Refund terms are published on our{" "}
               <Link to="/refund" className="text-accent hover:underline">Refund Policy</Link> page.
             </p>

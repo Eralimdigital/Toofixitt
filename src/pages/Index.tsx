@@ -48,13 +48,13 @@ const Index = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <SEO
-        title="Best Premium Shopify Tools Marketplace | ToolifyHQ"
-        description="ToolifyHQ is the best premium Shopify tools marketplace — 40+ curated SEO, AI, marketing & conversion tools trusted by 12,000+ stores in 60+ countries."
+        title="Best Premium Shopify Tools Marketplace | Toofixitt"
+        description="Toofixitt is the best premium Shopify tools marketplace — 40+ curated SEO, AI, marketing & conversion tools trusted by 12,000+ stores in 60+ countries."
         path="/"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "ToolifyHQ",
+          name: "Toofixitt",
           url: "https://toolfixit.lovable.app/",
           description: "Best premium Shopify tools marketplace — 40+ curated SEO, AI, marketing and conversion tools for Shopify merchants.",
           aggregateRating: {
@@ -78,7 +78,7 @@ const Index = () => {
           {anniversary ? (
             <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent shadow-card">
               <PartyPopper className="h-3.5 w-3.5" />
-              Celebrating 5 Years of ToolifyHQ — Limited-Time Offer
+              Celebrating 5 Years of Toofixitt — Limited-Time Offer
             </span>
           ) : (
             <span className="mb-6 inline-block rounded-full border border-border bg-secondary/80 px-4 py-1.5 text-xs font-semibold text-secondary-foreground shadow-card">
@@ -254,10 +254,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Why ToolifyHQ */}
+      {/* Why Toofixitt */}
       <section className="border-b border-border py-20">
         <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold text-foreground">Why ToolifyHQ?</h2>
+          <h2 className="mb-12 text-center text-3xl font-bold text-foreground">Why Toofixitt?</h2>
           <div className="grid gap-8 md:grid-cols-3">
             {[
               { icon: Zap, title: "Instant Download", desc: "Get your tools immediately after purchase. No waiting." },
@@ -336,7 +336,7 @@ const Index = () => {
         <div className="container text-center">
           <h2 className="mb-4 text-3xl font-bold text-primary-foreground">Ready to Scale Your Shopify Store?</h2>
           <p className="mx-auto mb-8 max-w-md text-primary-foreground/80">
-            Join thousands of store owners who trust ToolifyHQ for premium Shopify tools.
+            Join thousands of store owners who trust Toofixitt for premium Shopify tools.
           </p>
           <Link
             to="/tools"

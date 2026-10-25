@@ -16,7 +16,7 @@ const Cart = () => {
   const buildMailto = () => {
     const subject = `Payment request for ${items.length} tool${items.length > 1 ? "s" : ""} ($${total.toLocaleString()})`;
     const lines = [
-      "Hi ToolifyHQ team,",
+      "Hi Toofixitt team,",
       "",
       "I'd like to purchase the following tools and need the payment details:",
       "",

@@ -35,8 +35,8 @@ const Activate = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <SEO
-        title="Product Activation Portal | ToolifyHQ"
-        description="Activate your purchased ToolifyHQ tool using your store URL, license key, license number and activation code."
+        title="Product Activation Portal | Toofixitt"
+        description="Activate your purchased Toofixitt tool using your store URL, license key, license number and activation code."
         path="/activate"
       />
       <Navbar />
