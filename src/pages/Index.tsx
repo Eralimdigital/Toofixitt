@@ -276,19 +276,56 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Tools */}
-      <section className="py-20">
-        <div className="container">
-          <div className="mb-12 text-center">
-            <h2 className="mb-3 text-3xl font-bold text-foreground">Featured Tools</h2>
-            <p className="text-muted-foreground">Top-rated tools loved by Shopify store owners</p>
+      {/* Shopify-style Collections */}
+      {showcaseCollections.map((col, index) => (
+        <section
+          key={col.slug}
+          className={`border-b border-border py-16 ${index % 2 === 1 ? "bg-background/40" : ""}`}
+        >
+          <div className="container">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <span className="mb-2 inline-block rounded-full border border-border bg-secondary/80 px-3 py-1 text-xs font-semibold text-secondary-foreground">
+                  {col.items.length} {col.items.length === 1 ? "Tool" : "Tools"}
+                </span>
+                <h2 className="text-3xl font-bold text-foreground">{col.name} Tools</h2>
+                <p className="mt-1 max-w-xl text-sm text-muted-foreground">{col.description}</p>
+              </div>
+              <Link
+                to={`/collections/${col.slug}`}
+                className="rounded-lg border border-accent/50 bg-accent/10 px-6 py-2.5 text-sm font-semibold text-accent shadow-card transition-all hover:-translate-y-0.5 hover:bg-accent/20"
+              >
+                View All {col.name} Tools →
+              </Link>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {col.items.slice(0, 3).map((tool) => (
+                <ToolCard key={tool.id} tool={tool} />
+              ))}
+            </div>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredTools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
+        </section>
+      ))}
+
+      {/* All collections */}
+      <section className="border-b border-border py-16">
+        <div className="container">
+          <div className="mb-8 text-center">
+            <h2 className="mb-2 text-3xl font-bold text-foreground">Shop All Collections</h2>
+            <p className="text-muted-foreground">Pick a category and see every tool inside it</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
+            {collections.map((c) => (
+              <Link
+                key={c.slug}
+                to={`/collections/${c.slug}`}
+                className="rounded-xl border border-border bg-card/80 px-5 py-3 text-sm font-semibold text-foreground shadow-card transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+              >
+                {c.name} <span className="text-muted-foreground">({c.items.length})</span>
+              </Link>
             ))}
           </div>
-          <div className="mt-12 text-center">
+          <div className="mt-10 text-center">
             <Link
               to="/tools"
               className="rounded-lg bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-card transition-all hover:opacity-90"
