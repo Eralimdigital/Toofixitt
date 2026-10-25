@@ -8,6 +8,7 @@ import { CartProvider } from "./contexts/CartContext";
 
 // Route-level code splitting: only the landing page ships in the initial bundle.
 const ToolsPage = lazy(() => import("./pages/ToolsPage.tsx"));
+const CollectionPage = lazy(() => import("./pages/CollectionPage.tsx"));
 const ToolDetailPage = lazy(() => import("./pages/ToolDetailPage.tsx"));
 const About = lazy(() => import("./pages/About.tsx"));
 const Contact = lazy(() => import("./pages/Contact.tsx"));
@@ -45,6 +46,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/tools" element={<ToolsPage />} />
+              <Route path="/collections/:slug" element={<CollectionPage />} />
               <Route path="/tools/:slug" element={<ToolDetailPage />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/activate" element={<Activate />} />
