@@ -16,11 +16,11 @@ const Blog = () => {
           "@context": "https://schema.org",
           "@type": "Blog",
           name: "Toofixitt Blog",
-          url: "https://toolfixit.lovable.app/blog",
+          url: "https://toofixitt.lovable.app/blog",
           blogPost: posts.map((p) => ({
             "@type": "BlogPosting",
             headline: p.title,
-            url: `https://toolfixit.lovable.app/blog/${p.slug}`,
+            url: `https://toofixitt.lovable.app/blog/${p.slug}`,
             datePublished: p.date,
             author: { "@type": "Organization", name: p.author },
           })),

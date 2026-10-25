@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://toolfixit.lovable.app/sitemap.xml
+Sitemap: https://toofixitt.lovable.app/sitemap.xml

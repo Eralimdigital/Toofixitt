@@ -3,7 +3,7 @@ import { resolve } from "path";
 import { tools } from "../src/data/tools";
 import { posts } from "../src/data/blog";
 
-const BASE_URL = "https://toolfixit.lovable.app";
+const BASE_URL = "https://toofixitt.lovable.app";
 
 interface Entry {
   path: string;

@@ -55,7 +55,7 @@ const Index = () => {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Toofixitt",
-          url: "https://toolfixit.lovable.app/",
+          url: "https://toofixitt.lovable.app/",
           description: "Best premium Shopify tools marketplace — 40+ curated SEO, AI, marketing and conversion tools for Shopify merchants.",
           aggregateRating: {
             "@type": "AggregateRating",

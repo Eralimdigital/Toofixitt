@@ -33,18 +33,18 @@ const BlogPost = () => {
             publisher: {
               "@type": "Organization",
               name: "Toofixitt",
-              url: "https://toolfixit.lovable.app/",
+              url: "https://toofixitt.lovable.app/",
             },
-            mainEntityOfPage: `https://toolfixit.lovable.app/blog/${post.slug}`,
+            mainEntityOfPage: `https://toofixitt.lovable.app/blog/${post.slug}`,
             keywords: post.tags.join(", "),
           },
           {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://toolfixit.lovable.app/" },
-              { "@type": "ListItem", position: 2, name: "Blog", item: "https://toolfixit.lovable.app/blog" },
-              { "@type": "ListItem", position: 3, name: post.title, item: `https://toolfixit.lovable.app/blog/${post.slug}` },
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://toofixitt.lovable.app/" },
+              { "@type": "ListItem", position: 2, name: "Blog", item: "https://toofixitt.lovable.app/blog" },
+              { "@type": "ListItem", position: 3, name: post.title, item: `https://toofixitt.lovable.app/blog/${post.slug}` },
             ],
           },
         ]}
