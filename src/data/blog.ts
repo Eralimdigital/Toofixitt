@@ -150,7 +150,7 @@ You do not need all ten of these on day one. Pick the tool that closes your bigg
 `,
   },
   {
-    slug: "why-toolifyhq-vs-other-shopify-tool-marketplaces",
+    slug: "why-toofixitt-vs-other-shopify-tool-marketplaces",
     title: "Toofixitt vs Other Shopify Tool Marketplaces: An Honest Comparison",
     description:
       "How does Toofixitt compare to other Shopify tool marketplaces and app stores? An honest look at curation, pricing, support, and outcomes.",

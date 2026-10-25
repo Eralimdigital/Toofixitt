@@ -50,7 +50,7 @@ function buildPdf(opts: {
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
-  doc.text("TOOLIFYHQ — OFFICIAL TOOL DELIVERY", M, 45);
+  doc.text("TOOFIXITT — OFFICIAL TOOL DELIVERY", M, 45);
   doc.setFontSize(22);
   doc.text(opts.toolName, M, 78);
   doc.setFontSize(11);
@@ -341,7 +341,7 @@ Deno.serve(async (req) => {
      const isCommerce = Boolean(socialCommerceDocument(reqRow.tool_slug));
      const licenseKey = isCommerce ? "" : (reqRow.license_key || genLicenseKey(reqRow.tool_name));
     const zipBytes = await buildZip(reqRow, licenseKey, supabase);
-    const fileName = `${reqRow.tool_slug}-toolifyhq.zip`;
+    const fileName = `${reqRow.tool_slug}-toofixitt.zip`;
     const downloadUrl = await createDeliveryDownload(reqRow, zipBytes, fileName, supabase);
 
     const html = `<!doctype html><html><body style="margin:0;padding:0;background:#f4f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;">
