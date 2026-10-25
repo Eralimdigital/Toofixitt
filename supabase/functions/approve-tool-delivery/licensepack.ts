@@ -1,8 +1,8 @@
 // @ts-nocheck
-// Builds the ToolifyHQ license documents delivered inside every tool ZIP.
+// Builds the Toofixitt license documents delivered inside every tool ZIP.
 
-const BRAND = "TOOLIFYHQ";
-const BRAND_NAME = "ToolifyHQ";
+const BRAND = "TOOFIXITT";
+const BRAND_NAME = "Toofixitt";
 const SITE = "https://toofixit.lovable.app";
 const ACTIVATE_URL = `${SITE}/activate`;
 const SUPPORT_EMAIL = "smithmove0@gmail.com";

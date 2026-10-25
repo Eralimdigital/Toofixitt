@@ -23,7 +23,7 @@ const buildSystemPrompt = (tools: ClientTool[]) => {
     )
     .join("\n");
 
-  return `You are ToolBot, the friendly support assistant for ToolifyHQ — a premium Shopify tools marketplace.
+  return `You are ToolBot, the friendly support assistant for Toofixitt — a premium Shopify tools marketplace.
 
 SITE PAGES
 - Home: /

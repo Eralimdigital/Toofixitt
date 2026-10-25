@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container">
         <div className="grid gap-10 md:grid-cols-4">
           <div>
-            <h3 className="mb-3 text-lg font-bold text-gradient">ToolifyHQ</h3>
+            <h3 className="mb-3 text-lg font-bold text-gradient">Toofixitt</h3>
             <p className="text-sm text-muted-foreground">
               Premium Shopify tools for serious store owners. Automate, optimize, scale.
             </p>
@@ -31,7 +31,7 @@ const Footer = () => {
           </div>
           <div>
             <h4 className="mb-3 text-sm font-semibold text-foreground">Support</h4>
-            <p className="text-sm text-muted-foreground">ToolifyHQ — independent, owner-operated online store.</p>
+            <p className="text-sm text-muted-foreground">Toofixitt — independent, owner-operated online store.</p>
             <p className="mt-2 text-sm text-muted-foreground">Need help? Email us:</p>
             <a href="mailto:smithmove0@gmail.com" className="mt-1 inline-block text-sm font-semibold text-accent hover:underline">
               smithmove0@gmail.com
@@ -80,7 +80,7 @@ const Footer = () => {
             </div>
           </div>
           <p className="mb-2 text-xs text-muted-foreground">Secure payments accepted worldwide</p>
-          © {new Date().getFullYear()} ToolifyHQ. All rights reserved.
+          © {new Date().getFullYear()} Toofixitt. All rights reserved.
         </div>
       </div>
     </footer>

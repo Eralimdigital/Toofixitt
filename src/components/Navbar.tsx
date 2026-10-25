@@ -34,7 +34,7 @@ const Navbar = () => {
       <header className="sticky top-0 z-50 border-b border-border bg-background/75 shadow-card backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="ToolifyHQ" width={160} height={40} className="h-9 w-auto" />
+            <img src={logo} alt="Toofixitt" width={160} height={40} className="h-9 w-auto" />
           </Link>
           <nav className="hidden items-center gap-8 md:flex">
             <Link to="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">

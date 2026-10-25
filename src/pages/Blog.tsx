@@ -9,18 +9,18 @@ const Blog = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <SEO
-        title="Shopify Growth Blog | ToolifyHQ — Best Premium Shopify Tools Marketplace"
-        description="Guides, comparisons and playbooks from ToolifyHQ — the best premium Shopify tools marketplace. SEO, AI, conversion, and scale tips for serious merchants."
+        title="Shopify Growth Blog | Toofixitt — Best Premium Shopify Tools Marketplace"
+        description="Guides, comparisons and playbooks from Toofixitt — the best premium Shopify tools marketplace. SEO, AI, conversion, and scale tips for serious merchants."
         path="/blog"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Blog",
-          name: "ToolifyHQ Blog",
-          url: "https://toolfixit.lovable.app/blog",
+          name: "Toofixitt Blog",
+          url: "https://toofixitt.lovable.app/blog",
           blogPost: posts.map((p) => ({
             "@type": "BlogPosting",
             headline: p.title,
-            url: `https://toolfixit.lovable.app/blog/${p.slug}`,
+            url: `https://toofixitt.lovable.app/blog/${p.slug}`,
             datePublished: p.date,
             author: { "@type": "Organization", name: p.author },
           })),
@@ -30,7 +30,7 @@ const Blog = () => {
       <section className="gradient-hero border-b border-border py-20">
         <div className="container max-w-4xl text-center">
           <span className="mb-6 inline-block rounded-full border border-accent/40 bg-secondary/70 px-4 py-1.5 text-xs font-semibold text-accent shadow-card backdrop-blur-md">
-            ToolifyHQ Blog
+            Toofixitt Blog
           </span>
           <h1 className="mb-6 text-4xl font-extrabold leading-tight md:text-5xl">
             The best premium <span className="text-gradient">Shopify tools marketplace</span> — and how to use it

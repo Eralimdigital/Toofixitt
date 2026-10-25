@@ -30,7 +30,7 @@ const STARTER_QUESTIONS = [
 ];
 
 const INITIAL_GREETING =
-  "Hey there! 👋 I'm **ToolBot** — your guide to **ToolifyHQ**.\n\nAsk me anything about our tools, pricing, setup, or use a quick action below to jump straight in.";
+  "Hey there! 👋 I'm **ToolBot** — your guide to **Toofixitt**.\n\nAsk me anything about our tools, pricing, setup, or use a quick action below to jump straight in.";
 
 const ChatbotWidget = () => {
   const navigate = useNavigate();
@@ -228,7 +228,7 @@ const ChatbotWidget = () => {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
                 </span>
-                Online · Powered by ToolifyHQ
+                Online · Powered by Toofixitt
               </div>
             </div>
             <button
