@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import ToolCard from "@/components/ToolCard";
 import ToolSearch from "@/components/ToolSearch";
 import { tools } from "@/data/tools";
+import { collections, showcaseCollections } from "@/data/collections";
 import { ShieldCheck, Zap, Download, Mail, Send, CreditCard, Sparkles, PartyPopper, Store, Globe2, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import AnniversaryCountdown from "@/components/AnniversaryCountdown";
@@ -40,8 +41,6 @@ const homeFaqs = [
     a: "Please review our Refund Policy page for full details. In general, we handle refund requests on a case-by-case basis — reach out to smithmove0@gmail.com if you have any concerns.",
   },
 ];
-
-const featuredTools = tools.slice(0, 6);
 
 const Index = () => {
   const anniversary = isAnniversaryActive();
