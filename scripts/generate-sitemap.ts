@@ -24,6 +24,7 @@ const entries: Entry[] = [
   { path: "/privacy", changefreq: "yearly", priority: "0.3" },
   { path: "/terms", changefreq: "yearly", priority: "0.3" },
   { path: "/refund", changefreq: "yearly", priority: "0.3" },
+  ...collections.map((c) => ({ path: `/collections/${c.slug}`, changefreq: "weekly" as const, priority: "0.7" })),
   ...tools.map((t) => ({ path: `/tools/${t.slug}`, changefreq: "monthly" as const, priority: "0.8" })),
   ...posts.map((p) => ({ path: `/blog/${p.slug}`, changefreq: "monthly" as const, priority: "0.7", lastmod: p.date })),
 ];
