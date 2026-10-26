@@ -2,6 +2,7 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { tools } from "../src/data/tools";
 import { posts } from "../src/data/blog";
+import { collections } from "../src/data/collections";
 
 const BASE_URL = "https://toofixitt.lovable.app";
 
