@@ -66,7 +66,7 @@ const Index = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="gradient-hero relative overflow-hidden border-b border-border py-24 md:py-32">
+      <section className="relative overflow-hidden border-b border-border bg-background py-20 md:py-28">
         {anniversary && (
           <>
             <div className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
@@ -80,27 +80,26 @@ const Index = () => {
               Celebrating 5 Years of Toofixitt — Limited-Time Offer
             </span>
           ) : (
-            <span className="mb-6 inline-block rounded-full border border-border bg-secondary/80 px-4 py-1.5 text-xs font-semibold text-secondary-foreground shadow-card">
-              🚀 The #1 Shopify Tools Marketplace
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/80 px-4 py-1.5 text-xs font-semibold text-secondary-foreground">
+              <ShieldCheck className="h-3.5 w-3.5 text-accent" />
+              Trusted by 12,000+ Shopify stores in 60+ countries
             </span>
           )}
           <h1 className="mx-auto mb-6 max-w-3xl text-4xl font-extrabold leading-tight text-foreground md:text-5xl lg:text-6xl">
             {anniversary ? (
               <>
-                5 Years of Powering{" "}
-                <span className="text-gradient">Shopify Store Owners</span>
+                5 Years of Powering Shopify Store Owners
               </>
             ) : (
               <>
-                Premium Shopify Tools for{" "}
-                <span className="text-gradient">Serious Store Owners</span>
+                Stop Losing Sales to Slow Pages, SEO Errors and Sold-Out Stock
               </>
             )}
           </h1>
           <p className="mx-auto mb-10 max-w-xl text-lg text-muted-foreground">
             {anniversary
               ? `Thank you for 5 incredible years! Use code ${anniversaryConfig.promoCode} for ${anniversaryConfig.discountLabel} any tool this week only.`
-              : "Automate, optimize, and scale your Shopify store with powerful ready-to-use tools."}
+              : `Browse ${tools.length}+ premium Shopify tools for SEO, speed, conversion and automation. Pay once, request delivery, and receive a complete package with setup guides and license.`}
           </p>
           {anniversary && (
             <>
@@ -134,18 +133,12 @@ const Index = () => {
               ))}
             </div>
           </div>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center">
             <Link
               to="/tools"
               className="rounded-lg bg-accent px-8 py-3.5 text-base font-semibold text-accent-foreground shadow-card transition-all hover:opacity-90"
             >
-              Browse Tools
-            </Link>
-            <Link
-              to="/tools"
-              className="rounded-lg border border-border bg-card/80 px-8 py-3.5 text-base font-semibold text-foreground shadow-card transition-all hover:bg-secondary"
-            >
-              Get Started
+              Browse All Tools
             </Link>
           </div>
         </div>
@@ -368,17 +361,17 @@ const Index = () => {
       </section>
 
       {/* CTA */}
-      <section className="gradient-primary border-y border-border py-20">
+      <section className="border-y border-border bg-card/60 py-16">
         <div className="container text-center">
-          <h2 className="mb-4 text-3xl font-bold text-primary-foreground">Ready to Scale Your Shopify Store?</h2>
-          <p className="mx-auto mb-8 max-w-md text-primary-foreground/80">
-            Join thousands of store owners who trust Toofixitt for premium Shopify tools.
+          <h2 className="mb-3 text-3xl font-bold text-foreground">Ready to Fix What's Costing You Sales?</h2>
+          <p className="mx-auto mb-8 max-w-md text-muted-foreground">
+            Browse the full collection and get your first tool delivered within hours.
           </p>
           <Link
             to="/tools"
-            className="inline-block rounded-lg bg-accent px-8 py-3.5 text-base font-semibold text-accent-foreground transition-all hover:opacity-90"
+            className="inline-block rounded-lg bg-accent px-8 py-3.5 text-base font-semibold text-accent-foreground shadow-card transition-all hover:opacity-90"
           >
-            Browse Tools Now
+            Browse All Tools
           </Link>
         </div>
       </section>
