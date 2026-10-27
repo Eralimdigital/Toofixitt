@@ -12,7 +12,7 @@ interface ToolSearchProps {
 
 const ToolSearch = ({
   variant = "hero",
-  placeholder = "Search 39+ premium Shopify tools...",
+  placeholder = `Search ${tools.length}+ premium Shopify tools...`,
   autoFocus = false,
   onClose,
 }: ToolSearchProps) => {
