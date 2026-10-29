@@ -381,6 +381,7 @@ export const tools: Tool[] = [
     price: "$250",
     priceValue: 250,
     benefits: ["Improve SEO performance", "Increase organic traffic", "Better Google ranking"],
+    paymentUrl: "https://checkout.bachs.io/pay/pl_8d5acc9e2768",
     category: "SEO",
     imagePrompt: "seo",
   },
