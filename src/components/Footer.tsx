@@ -1,4 +1,42 @@
 import { Link } from "react-router-dom";
+import {
+  siVisa,
+  siMastercard,
+  siPaypal,
+  siApplepay,
+  siGooglepay,
+  siStripe,
+  siDiscover,
+  siAmericanexpress,
+} from "simple-icons";
+
+const paymentIcons = [
+  { si: siVisa, hex: siVisa.hex, label: "Visa" },
+  { si: siMastercard, hex: siMastercard.hex, label: "Mastercard" },
+  { si: siPaypal, hex: siPaypal.hex, label: "PayPal" },
+  { si: siApplepay, hex: siApplepay.hex, label: "Apple Pay" },
+  { si: siGooglepay, hex: siGooglepay.hex, label: "Google Pay" },
+  { si: siStripe, hex: "#FFFFFF", label: "Stripe" },
+  { si: siDiscover, hex: siDiscover.hex, label: "Discover" },
+  { si: siAmericanexpress, hex: "#FFFFFF", label: "American Express" },
+];
+
+const PaymentBadges = () => (
+  <div className="mb-4 flex flex-wrap items-center justify-center gap-3">
+    {paymentIcons.map(({ si, hex, label }) => (
+      <div
+        key={label}
+        title={label}
+        aria-label={label}
+        className="flex h-8 w-12 items-center justify-center rounded bg-white shadow-sm"
+      >
+        <svg viewBox="0 0 24 24" className="h-4 w-4" fill={hex} role="img" aria-hidden="true">
+          <path d={si.path} />
+        </svg>
+      </div>
+    ))}
+  </div>
+);
 
 const Footer = () => {
   return (
