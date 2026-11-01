@@ -10,27 +10,18 @@ import {
   siAmericanexpress,
 } from "simple-icons";
 
-const paymentIcons = [
-  { si: siVisa, hex: siVisa.hex, label: "Visa" },
-  { si: siMastercard, hex: siMastercard.hex, label: "Mastercard" },
-  { si: siPaypal, hex: siPaypal.hex, label: "PayPal" },
-  { si: siApplepay, hex: siApplepay.hex, label: "Apple Pay" },
-  { si: siGooglepay, hex: siGooglepay.hex, label: "Google Pay" },
-  { si: siStripe, hex: "#FFFFFF", label: "Stripe" },
-  { si: siDiscover, hex: siDiscover.hex, label: "Discover" },
-  { si: siAmericanexpress, hex: "#FFFFFF", label: "American Express" },
-];
+const paymentIcons = [siVisa, siMastercard, siPaypal, siApplepay, siGooglepay, siStripe, siDiscover, siAmericanexpress];
 
 const PaymentBadges = () => (
   <div className="mb-4 flex flex-wrap items-center justify-center gap-3">
-    {paymentIcons.map(({ si, hex, label }) => (
+    {paymentIcons.map((si) => (
       <div
-        key={label}
-        title={label}
-        aria-label={label}
+        key={si.title}
+        title={si.title}
+        aria-label={si.title}
         className="flex h-8 w-12 items-center justify-center rounded bg-white shadow-sm"
       >
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill={hex} role="img" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="h-4 w-4" fill={si.hex} role="img" aria-hidden="true">
           <path d={si.path} />
         </svg>
       </div>
