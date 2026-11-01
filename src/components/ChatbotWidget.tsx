@@ -30,7 +30,7 @@ const STARTER_QUESTIONS = [
 ];
 
 const INITIAL_GREETING =
-  "Hey there! 👋 I'm **ToolBot** — your guide to **Toofixitt**.\n\nAsk me anything about our tools, pricing, setup, or use a quick action below to jump straight in.";
+  "Hey there! I'm **ToolBot** — your guide to **Toofixitt**.\n\nAsk me anything about our tools, pricing, setup, or use a quick action below to jump straight in.";
 
 const ChatbotWidget = () => {
   const navigate = useNavigate();
