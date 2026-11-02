@@ -5,7 +5,7 @@ import ToolCard from "@/components/ToolCard";
 import ToolSearch from "@/components/ToolSearch";
 import { tools } from "@/data/tools";
 import { collections, showcaseCollections } from "@/data/collections";
-import { ShieldCheck, Zap, Download, Mail, Send, CreditCard, Sparkles, PartyPopper, Store, Globe2, Users } from "lucide-react";
+import { ShieldCheck, Zap, ShoppingCart, Star, KeyRound, Sparkles, PartyPopper, Store, Globe2, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import AnniversaryCountdown from "@/components/AnniversaryCountdown";
 import { anniversaryConfig, isAnniversaryActive } from "@/config/anniversary";
