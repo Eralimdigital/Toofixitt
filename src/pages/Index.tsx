@@ -194,45 +194,56 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="relative mt-12 grid gap-6 md:grid-cols-4">
-            {/* Connector line */}
-            <div className="absolute left-0 right-0 top-10 hidden h-0.5 bg-gradient-to-r from-transparent via-accent/30 to-transparent md:block" />
-
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
             {[
               {
                 step: "1",
-                icon: Zap,
+                img: "/images/how-it-works/browse.webp",
+                alt: "Browsing the Toofixitt catalog of Shopify tools",
                 title: "Browse & Choose",
                 desc: "Explore our collection of premium Shopify tools. Pick the one that fits your store's needs.",
               },
               {
                 step: "2",
-                icon: Mail,
+                img: "/images/how-it-works/checkout.webp",
+                alt: "Order summary and Start Checkout button on a tool page",
                 title: "Start Checkout",
                 desc: "Click \"Start Checkout\" on the tool page. This opens an email to us — we'll reply with payment details (amount, method).",
               },
               {
                 step: "3",
-                icon: CreditCard,
+                img: "/images/how-it-works/payment.webp",
+                alt: "Cart checkout screen with the payment Transaction ID field",
                 title: "Pay & Get Txn ID",
                 desc: "Complete payment using the method we provide (PayPal, bank transfer, crypto, etc.). Save your Transaction ID from the receipt.",
               },
               {
                 step: "4",
-                icon: Send,
+                img: "/images/how-it-works/delivery.webp",
+                alt: "Download Tool request form with name, email and Transaction ID fields",
                 title: "Request Delivery",
                 desc: "Back on the tool page, click \"Download Tool\", enter your name, technician email, and Transaction ID. We verify & deliver the tool!",
               },
             ].map((s) => (
-              <div key={s.step} className="relative flex flex-col items-center text-center">
-                <div className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-2xl border border-accent/30 bg-card shadow-card backdrop-blur-sm">
-                  <s.icon className="h-8 w-8 text-accent" />
-                  <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-md">
+              <div
+                key={s.step}
+                className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
+                  <img
+                    src={s.img}
+                    alt={s.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <span className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-md">
                     {s.step}
                   </span>
                 </div>
-                <h3 className="mb-2 text-base font-bold text-foreground">{s.title}</h3>
-                <p className="max-w-[220px] text-sm text-muted-foreground">{s.desc}</p>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="mb-2 text-base font-bold text-foreground">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground">{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>
