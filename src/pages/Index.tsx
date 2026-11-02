@@ -260,19 +260,53 @@ const Index = () => {
       {/* Why Toofixitt */}
       <section className="border-b border-border py-20">
         <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold text-foreground">Why Toofixitt?</h2>
+          <h2 className="mb-3 text-center text-3xl font-bold text-foreground">Why Toofixitt?</h2>
+          <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
+            Real screens from the store — no mockups, this is what you actually get.
+          </p>
           <div className="grid gap-8 md:grid-cols-3">
             {[
-              { icon: Zap, title: "Instant Download", desc: "Get your tools immediately after purchase. No waiting." },
-              { icon: ShieldCheck, title: "Expert-Grade Quality", desc: "Every tool is built for professional Shopify store owners." },
-              { icon: Download, title: "Easy Integration", desc: "Simple setup guides included with every tool purchase." },
+              {
+                icon: ShoppingCart,
+                img: "/images/how-it-works/cart.webp",
+                alt: "Cart page with several tools and a combined checkout total",
+                title: "Order One Tool or Many",
+                desc: "Add several tools to your cart and request them together in one go — a single payment, one delivery request, every tool delivered.",
+              },
+              {
+                icon: Star,
+                img: "/images/how-it-works/reviews.webp",
+                alt: "Shopify store reviews with star ratings, countries and dates",
+                title: "Read Real Store Reviews",
+                desc: "Every tool page shows shopper reviews with ratings, countries and dates — read them before you buy, and add your own after delivery.",
+              },
+              {
+                icon: KeyRound,
+                img: "/images/how-it-works/activate.webp",
+                alt: "Product activation portal with license key, number and activation code fields",
+                title: "Licenses & Activation Included",
+                desc: "Each delivery ships with your license credentials and a simple activation portal to get the tool running on your store.",
+              },
             ].map((f) => (
-              <div key={f.title} className="rounded-xl border border-border bg-card/90 p-8 text-center shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-secondary">
-                  <f.icon className="h-6 w-6 text-accent" />
+              <div
+                key={f.title}
+                className="flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
+              >
+                <div className="aspect-[16/10] overflow-hidden bg-secondary">
+                  <img
+                    src={f.img}
+                    alt={f.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-foreground">{f.title}</h3>
-                <p className="text-sm text-muted-foreground">{f.desc}</p>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <f.icon className="h-4 w-4 text-accent" />
+                    <h3 className="text-lg font-bold text-foreground">{f.title}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{f.desc}</p>
+                </div>
               </div>
             ))}
           </div>
