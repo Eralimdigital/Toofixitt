@@ -5,7 +5,7 @@ import ToolCard from "@/components/ToolCard";
 import ToolSearch from "@/components/ToolSearch";
 import { tools } from "@/data/tools";
 import { collections, showcaseCollections } from "@/data/collections";
-import { ShieldCheck, Zap, Download, Mail, Send, CreditCard, Sparkles, PartyPopper, Store, Globe2, Users } from "lucide-react";
+import { ShieldCheck, Zap, ShoppingCart, Star, KeyRound, Sparkles, PartyPopper, Store, Globe2, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import AnniversaryCountdown from "@/components/AnniversaryCountdown";
 import { anniversaryConfig, isAnniversaryActive } from "@/config/anniversary";
@@ -194,45 +194,56 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="relative mt-12 grid gap-6 md:grid-cols-4">
-            {/* Connector line */}
-            <div className="absolute left-0 right-0 top-10 hidden h-0.5 bg-gradient-to-r from-transparent via-accent/30 to-transparent md:block" />
-
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
             {[
               {
                 step: "1",
-                icon: Zap,
+                img: "/images/how-it-works/browse.webp",
+                alt: "Browsing the Toofixitt catalog of Shopify tools",
                 title: "Browse & Choose",
                 desc: "Explore our collection of premium Shopify tools. Pick the one that fits your store's needs.",
               },
               {
                 step: "2",
-                icon: Mail,
+                img: "/images/how-it-works/checkout.webp",
+                alt: "Order summary and Start Checkout button on a tool page",
                 title: "Start Checkout",
                 desc: "Click \"Start Checkout\" on the tool page. This opens an email to us — we'll reply with payment details (amount, method).",
               },
               {
                 step: "3",
-                icon: CreditCard,
+                img: "/images/how-it-works/payment.webp",
+                alt: "Cart checkout screen with the payment Transaction ID field",
                 title: "Pay & Get Txn ID",
                 desc: "Complete payment using the method we provide (PayPal, bank transfer, crypto, etc.). Save your Transaction ID from the receipt.",
               },
               {
                 step: "4",
-                icon: Send,
+                img: "/images/how-it-works/delivery.webp",
+                alt: "Download Tool request form with name, email and Transaction ID fields",
                 title: "Request Delivery",
                 desc: "Back on the tool page, click \"Download Tool\", enter your name, technician email, and Transaction ID. We verify & deliver the tool!",
               },
             ].map((s) => (
-              <div key={s.step} className="relative flex flex-col items-center text-center">
-                <div className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-2xl border border-accent/30 bg-card shadow-card backdrop-blur-sm">
-                  <s.icon className="h-8 w-8 text-accent" />
-                  <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-md">
+              <div
+                key={s.step}
+                className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
+                  <img
+                    src={s.img}
+                    alt={s.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <span className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-md">
                     {s.step}
                   </span>
                 </div>
-                <h3 className="mb-2 text-base font-bold text-foreground">{s.title}</h3>
-                <p className="max-w-[220px] text-sm text-muted-foreground">{s.desc}</p>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="mb-2 text-base font-bold text-foreground">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground">{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -249,19 +260,53 @@ const Index = () => {
       {/* Why Toofixitt */}
       <section className="border-b border-border py-20">
         <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold text-foreground">Why Toofixitt?</h2>
+          <h2 className="mb-3 text-center text-3xl font-bold text-foreground">Why Toofixitt?</h2>
+          <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
+            Real screens from the store — no mockups, this is what you actually get.
+          </p>
           <div className="grid gap-8 md:grid-cols-3">
             {[
-              { icon: Zap, title: "Instant Download", desc: "Get your tools immediately after purchase. No waiting." },
-              { icon: ShieldCheck, title: "Expert-Grade Quality", desc: "Every tool is built for professional Shopify store owners." },
-              { icon: Download, title: "Easy Integration", desc: "Simple setup guides included with every tool purchase." },
+              {
+                icon: ShoppingCart,
+                img: "/images/how-it-works/cart.webp",
+                alt: "Cart page with several tools and a combined checkout total",
+                title: "Order One Tool or Many",
+                desc: "Add several tools to your cart and request them together in one go — a single payment, one delivery request, every tool delivered.",
+              },
+              {
+                icon: Star,
+                img: "/images/how-it-works/reviews.webp",
+                alt: "Shopify store reviews with star ratings, countries and dates",
+                title: "Read Real Store Reviews",
+                desc: "Every tool page shows shopper reviews with ratings, countries and dates — read them before you buy, and add your own after delivery.",
+              },
+              {
+                icon: KeyRound,
+                img: "/images/how-it-works/activate.webp",
+                alt: "Product activation portal with license key, number and activation code fields",
+                title: "Licenses & Activation Included",
+                desc: "Each delivery ships with your license credentials and a simple activation portal to get the tool running on your store.",
+              },
             ].map((f) => (
-              <div key={f.title} className="rounded-xl border border-border bg-card/90 p-8 text-center shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-secondary">
-                  <f.icon className="h-6 w-6 text-accent" />
+              <div
+                key={f.title}
+                className="flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
+              >
+                <div className="aspect-[16/10] overflow-hidden bg-secondary">
+                  <img
+                    src={f.img}
+                    alt={f.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-foreground">{f.title}</h3>
-                <p className="text-sm text-muted-foreground">{f.desc}</p>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <f.icon className="h-4 w-4 text-accent" />
+                    <h3 className="text-lg font-bold text-foreground">{f.title}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{f.desc}</p>
+                </div>
               </div>
             ))}
           </div>
