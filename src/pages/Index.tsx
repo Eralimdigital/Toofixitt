@@ -265,39 +265,43 @@ const Index = () => {
             Real screens from the store — no mockups, this is what you actually get.
           </p>
           <div className="grid gap-8 md:grid-cols-3">
+          <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
+            Everything you get with every order on Toofixitt — no surprises.
+          </p>
+          <div className="grid gap-8 md:grid-cols-3">
             {[
               {
                 icon: ShoppingCart,
-                img: "/images/how-it-works/cart.webp",
-                alt: "Cart page with several tools and a combined checkout total",
+                img: "/images/icons3d/multi-order.webp",
+                alt: "Glossy 3D icon of a shopping cart stacked full of packages",
                 title: "Order One Tool or Many",
                 desc: "Add several tools to your cart and request them together in one go — a single payment, one delivery request, every tool delivered.",
               },
               {
                 icon: Star,
-                img: "/images/how-it-works/reviews.webp",
-                alt: "Shopify store reviews with star ratings, countries and dates",
+                img: "/images/icons3d/reviews.webp",
+                alt: "Glossy 3D icon of golden rating stars",
                 title: "Read Real Store Reviews",
                 desc: "Every tool page shows shopper reviews with ratings, countries and dates — read them before you buy, and add your own after delivery.",
               },
               {
                 icon: KeyRound,
-                img: "/images/how-it-works/activate.webp",
-                alt: "Product activation portal with license key, number and activation code fields",
+                img: "/images/icons3d/activate.webp",
+                alt: "Glossy 3D icon of a golden security key",
                 title: "Licenses & Activation Included",
                 desc: "Each delivery ships with your license credentials and a simple activation portal to get the tool running on your store.",
               },
             ].map((f) => (
               <div
                 key={f.title}
-                className="flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
+                className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
               >
-                <div className="aspect-[16/10] overflow-hidden bg-secondary">
+                <div className="flex aspect-[16/10] items-center justify-center overflow-hidden bg-gradient-to-b from-accent/10 via-accent/5 to-transparent">
                   <img
                     src={f.img}
                     alt={f.alt}
                     loading="lazy"
-                    className="h-full w-full object-cover object-top"
+                    className="h-[68%] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
