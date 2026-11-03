@@ -198,29 +198,29 @@ const Index = () => {
             {[
               {
                 step: "1",
-                img: "/images/how-it-works/browse.webp",
-                alt: "Browsing the Toofixitt catalog of Shopify tools",
+                img: "/images/icons3d/browse.webp",
+                alt: "Glossy 3D icon of a storefront with a magnifying glass",
                 title: "Browse & Choose",
                 desc: "Explore our collection of premium Shopify tools. Pick the one that fits your store's needs.",
               },
               {
                 step: "2",
-                img: "/images/how-it-works/checkout.webp",
-                alt: "Order summary and Start Checkout button on a tool page",
+                img: "/images/icons3d/checkout.webp",
+                alt: "Glossy 3D icon of a shopping cart with a checkout badge",
                 title: "Start Checkout",
                 desc: "Click \"Start Checkout\" on the tool page. This opens an email to us — we'll reply with payment details (amount, method).",
               },
               {
                 step: "3",
-                img: "/images/how-it-works/payment.webp",
-                alt: "Cart checkout screen with the payment Transaction ID field",
+                img: "/images/icons3d/payment.webp",
+                alt: "Glossy 3D icon of a credit card with a verified checkmark",
                 title: "Pay & Get Txn ID",
                 desc: "Complete payment using the method we provide (PayPal, bank transfer, crypto, etc.). Save your Transaction ID from the receipt.",
               },
               {
                 step: "4",
-                img: "/images/how-it-works/delivery.webp",
-                alt: "Download Tool request form with name, email and Transaction ID fields",
+                img: "/images/icons3d/delivery.webp",
+                alt: "Glossy 3D icon of a parcel box with a download arrow",
                 title: "Request Delivery",
                 desc: "Back on the tool page, click \"Download Tool\", enter your name, technician email, and Transaction ID. We verify & deliver the tool!",
               },
@@ -229,12 +229,12 @@ const Index = () => {
                 key={s.step}
                 className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
+                <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-b from-accent/10 via-accent/5 to-transparent">
                   <img
                     src={s.img}
                     alt={s.alt}
                     loading="lazy"
-                    className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                    className="h-[72%] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
                   />
                   <span className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-md">
                     {s.step}
