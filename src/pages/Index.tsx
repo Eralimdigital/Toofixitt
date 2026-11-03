@@ -262,10 +262,6 @@ const Index = () => {
         <div className="container">
           <h2 className="mb-3 text-center text-3xl font-bold text-foreground">Why Toofixitt?</h2>
           <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
-            Real screens from the store — no mockups, this is what you actually get.
-          </p>
-          <div className="grid gap-8 md:grid-cols-3">
-          <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
             Everything you get with every order on Toofixitt — no surprises.
           </p>
           <div className="grid gap-8 md:grid-cols-3">
