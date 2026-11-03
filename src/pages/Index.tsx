@@ -198,29 +198,29 @@ const Index = () => {
             {[
               {
                 step: "1",
-                img: "/images/how-it-works/browse.webp",
-                alt: "Browsing the Toofixitt catalog of Shopify tools",
+                img: "/images/icons3d/browse.webp",
+                alt: "Glossy 3D icon of a storefront with a magnifying glass",
                 title: "Browse & Choose",
                 desc: "Explore our collection of premium Shopify tools. Pick the one that fits your store's needs.",
               },
               {
                 step: "2",
-                img: "/images/how-it-works/checkout.webp",
-                alt: "Order summary and Start Checkout button on a tool page",
+                img: "/images/icons3d/checkout.webp",
+                alt: "Glossy 3D icon of a shopping cart with a checkout badge",
                 title: "Start Checkout",
                 desc: "Click \"Start Checkout\" on the tool page. This opens an email to us — we'll reply with payment details (amount, method).",
               },
               {
                 step: "3",
-                img: "/images/how-it-works/payment.webp",
-                alt: "Cart checkout screen with the payment Transaction ID field",
+                img: "/images/icons3d/payment.webp",
+                alt: "Glossy 3D icon of a credit card with a verified checkmark",
                 title: "Pay & Get Txn ID",
                 desc: "Complete payment using the method we provide (PayPal, bank transfer, crypto, etc.). Save your Transaction ID from the receipt.",
               },
               {
                 step: "4",
-                img: "/images/how-it-works/delivery.webp",
-                alt: "Download Tool request form with name, email and Transaction ID fields",
+                img: "/images/icons3d/delivery.webp",
+                alt: "Glossy 3D icon of a parcel box with a download arrow",
                 title: "Request Delivery",
                 desc: "Back on the tool page, click \"Download Tool\", enter your name, technician email, and Transaction ID. We verify & deliver the tool!",
               },
@@ -229,12 +229,12 @@ const Index = () => {
                 key={s.step}
                 className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
+                <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-b from-accent/10 via-accent/5 to-transparent">
                   <img
                     src={s.img}
                     alt={s.alt}
                     loading="lazy"
-                    className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                    className="h-[72%] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
                   />
                   <span className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-md">
                     {s.step}
@@ -262,42 +262,42 @@ const Index = () => {
         <div className="container">
           <h2 className="mb-3 text-center text-3xl font-bold text-foreground">Why Toofixitt?</h2>
           <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
-            Real screens from the store — no mockups, this is what you actually get.
+            Everything you get with every order on Toofixitt — no surprises.
           </p>
           <div className="grid gap-8 md:grid-cols-3">
             {[
               {
                 icon: ShoppingCart,
-                img: "/images/how-it-works/cart.webp",
-                alt: "Cart page with several tools and a combined checkout total",
+                img: "/images/icons3d/multi-order.webp",
+                alt: "Glossy 3D icon of a shopping cart stacked full of packages",
                 title: "Order One Tool or Many",
                 desc: "Add several tools to your cart and request them together in one go — a single payment, one delivery request, every tool delivered.",
               },
               {
                 icon: Star,
-                img: "/images/how-it-works/reviews.webp",
-                alt: "Shopify store reviews with star ratings, countries and dates",
+                img: "/images/icons3d/reviews.webp",
+                alt: "Glossy 3D icon of golden rating stars",
                 title: "Read Real Store Reviews",
                 desc: "Every tool page shows shopper reviews with ratings, countries and dates — read them before you buy, and add your own after delivery.",
               },
               {
                 icon: KeyRound,
-                img: "/images/how-it-works/activate.webp",
-                alt: "Product activation portal with license key, number and activation code fields",
+                img: "/images/icons3d/activate.webp",
+                alt: "Glossy 3D icon of a golden security key",
                 title: "Licenses & Activation Included",
                 desc: "Each delivery ships with your license credentials and a simple activation portal to get the tool running on your store.",
               },
             ].map((f) => (
               <div
                 key={f.title}
-                className="flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
+                className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
               >
-                <div className="aspect-[16/10] overflow-hidden bg-secondary">
+                <div className="flex aspect-[16/10] items-center justify-center overflow-hidden bg-gradient-to-b from-accent/10 via-accent/5 to-transparent">
                   <img
                     src={f.img}
                     alt={f.alt}
                     loading="lazy"
-                    className="h-full w-full object-cover object-top"
+                    className="h-[68%] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
