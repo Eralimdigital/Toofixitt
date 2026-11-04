@@ -29,6 +29,27 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    id: "52",
+    name: "Higgsfield Creative Studio Plugin",
+    slug: "higgsfield-creative-studio-plugin",
+    description:
+      "Transform your creative workflow with the power of Higgsfield AI. The Higgsfield Plugin brings advanced AI-powered image and video creation capabilities into your digital workflow, helping you produce professional-quality visual content for marketing, branding, advertising, and social media. With this integration, you can leverage AI creative tools to generate stunning product visuals, engaging video advertisements, branded content, and promotional materials without relying entirely on traditional production methods.",
+    price: "$300",
+    priceValue: 300,
+    category: "AI",
+    imagePrompt: "purple robot creating AI images and videos with a paint palette and film clapper",
+    benefits: [
+      "AI Image Generation: professional, high-quality images from text prompts",
+      "AI Video Creation: engaging videos for marketing and promotional campaigns",
+      "Product Advertising: eye-catching product advertisements and promotional visuals",
+      "Social Media Content: creative content for Instagram, TikTok, Facebook and other platforms",
+      "Brand Visuals: consistent visual content that supports your brand identity",
+      "Creative Workflow: simplified content production with less time spent creating marketing assets",
+    ],
+    packagesRecommendedFor:
+      "Every delivery includes the Higgsfield Plugin integration and setup, configuration of the available creative features, basic setup guidance, and testing to verify everything works before handoff.",
+  },
+  {
     id: "50",
     name: "Sherpas Plugin",
     slug: "sherpas-plugin",
