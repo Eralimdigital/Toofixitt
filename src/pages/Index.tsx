@@ -229,19 +229,21 @@ const Index = () => {
                 key={s.step}
                 className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
               >
-                <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-b from-accent/10 via-accent/5 to-transparent">
-                  <img
-                    src={s.img}
-                    alt={s.alt}
-                    loading="lazy"
-                    className="h-[72%] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <span className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-md">
-                    {s.step}
-                  </span>
-                </div>
                 <div className="flex flex-1 flex-col p-5">
-                  <h3 className="mb-2 text-base font-bold text-foreground">{s.title}</h3>
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={s.img}
+                        alt={s.alt}
+                        loading="lazy"
+                        className="h-12 w-12 flex-shrink-0 object-contain"
+                      />
+                      <h3 className="text-base font-bold text-foreground">{s.title}</h3>
+                    </div>
+                    <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-md">
+                      {s.step}
+                    </span>
+                  </div>
                   <p className="text-sm text-muted-foreground">{s.desc}</p>
                 </div>
               </div>
@@ -292,18 +294,18 @@ const Index = () => {
                 key={f.title}
                 className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card/90 shadow-card backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-card-hover"
               >
-                <div className="flex aspect-[16/10] items-center justify-center overflow-hidden bg-gradient-to-b from-accent/10 via-accent/5 to-transparent">
-                  <img
-                    src={f.img}
-                    alt={f.alt}
-                    loading="lazy"
-                    className="h-[68%] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
-                  />
-                </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <div className="mb-3 flex items-center gap-2">
-                    <f.icon className="h-4 w-4 text-accent" />
-                    <h3 className="text-lg font-bold text-foreground">{f.title}</h3>
+                  <div className="mb-3 flex items-center gap-3">
+                    <img
+                      src={f.img}
+                      alt={f.alt}
+                      loading="lazy"
+                      className="h-12 w-12 flex-shrink-0 object-contain"
+                    />
+                    <div className="flex items-center gap-2">
+                      <f.icon className="h-4 w-4 text-accent" />
+                      <h3 className="text-lg font-bold text-foreground">{f.title}</h3>
+                    </div>
                   </div>
                   <p className="text-sm text-muted-foreground">{f.desc}</p>
                 </div>
