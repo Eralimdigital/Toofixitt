@@ -858,7 +858,7 @@ export const tools: Tool[] = [
     description: "Drive targeted traffic directly to your best-selling product pages using smart routing and SEO signals.",
     price: "$270",
     priceValue: 270,
-    paymentUrl: "https://checkout.bachs.io/pay/pl_e35f10860636",
+    paymentUrl: "https://checkout.bachs.io/pay/pl_c1e85b00f901",
     benefits: ["Targeted product traffic", "Smart routing", "Best-seller boost", "Higher revenue per visitor"],
     category: "Traffic",
     imagePrompt: "product-traffic",
