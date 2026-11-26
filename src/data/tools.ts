@@ -9,6 +9,8 @@ export interface ToolPackage {
   bestFor: string;
   features: string[];
   benefits: string[];
+  paymentUrl?: string;
+  productLimit?: number;
 }
 
 export interface Tool {
@@ -398,11 +400,82 @@ export const tools: Tool[] = [
     id: "1",
     name: "SEO Optimization",
     slug: "seo-optimization-tool",
-    description: "Optimize your Shopify store for higher search rankings and organic traffic.",
+    description: "Improve your Shopify store's product search visibility and organic traffic. Choose a package based on how many products you need optimized.",
     price: "$250",
     priceValue: 250,
     benefits: ["Improve SEO performance", "Increase organic traffic", "Better Google ranking"],
-    paymentUrl: "https://checkout.bachs.io/pay/pl_8d5acc9e2768",
+    packagesRecommendedFor: "Choose the package that matches your Shopify catalog size: Basic covers up to 250 products, Professional up to 500, and Premium up to 600.",
+    packages: [
+      {
+        id: "basic",
+        name: "Basic",
+        tagline: "Product SEO essentials",
+        price: "$250",
+        priceValue: 250,
+        accent: "basic",
+        productLimit: 250,
+        paymentUrl: "https://checkout.bachs.io/pay/pl_8d5acc9e2768",
+        bestFor: "For Shopify stores optimizing up to 250 products.",
+        features: [
+          "Optimize up to 250 product listings",
+          "Product title and metadata optimization",
+          "Product description and image alt-text review",
+          "Basic setup guidance",
+          "Optimization and functionality verification",
+        ],
+        benefits: [
+          "Improve product search visibility",
+          "Create clearer search listings",
+          "Build a stronger organic discovery foundation",
+        ],
+      },
+      {
+        id: "professional",
+        name: "Professional",
+        tagline: "Expanded catalog optimization",
+        price: "$350",
+        priceValue: 350,
+        accent: "pro",
+        productLimit: 500,
+        paymentUrl: "https://checkout.bachs.io/pay/pl_f955e53bf4db",
+        bestFor: "For growing Shopify catalogs with up to 500 products to optimize.",
+        features: [
+          "Optimize up to 500 product listings",
+          "Product title and metadata optimization",
+          "Product description and image alt-text review",
+          "Basic setup guidance",
+          "Optimization and functionality verification",
+        ],
+        benefits: [
+          "Cover more of your product catalog",
+          "Improve product search visibility at scale",
+          "Build a stronger organic discovery foundation",
+        ],
+      },
+      {
+        id: "premium",
+        name: "Premium",
+        tagline: "Largest catalog coverage",
+        price: "$500",
+        priceValue: 500,
+        accent: "premium",
+        productLimit: 600,
+        paymentUrl: "https://checkout.bachs.io/pay/pl_6089db857198",
+        bestFor: "For larger Shopify catalogs with up to 600 products to optimize.",
+        features: [
+          "Optimize up to 600 product listings",
+          "Product title and metadata optimization",
+          "Product description and image alt-text review",
+          "Basic setup guidance",
+          "Optimization and functionality verification",
+        ],
+        benefits: [
+          "Cover the widest product catalog",
+          "Improve product search visibility across more listings",
+          "Build a stronger organic discovery foundation",
+        ],
+      },
+    ],
     category: "SEO",
     imagePrompt: "seo",
   },

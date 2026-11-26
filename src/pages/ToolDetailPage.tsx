@@ -21,6 +21,7 @@ const ToolDetailPage = () => {
     packages ? (packages.find((p) => p.popular)?.id ?? packages[0].id) : null,
   );
   const selectedPkg: ToolPackage | undefined = packages?.find((p) => p.id === selectedPkgId);
+  const selectedPaymentUrl = selectedPkg ? selectedPkg.paymentUrl : tool?.paymentUrl;
   const cartSlug = tool ? (selectedPkg ? `${tool.slug}--${selectedPkg.id}` : tool.slug) : "";
   const displayName = tool ? (selectedPkg ? `${tool.name} — ${selectedPkg.name}` : tool.name) : "";
   const displayPrice = selectedPkg ? selectedPkg.price : tool?.price ?? "";
@@ -139,6 +140,11 @@ const ToolDetailPage = () => {
                           <p className="mb-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
                             {pkg.tagline}
                           </p>
+                          {pkg.productLimit && (
+                            <p className="mb-2 text-sm font-semibold text-foreground">
+                              Up to {pkg.productLimit} products optimized
+                            </p>
+                          )}
                           <p className="text-3xl font-extrabold text-accent">{pkg.price}</p>
                            <p className="mb-4 text-xs text-muted-foreground">One-time purchase</p>
                           <p className="mb-4 text-xs text-muted-foreground">{pkg.bestFor}</p>
@@ -195,7 +201,7 @@ const ToolDetailPage = () => {
                 <div className="grid gap-3 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <CreditCard className="h-4 w-4 text-accent" />
-                    <span>Secure payment details are confirmed by email.</span>
+                    <span>{selectedPaymentUrl ? "Continue to the secure payment page for this package." : "Secure payment details are confirmed by email."}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="h-4 w-4 text-accent" />
@@ -204,9 +210,9 @@ const ToolDetailPage = () => {
                 </div>
               </div>
 
-              {tool.paymentUrl ? (
+              {selectedPaymentUrl ? (
                 <a
-                  href={tool.paymentUrl}
+                  href={selectedPaymentUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-8 py-3.5 text-center text-base font-semibold text-accent-foreground shadow-card transition-all hover:-translate-y-0.5 hover:opacity-90"
