@@ -1,6 +1,9 @@
 // Customer handoff documents for the Social Commerce Setup Resource.
 // These are setup resources, not a claim that a customer's accounts have already been configured.
+import { DOCUMENT_SITE_URL } from "./licensepack.ts";
+
 const common = `TOOFIXITT | SOCIAL COMMERCE SETUP RESOURCE
+Website: ${DOCUMENT_SITE_URL}
 
 BEFORE YOU BEGIN
 Have owner-approved access to the Shopify store and the relevant social commerce business accounts. Confirm the store's selling region, shipping and returns policies, product eligibility, and required business verification. Platform features and eligibility vary by region and account.
