@@ -2,7 +2,13 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import JSZip from "https://esm.sh/jszip@3.10.1";
 import { jsPDF } from "https://esm.sh/jspdf@2.5.1";
-import { buildLicensePack, abbreviate, licenseKey as makeLicenseKey } from "./licensepack.ts";
+import {
+  ACTIVATION_URL,
+  DOCUMENT_SITE_URL,
+  buildLicensePack,
+  abbreviate,
+  licenseKey as makeLicenseKey,
+} from "./licensepack.ts";
 import { socialCommerceDocument } from "./socialcommerce.ts";
 
 const corsHeaders = {
@@ -13,7 +19,6 @@ const corsHeaders = {
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_mail/gmail/v1";
 const NOTIFY_TO = "smithmove0@gmail.com";
 const FROM_NAME = "Toofixitt Delivery";
-const SITE_URL = "https://toofixitt.lovable.app";
 
 function htmlPage(title: string, body: string, color = "#a64dff") {
   return `<!doctype html><html><head><meta charset="utf-8"><title>${title}</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>
@@ -125,7 +130,7 @@ function buildPdf(opts: {
   doc.setTextColor(60, 60, 80);
   const steps = [
     "1. Open the *_INSTRUCTIONS.txt file and read the activation notice fully.",
-    "2. Go to the activation portal at https://toofixit.lovable.app/activate",
+    `2. Go to the activation portal at ${ACTIVATION_URL}`,
     "3. Enter your Store URL, License Key, License Number and Activation Code from *_LICENSES.txt.",
     "4. Keep the license files private - they are your proof of purchase.",
   ];
@@ -143,7 +148,7 @@ function buildPdf(opts: {
   doc.setFontSize(9);
   doc.setTextColor(140, 140, 160);
   doc.text(
-    `Toofixitt — ${SITE_URL}  •  Support: ${NOTIFY_TO}  •  Issued ${new Date().toUTCString()}`,
+    `Toofixitt — ${DOCUMENT_SITE_URL}  •  Support: ${NOTIFY_TO}  •  Issued ${new Date().toUTCString()}`,
     M,
     H - 40,
   );

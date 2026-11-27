@@ -3,8 +3,8 @@
 
 const BRAND = "TOOFIXITT";
 const BRAND_NAME = "Toofixitt";
-const SITE = "https://toofixit.lovable.app";
-const ACTIVATE_URL = `${SITE}/activate`;
+export const DOCUMENT_SITE_URL = "https://toofixitt.com";
+export const ACTIVATION_URL = `${DOCUMENT_SITE_URL}/activate`;
 const SUPPORT_EMAIL = "smithmove0@gmail.com";
 
 const UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -62,7 +62,7 @@ export function buildLicensesFile(toolName: string, sets: LicenseSet[]): string 
     `${BRAND} PRODUCT LICENSE FILE\n` +
     `==============================\n\n` +
     `Product Name: ${toolName}\n` +
-    `Activation URL:\n${ACTIVATE_URL}\n\n` +
+    `Activation URL:\n${ACTIVATION_URL}\n\n` +
     `Activation Input:\n1. Store URL\n2. License Key\n3. License Number\n4. Activation Code\n\n` +
     `LICENSE CREDENTIALS:\n\n`;
   sets.forEach((s, i) => {
@@ -89,7 +89,7 @@ INSTRUCTIONS FOR ACTIVATION:
    - Any attempt to reuse, replicate, or redistribute these credentials is prohibited.
 
 2. Activation Process:
-   a. Visit the official activation portal: ${ACTIVATE_URL}
+   a. Visit the official activation portal: ${ACTIVATION_URL}
    b. Log in using your registered ${BRAND_NAME} account. If you do not have an account, create one using verified credentials.
    c. Ensure a secure and stable internet connection before starting the activation process.
    d. Keep this document open in a secure environment while activating the product.

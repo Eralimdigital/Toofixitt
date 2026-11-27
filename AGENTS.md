@@ -5,3 +5,4 @@
 - Keep reviews in the existing customer submission flow rather than inserting unverified testimonials; purchase claims should reflect real customer experiences.
 - Keep the storefront free of music, voiceover, and shopping action sounds; the owner requested a silent experience.
 - Store package-specific checkout URLs and catalog limits on each `ToolPackage` so a selected tier always uses its own price, scope, and payment destination.
+- Keep the canonical storefront and activation URLs for generated delivery documents in `supabase/functions/approve-tool-delivery/licensepack.ts`, so every tool's documents point to one consistent domain.
